@@ -1,0 +1,1072 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Comprehensive design patterns guide for AI/ML projects with SOLID principles, performance optimization, and industry best practices.
+globs: src/**/*.py, tests/**/*.py, architecture/**/*.py
+alwaysApply: true
+---
+
+# 🎨 DESIGN PATTERNS FOR AI/ML PROJECTS
+
+## 1. 🏗️ **CREATIONAL PATTERNS FOR AI/ML**
+
+### 1.1 **Model Factory Pattern**
+```python
+# ✅ EXCELLENT: Comprehensive Model Factory for AI/ML
+from abc import ABC, abstractmethod
+from typing import Dict, Any, Type, Optional
+import inspect
+
+class ModelInterface(ABC):
+    """Abstract base for all ML models."""
+    
+    @abstractmethod
+    def fit(self, X: np.ndarray, y: np.ndarray) -> 'ModelInterface':
+        """Train the model."""
+        pass
+    
+    @abstractmethod
+    def predict(self, X: np.ndarray) -> np.ndarray:
+        """Make predictions."""
+        pass
+    
+    @abstractmethod
+    def get_params(self) -> Dict[str, Any]:
+        """Get model parameters."""
+        pass
+
+class ModelFactory:
+    """Factory for creating ML models with proper registration."""
+    
+    _models: Dict[str, Type[ModelInterface]] = {}
+    _default_params: Dict[str, Dict[str, Any]] = {}
+    
+    @classmethod
+    def register(
+        cls, 
+        name: str, 
+        default_params: Optional[Dict[str, Any]] = None
+    ):
+        """Decorator to register model classes."""
+        def decorator(model_class: Type[ModelInterface]):
+            # Validate model implements interface
+            if not issubclass(model_class, ModelInterface):
+                raise ValueError(f"Model {model_class} must implement ModelInterface")
+            
+            cls._models[name] = model_class
+            cls._default_params[name] = default_params or {}
+            return model_class
+        return decorator
+    
+    @classmethod
+    def create_model(
+        cls, 
+        model_type: str, 
+        **kwargs
+    ) -> ModelInterface:
+        """Create model instance with validation."""
+        if model_type not in cls._models:
+            available = list(cls._models.keys())
+            raise ValueError(f"Unknown model '{model_type}'. Available: {available}")
+        
+        model_class = cls._models[model_type]
+        
+        # Merge default params with provided params
+        params = cls._default_params[model_type].copy()
+        params.update(kwargs)
+        
+        # Validate parameters match constructor signature
+        sig = inspect.signature(model_class.__init__)
+        valid_params = {k: v for k, v in params.items() 
+                       if k in sig.parameters or 'kwargs' in sig.parameters}
+        
+        return model_class(**valid_params)
+
+# Usage examples
+@ModelFactory.register("random_forest", {"n_estimators": 100, "random_state": 42})
+class RandomForestModel(ModelInterface):
+    """Random Forest classifier with optimal defaults."""
+    
+    def __init__(self, n_estimators: int = 100, max_depth: Optional[int] = None, 
+                 random_state: int = 42):
+        self.n_estimators = n_estimators
+        self.max_depth = max_depth
+        self.random_state = random_state
+        self._model = None
+    
+    def fit(self, X: np.ndarray, y: np.ndarray) -> 'RandomForestModel':
+        from sklearn.ensemble import RandomForestClassifier
+        self._model = RandomForestClassifier(
+            n_estimators=self.n_estimators,
+            max_depth=self.max_depth,
+            random_state=self.random_state
+        )
+        self._model.fit(X, y)
+        return self
+    
+    def predict(self, X: np.ndarray) -> np.ndarray:
+        if self._model is None:
+            raise ValueError("Model must be fitted before prediction")
+        return self._model.predict(X)
+    
+    def get_params(self) -> Dict[str, Any]:
+        return {
+            "n_estimators": self.n_estimators,
+            "max_depth": self.max_depth,
+            "random_state": self.random_state
+        }
+```
+
+### 1.2 **Pipeline Builder Pattern**
+```python
+# ✅ EXCELLENT: AI/ML Pipeline Builder
+from typing import List, Tuple, Any, Optional, Callable
+from dataclasses import dataclass
+
+@dataclass
+class PipelineStep:
+    """Represents a step in the ML pipeline."""
+    name: str
+    transformer: Any
+    fit_params: Dict[str, Any] = None
+    transform_params: Dict[str, Any] = None
+
+class MLPipelineBuilder:
+    """Builder for creating complex ML pipelines."""
+    
+    def __init__(self):
+        self._steps: List[PipelineStep] = []
+        self._validation_steps: List[Callable] = []
+        self._metadata: Dict[str, Any] = {}
+    
+    def add_preprocessing_step(
+        self, 
+        name: str, 
+        transformer: Any,
+        fit_params: Optional[Dict[str, Any]] = None
+    ) -> 'MLPipelineBuilder':
+        """Add data preprocessing step."""
+        step = PipelineStep(
+            name=f"preprocess_{name}",
+            transformer=transformer,
+            fit_params=fit_params or {}
+        )
+        self._steps.append(step)
+        return self
+    
+    def add_feature_engineering_step(
+        self,
+        name: str,
+        transformer: Any,
+        fit_params: Optional[Dict[str, Any]] = None
+    ) -> 'MLPipelineBuilder':
+        """Add feature engineering step."""
+        step = PipelineStep(
+            name=f"feature_{name}",
+            transformer=transformer,
+            fit_params=fit_params or {}
+        )
+        self._steps.append(step)
+        return self
+    
+    def add_model_step(
+        self,
+        model: ModelInterface,
+        fit_params: Optional[Dict[str, Any]] = None
+    ) -> 'MLPipelineBuilder':
+        """Add model training step."""
+        step = PipelineStep(
+            name="model",
+            transformer=model,
+            fit_params=fit_params or {}
+        )
+        self._steps.append(step)
+        return self
+    
+    def add_validation(
+        self,
+        validation_func: Callable[[Any], bool]
+    ) -> 'MLPipelineBuilder':
+        """Add validation step."""
+        self._validation_steps.append(validation_func)
+        return self
+    
+    def with_metadata(
+        self,
+        **metadata
+    ) -> 'MLPipelineBuilder':
+        """Add metadata to pipeline."""
+        self._metadata.update(metadata)
+        return self
+    
+    def build(self) -> 'MLPipeline':
+        """Build the final pipeline."""
+        if not self._steps:
+            raise ValueError("Pipeline must have at least one step")
+        
+        # Validate pipeline structure
+        model_steps = [s for s in self._steps if s.name == "model"]
+        if len(model_steps) != 1:
+            raise ValueError("Pipeline must have exactly one model step")
+        
+        return MLPipeline(
+            steps=self._steps.copy(),
+            validations=self._validation_steps.copy(),
+            metadata=self._metadata.copy()
+        )
+    
+    def reset(self) -> 'MLPipelineBuilder':
+        """Reset builder for reuse."""
+        self._steps.clear()
+        self._validation_steps.clear()
+        self._metadata.clear()
+        return self
+
+class MLPipeline:
+    """Complete ML pipeline with validation and metadata."""
+    
+    def __init__(
+        self,
+        steps: List[PipelineStep],
+        validations: List[Callable],
+        metadata: Dict[str, Any]
+    ):
+        self.steps = steps
+        self.validations = validations
+        self.metadata = metadata
+        self._fitted_steps: Dict[str, Any] = {}
+        self._is_fitted = False
+    
+    def fit(self, X: np.ndarray, y: np.ndarray) -> 'MLPipeline':
+        """Fit the entire pipeline."""
+        current_X, current_y = X, y
+        
+        for step in self.steps:
+            try:
+                if hasattr(step.transformer, 'fit'):
+                    if step.name == "model":
+                        fitted_transformer = step.transformer.fit(current_X, current_y)
+                    else:
+                        fitted_transformer = step.transformer.fit(current_X)
+                        if hasattr(fitted_transformer, 'transform'):
+                            current_X = fitted_transformer.transform(current_X)
+                else:
+                    fitted_transformer = step.transformer
+                
+                self._fitted_steps[step.name] = fitted_transformer
+                
+                # Run validations
+                for validation in self.validations:
+                    if not validation(fitted_transformer):
+                        raise ValidationError(f"Validation failed for step {step.name}")
+                        
+            except Exception as e:
+                raise PipelineError(f"Failed to fit step '{step.name}': {e}") from e
+        
+        self._is_fitted = True
+        return self
+    
+    def predict(self, X: np.ndarray) -> np.ndarray:
+        """Make predictions using fitted pipeline."""
+        if not self._is_fitted:
+            raise ValueError("Pipeline must be fitted before prediction")
+        
+        current_X = X
+        
+        # Apply all preprocessing and feature engineering steps
+        for step in self.steps[:-1]:  # All except model
+            transformer = self._fitted_steps[step.name]
+            if hasattr(transformer, 'transform'):
+                current_X = transformer.transform(current_X)
+        
+        # Apply model prediction
+        model = self._fitted_steps["model"]
+        return model.predict(current_X)
+```
+
+### 1.3 **Configuration Factory Pattern**
+```python
+# ✅ EXCELLENT: Configuration Factory for different environments
+from pydantic import BaseModel, Field
+from typing import Union, Literal
+from pathlib import Path
+
+class TrainingConfig(BaseModel):
+    """Training configuration with validation."""
+    learning_rate: float = Field(gt=0, le=1)
+    batch_size: int = Field(gt=0)
+    epochs: int = Field(gt=0, le=10000)
+    early_stopping_patience: int = Field(gt=0)
+    model_type: str
+    random_seed: int = Field(ge=0)
+
+class DataConfig(BaseModel):
+    """Data configuration with validation."""
+    data_path: Path
+    target_column: str
+    test_size: float = Field(gt=0, lt=1)
+    validation_size: float = Field(gt=0, lt=1)
+    stratify: bool = True
+
+class ExperimentConfig(BaseModel):
+    """Complete experiment configuration."""
+    training: TrainingConfig
+    data: DataConfig
+    experiment_name: str
+    output_dir: Path
+    logging_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
+
+class ConfigurationFactory:
+    """Factory for creating different configuration types."""
+    
+    @staticmethod
+    def create_development_config() -> ExperimentConfig:
+        """Create configuration optimized for development."""
+        return ExperimentConfig(
+            training=TrainingConfig(
+                learning_rate=0.01,
+                batch_size=32,
+                epochs=10,  # Small for quick iterations
+                early_stopping_patience=3,
+                model_type="random_forest",
+                random_seed=42
+            ),
+            data=DataConfig(
+                data_path=Path("data/dev_sample.csv"),
+                target_column="target",
+                test_size=0.2,
+                validation_size=0.2
+            ),
+            experiment_name="development_experiment",
+            output_dir=Path("outputs/dev"),
+            logging_level="DEBUG"
+        )
+    
+    @staticmethod
+    def create_production_config() -> ExperimentConfig:
+        """Create configuration optimized for production."""
+        return ExperimentConfig(
+            training=TrainingConfig(
+                learning_rate=0.001,
+                batch_size=128,
+                epochs=1000,  # More epochs for better performance
+                early_stopping_patience=50,
+                model_type="neural_network",
+                random_seed=42
+            ),
+            data=DataConfig(
+                data_path=Path("data/full_dataset.csv"),
+                target_column="target",
+                test_size=0.15,
+                validation_size=0.15
+            ),
+            experiment_name="production_model",
+            output_dir=Path("outputs/prod"),
+            logging_level="INFO"
+        )
+    
+    @staticmethod
+    def create_hyperparameter_tuning_config() -> ExperimentConfig:
+        """Create configuration for hyperparameter tuning."""
+        return ExperimentConfig(
+            training=TrainingConfig(
+                learning_rate=0.01,  # Will be overridden by tuning
+                batch_size=64,
+                epochs=100,
+                early_stopping_patience=10,
+                model_type="gradient_boosting",
+                random_seed=42
+            ),
+            data=DataConfig(
+                data_path=Path("data/tuning_dataset.csv"),
+                target_column="target",
+                test_size=0.2,
+                validation_size=0.2
+            ),
+            experiment_name="hyperparameter_tuning",
+            output_dir=Path("outputs/tuning"),
+            logging_level="INFO"
+        )
+```
+
+## 2. 🔗 **STRUCTURAL PATTERNS FOR AI/ML**
+
+### 2.1 **Adapter Pattern for Data Sources**
+```python
+# ✅ EXCELLENT: Data Source Adapter Pattern
+from abc import ABC, abstractmethod
+import pandas as pd
+import numpy as np
+
+class DataSourceInterface(ABC):
+    """Common interface for all data sources."""
+    
+    @abstractmethod
+    def load_data(self) -> pd.DataFrame:
+        """Load data and return as DataFrame."""
+        pass
+    
+    @abstractmethod
+    def validate_schema(self, df: pd.DataFrame) -> bool:
+        """Validate data schema."""
+        pass
+
+class CSVDataSource(DataSourceInterface):
+    """CSV data source implementation."""
+    
+    def __init__(self, file_path: Path, **kwargs):
+        self.file_path = file_path
+        self.read_kwargs = kwargs
+    
+    def load_data(self) -> pd.DataFrame:
+        """Load CSV data."""
+        return pd.read_csv(self.file_path, **self.read_kwargs)
+    
+    def validate_schema(self, df: pd.DataFrame) -> bool:
+        """Validate CSV schema."""
+        # Implement CSV-specific validation
+        return not df.empty and len(df.columns) > 0
+
+class DatabaseAdapter(DataSourceInterface):
+    """Adapter for database data sources."""
+    
+    def __init__(self, connection_string: str, query: str):
+        self.connection_string = connection_string
+        self.query = query
+    
+    def load_data(self) -> pd.DataFrame:
+        """Load data from database."""
+        import sqlalchemy
+        engine = sqlalchemy.create_engine(self.connection_string)
+        return pd.read_sql(self.query, engine)
+    
+    def validate_schema(self, df: pd.DataFrame) -> bool:
+        """Validate database schema."""
+        # Implement database-specific validation
+        return not df.empty and len(df.columns) > 0
+
+class APIAdapter(DataSourceInterface):
+    """Adapter for API data sources."""
+    
+    def __init__(self, api_url: str, headers: Optional[Dict[str, str]] = None):
+        self.api_url = api_url
+        self.headers = headers or {}
+    
+    def load_data(self) -> pd.DataFrame:
+        """Load data from API."""
+        import requests
+        response = requests.get(self.api_url, headers=self.headers)
+        response.raise_for_status()
+        
+        # Convert JSON response to DataFrame
+        return pd.DataFrame(response.json())
+    
+    def validate_schema(self, df: pd.DataFrame) -> bool:
+        """Validate API response schema."""
+        # Implement API-specific validation
+        return not df.empty and len(df.columns) > 0
+
+class UniversalDataLoader:
+    """Context class that uses adapters to load data from any source."""
+    
+    def __init__(self, data_source: DataSourceInterface):
+        self.data_source = data_source
+    
+    def load_and_validate(self) -> pd.DataFrame:
+        """Load data using adapter and validate."""
+        df = self.data_source.load_data()
+        
+        if not self.data_source.validate_schema(df):
+            raise DataValidationError("Data schema validation failed")
+        
+        return df
+
+# Usage
+csv_loader = UniversalDataLoader(CSVDataSource(Path("data.csv")))
+db_loader = UniversalDataLoader(DatabaseAdapter("sqlite:///db.sqlite", "SELECT * FROM table"))
+api_loader = UniversalDataLoader(APIAdapter("https://api.example.com/data"))
+```
+
+### 2.2 **Decorator Pattern for Model Enhancement**
+```python
+# ✅ EXCELLENT: Model Enhancement Decorators
+from functools import wraps
+import time
+from typing import Any, Callable
+
+class ModelDecorator(ModelInterface):
+    """Base decorator for model enhancements."""
+    
+    def __init__(self, model: ModelInterface):
+        self._model = model
+        self._metadata: Dict[str, Any] = {}
+    
+    def fit(self, X: np.ndarray, y: np.ndarray) -> 'ModelDecorator':
+        """Delegate fitting to wrapped model."""
+        self._model.fit(X, y)
+        return self
+    
+    def predict(self, X: np.ndarray) -> np.ndarray:
+        """Delegate prediction to wrapped model."""
+        return self._model.predict(X)
+    
+    def get_params(self) -> Dict[str, Any]:
+        """Get parameters from wrapped model."""
+        return self._model.get_params()
+
+class PerformanceMonitoringDecorator(ModelDecorator):
+    """Decorator that adds performance monitoring."""
+    
+    def fit(self, X: np.ndarray, y: np.ndarray) -> 'PerformanceMonitoringDecorator':
+        """Fit model with timing."""
+        start_time = time.time()
+        result = super().fit(X, y)
+        end_time = time.time()
+        
+        self._metadata["fit_time"] = end_time - start_time
+        self._metadata["training_samples"] = len(X)
+        
+        return result
+    
+    def predict(self, X: np.ndarray) -> np.ndarray:
+        """Predict with timing and memory monitoring."""
+        import psutil
+        import os
+        
+        # Memory before prediction
+        process = psutil.Process(os.getpid())
+        memory_before = process.memory_info().rss
+        
+        start_time = time.time()
+        predictions = super().predict(X)
+        end_time = time.time()
+        
+        # Memory after prediction
+        memory_after = process.memory_info().rss
+        
+        self._metadata.update({
+            "last_prediction_time": end_time - start_time,
+            "last_prediction_samples": len(X),
+            "memory_increase": memory_after - memory_before
+        })
+        
+        return predictions
+    
+    def get_performance_metrics(self) -> Dict[str, Any]:
+        """Get performance metrics."""
+        return self._metadata.copy()
+
+class CachingDecorator(ModelDecorator):
+    """Decorator that adds prediction caching."""
+    
+    def __init__(self, model: ModelInterface, cache_size: int = 1000):
+        super().__init__(model)
+        self._cache: Dict[str, np.ndarray] = {}
+        self._cache_size = cache_size
+    
+    def predict(self, X: np.ndarray) -> np.ndarray:
+        """Predict with caching."""
+        # Create cache key from input data
+        cache_key = hash(X.tobytes())
+        
+        if cache_key in self._cache:
+            return self._cache[cache_key].copy()
+        
+        # Get prediction from wrapped model
+        predictions = super().predict(X)
+        
+        # Cache result if cache not full
+        if len(self._cache) < self._cache_size:
+            self._cache[cache_key] = predictions.copy()
+        
+        return predictions
+    
+    def clear_cache(self) -> None:
+        """Clear prediction cache."""
+        self._cache.clear()
+
+class ValidationDecorator(ModelDecorator):
+    """Decorator that adds input validation."""
+    
+    def __init__(self, model: ModelInterface, expected_features: int):
+        super().__init__(model)
+        self.expected_features = expected_features
+    
+    def fit(self, X: np.ndarray, y: np.ndarray) -> 'ValidationDecorator':
+        """Fit with input validation."""
+        self._validate_input(X, y)
+        return super().fit(X, y)
+    
+    def predict(self, X: np.ndarray) -> np.ndarray:
+        """Predict with input validation."""
+        self._validate_prediction_input(X)
+        return super().predict(X)
+    
+    def _validate_input(self, X: np.ndarray, y: np.ndarray) -> None:
+        """Validate training input."""
+        if X.shape[0] != y.shape[0]:
+            raise ValueError("X and y must have same number of samples")
+        
+        if X.shape[1] != self.expected_features:
+            raise ValueError(f"Expected {self.expected_features} features, got {X.shape[1]}")
+    
+    def _validate_prediction_input(self, X: np.ndarray) -> None:
+        """Validate prediction input."""
+        if X.shape[1] != self.expected_features:
+            raise ValueError(f"Expected {self.expected_features} features, got {X.shape[1]}")
+
+# Usage: Stacking decorators
+base_model = RandomForestModel(n_estimators=100)
+enhanced_model = PerformanceMonitoringDecorator(
+    CachingDecorator(
+        ValidationDecorator(base_model, expected_features=10)
+    )
+)
+```
+
+## 3. 🎭 **BEHAVIORAL PATTERNS FOR AI/ML**
+
+### 3.1 **Strategy Pattern for Algorithms**
+```python
+# ✅ EXCELLENT: Algorithm Strategy Pattern
+from abc import ABC, abstractmethod
+from typing import Protocol, runtime_checkable
+
+@runtime_checkable
+class OptimizationStrategy(Protocol):
+    """Protocol for optimization strategies."""
+    
+    def optimize(self, model: ModelInterface, X: np.ndarray, y: np.ndarray) -> ModelInterface:
+        """Optimize model parameters."""
+        ...
+
+class GridSearchStrategy:
+    """Grid search optimization strategy."""
+    
+    def __init__(self, param_grid: Dict[str, List[Any]], cv: int = 5):
+        self.param_grid = param_grid
+        self.cv = cv
+    
+    def optimize(self, model: ModelInterface, X: np.ndarray, y: np.ndarray) -> ModelInterface:
+        """Optimize using grid search."""
+        from sklearn.model_selection import GridSearchCV
+        
+        # Wrap model for sklearn compatibility
+        sklearn_model = self._wrap_model_for_sklearn(model)
+        
+        grid_search = GridSearchCV(
+            sklearn_model, 
+            self.param_grid, 
+            cv=self.cv,
+            scoring='accuracy'
+        )
+        
+        grid_search.fit(X, y)
+        
+        # Create optimized model with best parameters
+        best_params = grid_search.best_params_
+        optimized_model = ModelFactory.create_model(
+            model.get_params()["model_type"],
+            **best_params
+        )
+        
+        return optimized_model.fit(X, y)
+
+class BayesianOptimizationStrategy:
+    """Bayesian optimization strategy."""
+    
+    def __init__(self, n_trials: int = 100):
+        self.n_trials = n_trials
+    
+    def optimize(self, model: ModelInterface, X: np.ndarray, y: np.ndarray) -> ModelInterface:
+        """Optimize using Bayesian optimization."""
+        import optuna
+        
+        def objective(trial):
+            # Define hyperparameter search space
+            params = self._define_search_space(trial, model)
+            
+            # Create model with trial parameters
+            trial_model = ModelFactory.create_model(
+                model.get_params()["model_type"],
+                **params
+            )
+            
+            # Evaluate with cross-validation
+            from sklearn.model_selection import cross_val_score
+            scores = cross_val_score(trial_model, X, y, cv=5)
+            return scores.mean()
+        
+        study = optuna.create_study(direction='maximize')
+        study.optimize(objective, n_trials=self.n_trials)
+        
+        # Create optimized model
+        best_params = study.best_params
+        optimized_model = ModelFactory.create_model(
+            model.get_params()["model_type"],
+            **best_params
+        )
+        
+        return optimized_model.fit(X, y)
+
+class ModelOptimizer:
+    """Context class for model optimization."""
+    
+    def __init__(self, strategy: OptimizationStrategy):
+        self.strategy = strategy
+    
+    def set_strategy(self, strategy: OptimizationStrategy) -> None:
+        """Change optimization strategy."""
+        self.strategy = strategy
+    
+    def optimize_model(self, model: ModelInterface, X: np.ndarray, y: np.ndarray) -> ModelInterface:
+        """Optimize model using current strategy."""
+        return self.strategy.optimize(model, X, y)
+
+# Usage
+base_model = RandomForestModel()
+optimizer = ModelOptimizer(GridSearchStrategy({"n_estimators": [50, 100, 200]}))
+
+# Optimize with grid search
+optimized_model = optimizer.optimize_model(base_model, X_train, y_train)
+
+# Switch to Bayesian optimization
+optimizer.set_strategy(BayesianOptimizationStrategy(n_trials=50))
+further_optimized = optimizer.optimize_model(optimized_model, X_train, y_train)
+```
+
+### 3.2 **Observer Pattern for Training Monitoring**
+```python
+# ✅ EXCELLENT: Training Progress Observer Pattern
+from abc import ABC, abstractmethod
+from typing import List, Dict, Any
+import json
+from pathlib import Path
+
+class TrainingObserver(ABC):
+    """Abstract observer for training events."""
+    
+    @abstractmethod
+    def on_training_start(self, model_info: Dict[str, Any]) -> None:
+        """Called when training starts."""
+        pass
+    
+    @abstractmethod
+    def on_epoch_end(self, epoch: int, metrics: Dict[str, float]) -> None:
+        """Called at the end of each epoch."""
+        pass
+    
+    @abstractmethod
+    def on_training_end(self, final_metrics: Dict[str, float]) -> None:
+        """Called when training ends."""
+        pass
+
+class ConsoleLoggingObserver(TrainingObserver):
+    """Observer that logs training progress to console."""
+    
+    def on_training_start(self, model_info: Dict[str, Any]) -> None:
+        print(f"🚀 Training started: {model_info['model_type']}")
+        print(f"📊 Dataset: {model_info['samples']} samples, {model_info['features']} features")
+    
+    def on_epoch_end(self, epoch: int, metrics: Dict[str, float]) -> None:
+        metrics_str = ", ".join(f"{k}: {v:.4f}" for k, v in metrics.items())
+        print(f"Epoch {epoch:3d} | {metrics_str}")
+    
+    def on_training_end(self, final_metrics: Dict[str, float]) -> None:
+        print("✅ Training completed!")
+        print("📈 Final metrics:")
+        for metric, value in final_metrics.items():
+            print(f"  {metric}: {value:.4f}")
+
+class FileLoggingObserver(TrainingObserver):
+    """Observer that logs training progress to file."""
+    
+    def __init__(self, log_file: Path):
+        self.log_file = log_file
+        self.training_log: List[Dict[str, Any]] = []
+    
+    def on_training_start(self, model_info: Dict[str, Any]) -> None:
+        self.training_log = [{
+            "event": "training_start",
+            "timestamp": time.time(),
+            "model_info": model_info
+        }]
+    
+    def on_epoch_end(self, epoch: int, metrics: Dict[str, float]) -> None:
+        self.training_log.append({
+            "event": "epoch_end",
+            "timestamp": time.time(),
+            "epoch": epoch,
+            "metrics": metrics
+        })
+        
+        # Write to file after each epoch
+        with open(self.log_file, 'w') as f:
+            json.dump(self.training_log, f, indent=2)
+    
+    def on_training_end(self, final_metrics: Dict[str, float]) -> None:
+        self.training_log.append({
+            "event": "training_end",
+            "timestamp": time.time(),
+            "final_metrics": final_metrics
+        })
+        
+        with open(self.log_file, 'w') as f:
+            json.dump(self.training_log, f, indent=2)
+
+class EarlyStoppingObserver(TrainingObserver):
+    """Observer that implements early stopping."""
+    
+    def __init__(self, patience: int = 10, metric: str = "val_loss", mode: str = "min"):
+        self.patience = patience
+        self.metric = metric
+        self.mode = mode
+        self.best_value = float('inf') if mode == 'min' else float('-inf')
+        self.wait = 0
+        self.should_stop = False
+    
+    def on_training_start(self, model_info: Dict[str, Any]) -> None:
+        self.best_value = float('inf') if self.mode == 'min' else float('-inf')
+        self.wait = 0
+        self.should_stop = False
+    
+    def on_epoch_end(self, epoch: int, metrics: Dict[str, float]) -> None:
+        current_value = metrics.get(self.metric)
+        if current_value is None:
+            return
+        
+        improved = (
+            (self.mode == 'min' and current_value < self.best_value) or
+            (self.mode == 'max' and current_value > self.best_value)
+        )
+        
+        if improved:
+            self.best_value = current_value
+            self.wait = 0
+        else:
+            self.wait += 1
+            if self.wait >= self.patience:
+                self.should_stop = True
+                print(f"🛑 Early stopping triggered at epoch {epoch}")
+    
+    def on_training_end(self, final_metrics: Dict[str, float]) -> None:
+        pass
+
+class ObservableTrainer:
+    """Trainer that supports observers."""
+    
+    def __init__(self):
+        self._observers: List[TrainingObserver] = []
+    
+    def attach_observer(self, observer: TrainingObserver) -> None:
+        """Attach an observer."""
+        self._observers.append(observer)
+    
+    def detach_observer(self, observer: TrainingObserver) -> None:
+        """Detach an observer."""
+        self._observers.remove(observer)
+    
+    def _notify_training_start(self, model_info: Dict[str, Any]) -> None:
+        """Notify all observers of training start."""
+        for observer in self._observers:
+            observer.on_training_start(model_info)
+    
+    def _notify_epoch_end(self, epoch: int, metrics: Dict[str, float]) -> None:
+        """Notify all observers of epoch end."""
+        for observer in self._observers:
+            observer.on_epoch_end(epoch, metrics)
+    
+    def _notify_training_end(self, final_metrics: Dict[str, float]) -> None:
+        """Notify all observers of training end."""
+        for observer in self._observers:
+            observer.on_training_end(final_metrics)
+    
+    def train(self, model: ModelInterface, X: np.ndarray, y: np.ndarray) -> ModelInterface:
+        """Train model with observer notifications."""
+        model_info = {
+            "model_type": type(model).__name__,
+            "samples": len(X),
+            "features": X.shape[1] if len(X.shape) > 1 else 1
+        }
+        
+        self._notify_training_start(model_info)
+        
+        # Simulate training with epochs (this would be actual training logic)
+        for epoch in range(100):
+            # Simulate training metrics
+            metrics = {
+                "loss": 0.5 - epoch * 0.01 + np.random.normal(0, 0.05),
+                "accuracy": 0.5 + epoch * 0.005 + np.random.normal(0, 0.02)
+            }
+            
+            self._notify_epoch_end(epoch, metrics)
+            
+            # Check for early stopping
+            early_stopping_observers = [obs for obs in self._observers 
+                                      if isinstance(obs, EarlyStoppingObserver)]
+            if any(obs.should_stop for obs in early_stopping_observers):
+                break
+        
+        # Fit the actual model
+        trained_model = model.fit(X, y)
+        
+        final_metrics = {"final_accuracy": 0.95, "final_loss": 0.05}
+        self._notify_training_end(final_metrics)
+        
+        return trained_model
+
+# Usage
+trainer = ObservableTrainer()
+trainer.attach_observer(ConsoleLoggingObserver())
+trainer.attach_observer(FileLoggingObserver(Path("training_log.json")))
+trainer.attach_observer(EarlyStoppingObserver(patience=5, metric="loss"))
+
+model = trainer.train(RandomForestModel(), X_train, y_train)
+```
+
+## 4. 🚫 **AI/ML ANTI-PATTERNS TO AVOID**
+
+### 4.1 **Common Anti-Patterns**
+```python
+# ❌ ANTI-PATTERN: God Class Pattern
+class MLGodClass:
+    """Violates SRP - does everything poorly."""
+    def load_data(self): pass
+    def clean_data(self): pass
+    def engineer_features(self): pass
+    def train_model(self): pass
+    def evaluate_model(self): pass
+    def deploy_model(self): pass
+    def monitor_model(self): pass
+    # ... 50 more methods
+
+# ✅ CORRECT: Separate responsibilities
+class DataLoader: pass
+class DataCleaner: pass
+class FeatureEngineer: pass
+class ModelTrainer: pass
+
+# ❌ ANTI-PATTERN: Hardcoded Factory
+class BadModelFactory:
+    def create_model(self, model_type):
+        if model_type == "rf":
+            return RandomForest(n_estimators=100)  # Hardcoded params
+        elif model_type == "svm":
+            return SVM(C=1.0)  # No flexibility
+        # No extensibility for new models
+
+# ✅ CORRECT: Use registry pattern shown above
+
+# ❌ ANTI-PATTERN: Data Leakage in Pipeline
+class LeakyPipeline:
+    def fit(self, X, y):
+        # WRONG: Fit on entire dataset before split
+        self.scaler.fit(X)
+        X_train, X_test = train_test_split(X)
+        return self
+
+# ✅ CORRECT: Proper pipeline shown above
+```
+
+### 4.2 **Performance Anti-Patterns**
+```python
+# ❌ ANTI-PATTERN: Inefficient Data Loading
+def bad_data_loading():
+    data = []
+    for file in files:
+        df = pd.read_csv(file)
+        data.append(df)  # Memory inefficient
+    return pd.concat(data)
+
+# ✅ CORRECT: Streaming approach
+def good_data_loading():
+    def data_generator():
+        for file in files:
+            yield pd.read_csv(file)
+    return data_generator()
+
+# ❌ ANTI-PATTERN: No caching of expensive operations
+def bad_feature_engineering(data):
+    # Recalculates every time
+    complex_features = expensive_calculation(data)
+    return complex_features
+
+# ✅ CORRECT: Use caching decorator shown above
+```
+
+## 5. 📋 **PATTERN IMPLEMENTATION CHECKLIST**
+
+### **Before implementing any pattern:**
+- [ ] **Clear problem definition** - What specific problem does this pattern solve?
+- [ ] **Alternative evaluation** - Why is this pattern better than alternatives?
+- [ ] **SOLID compliance** - Does implementation follow SOLID principles?
+- [ ] **Type safety** - Are all interfaces properly typed?
+- [ ] **Error handling** - Are edge cases and errors handled?
+- [ ] **Testing strategy** - How will pattern be tested?
+- [ ] **Documentation** - Is pattern usage documented with examples?
+- [ ] **Performance impact** - What are the performance implications?
+- [ ] **Extensibility** - Can pattern be extended for future needs?
+- [ ] **Integration** - How does pattern integrate with existing code?
+
+### **Pattern Quality Gates:**
+- [ ] **90%+ test coverage** for pattern implementation
+- [ ] **Zero security vulnerabilities** in pattern code
+- [ ] **Performance benchmarks** established and met
+- [ ] **Memory usage** within acceptable limits
+- [ ] **Thread safety** considered and implemented if needed
+- [ ] **Configuration flexibility** without hardcoded values
+- [ ] **Logging and monitoring** integrated appropriately
+- [ ] **Error messages** are clear and actionable
+- [ ] **API compatibility** maintained during pattern evolution
+- [ ] **Documentation completeness** verified
+
+### **AI/ML Specific Validations:**
+- [ ] **No data leakage** in any pipeline patterns
+- [ ] **Model interface consistency** across all implementations
+- [ ] **Experiment reproducibility** enabled by patterns
+- [ ] **Resource cleanup** properly implemented
+- [ ] **Scalability considerations** for large datasets
+- [ ] **Model versioning** support in relevant patterns
+- [ ] **Bias and fairness** considerations documented
+- [ ] **Deployment readiness** of pattern implementations
+
+## 6. 🎯 **PATTERN SELECTION GUIDE**
+
+### **Use Factory Pattern when:**
+- Creating multiple types of models/algorithms
+- Need dynamic model selection based on configuration
+- Want to encapsulate object creation logic
+- Multiple model types share common interface
+
+### **Use Builder Pattern when:**
+- Creating complex ML pipelines with multiple steps
+- Need fluent interface for configuration
+- Object construction has many optional parameters
+- Want to ensure object is properly configured before use
+
+### **Use Strategy Pattern when:**
+- Multiple algorithms solve same problem differently
+- Want to switch algorithms at runtime
+- Need to make algorithms interchangeable
+- Want to isolate algorithm-specific code
+
+### **Use Observer Pattern when:**
+- Multiple components need to react to training events
+- Want to decouple training logic from monitoring/logging
+- Need flexible notification system
+- Want to add new observers without modifying core code
+
+### **Use Decorator Pattern when:**
+- Want to add functionality to models without inheritance
+- Need to compose multiple enhancements
+- Want to add cross-cutting concerns (logging, caching)
+- Need to maintain original interface
+
+### **Use Adapter Pattern when:**
+- Integrating different data sources or APIs
+- Need to make incompatible interfaces work together
+- Want to isolate external dependencies
+- Legacy system integration required

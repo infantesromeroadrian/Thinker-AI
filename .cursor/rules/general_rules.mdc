@@ -1,0 +1,712 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# 📋 GENERAL CODING GUIDELINES FOR AI/ML PROJECTS
+
+## 1. 🎯 **FUNDAMENTAL DEVELOPMENT PRINCIPLES**
+
+### 1.1 **SOLID Principles Application**
+```python
+# ✅ Single Responsibility Principle (SRP)
+class DataValidator:
+    """Validates data quality and schema compliance."""
+    def validate_schema(self, data: pd.DataFrame) -> bool: pass
+    def check_data_quality(self, data: pd.DataFrame) -> QualityReport: pass
+
+class ModelTrainer:
+    """Handles model training operations."""
+    def train(self, model: Model, data: TrainingData) -> TrainedModel: pass
+
+# ❌ Violates SRP - Multiple responsibilities
+class DataProcessor:
+    def validate_data(self): pass
+    def train_model(self): pass
+    def save_results(self): pass
+    def send_notifications(self): pass  # Too many responsibilities!
+
+# ✅ Open/Closed Principle (OCP)
+from abc import ABC, abstractmethod
+
+class MetricCalculator(ABC):
+    @abstractmethod
+    def calculate(self, y_true: np.ndarray, y_pred: np.ndarray) -> float: pass
+
+class AccuracyCalculator(MetricCalculator):
+    def calculate(self, y_true: np.ndarray, y_pred: np.ndarray) -> float:
+        return np.mean(y_true == y_pred)
+
+# ✅ Dependency Inversion Principle (DIP)
+class ModelEvaluator:
+    def __init__(self, metrics: List[MetricCalculator]):
+        self.metrics = metrics  # Depends on abstraction, not concretions
+```
+
+### 1.2 **Clean Code Principles**
+```python
+# ✅ DRY (Don't Repeat Yourself)
+class ConfigurationManager:
+    @staticmethod
+    def get_db_config() -> Dict[str, str]:
+        """Single source of truth for database configuration."""
+        return {
+            "host": os.getenv("DB_HOST", "localhost"),
+            "port": os.getenv("DB_PORT", "5432"),
+            "database": os.getenv("DB_NAME", "ml_project")
+        }
+
+# ❌ WET (Write Everything Twice)
+def connect_to_training_db():
+    host = os.getenv("DB_HOST", "localhost")  # Repeated code
+    port = os.getenv("DB_PORT", "5432")
+    database = os.getenv("DB_NAME", "ml_project")
+
+def connect_to_inference_db():
+    host = os.getenv("DB_HOST", "localhost")  # Same code repeated
+    port = os.getenv("DB_PORT", "5432")
+    database = os.getenv("DB_NAME", "ml_project")
+
+# ✅ KISS (Keep It Simple, Stupid)
+def calculate_accuracy(predictions: np.ndarray, labels: np.ndarray) -> float:
+    """Simple, clear accuracy calculation."""
+    return np.mean(predictions == labels)
+
+# ❌ Over-complicated
+def calculate_accuracy_complex(predictions, labels):
+    correct = 0
+    total = len(predictions)
+    for i in range(total):
+        if predictions[i] == labels[i]:
+            correct += 1
+    return correct / total if total > 0 else 0.0
+
+# ✅ YAGNI (You Aren't Gonna Need It)
+class SimpleModelTrainer:
+    """Implements only what we need now."""
+    def train(self, model, data): pass
+    def evaluate(self, model, data): pass
+
+# ❌ Over-engineering for future needs
+class OverEngineeredTrainer:
+    def train(self): pass
+    def train_distributed(self): pass      # Not needed yet
+    def train_with_gpu_cluster(self): pass # Not needed yet
+    def train_with_quantum_ai(self): pass  # Definitely not needed!
+```
+
+## 2. 📝 **CODE ORGANIZATION & STRUCTURE**
+
+### 2.1 **Project Structure Standards**
+```
+project_root/
+├── src/                          # Source code
+│   ├── data/                     # Data handling modules
+│   │   ├── loaders/             # Data loading utilities
+│   │   ├── processors/          # Data processing pipelines
+│   │   └── validators/          # Data validation logic
+│   ├── models/                   # Model definitions
+│   │   ├── architectures/       # Model architectures
+│   │   ├── training/           # Training logic
+│   │   └── evaluation/         # Evaluation utilities
+│   ├── features/                # Feature engineering
+│   ├── utils/                   # Utility functions
+│   ├── config/                  # Configuration management
+│   └── api/                     # API endpoints
+├── tests/                       # Test suite
+│   ├── unit/                   # Unit tests
+│   ├── integration/            # Integration tests
+│   └── e2e/                    # End-to-end tests
+├── docs/                       # Documentation
+├── scripts/                    # Utility scripts
+├── notebooks/                  # Jupyter notebooks
+├── data/                       # Data directory
+│   ├── raw/                    # Raw data
+│   ├── processed/              # Processed data
+│   └── external/               # External data
+├── models/                     # Trained models
+├── outputs/                    # Output artifacts
+├── .env                        # Environment variables
+├── requirements.txt            # Python dependencies
+├── docker-compose.yml          # Docker configuration
+└── README.md                   # Project documentation
+```
+
+### 2.2 **Import Organization**
+```python
+# ✅ CORRECT: Import order (PEP 8)
+# 1. Standard library imports
+import os
+import sys
+from pathlib import Path
+from typing import List, Dict, Optional, Union
+
+# 2. Related third-party imports
+import numpy as np
+import pandas as pd
+import sklearn
+from sklearn.ensemble import RandomForestClassifier
+
+# 3. Local application/library imports
+from src.data.loaders import DataLoader
+from src.models.base import BaseModel
+from src.utils.logging import get_logger
+
+# ❌ WRONG: Mixed import order
+import pandas as pd
+from src.models.base import BaseModel
+import os
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+```
+
+## 3. 🔐 **SECURITY & CONFIGURATION**
+
+### 3.1 **Environment Variables & Secrets**
+```python
+# ✅ CORRECT: Secure configuration management
+import os
+from typing import Optional
+
+class SecurityConfig:
+    """Secure configuration with validation."""
+    
+    @staticmethod
+    def get_secret(key: str, default: Optional[str] = None) -> str:
+        """Get secret from environment with validation."""
+        value = os.getenv(key, default)
+        if value is None:
+            raise ValueError(f"Required environment variable {key} not set")
+        return value
+    
+    @staticmethod
+    def get_database_url() -> str:
+        """Get database URL from environment."""
+        return SecurityConfig.get_secret("DATABASE_URL")
+    
+    @staticmethod
+    def get_api_key() -> str:
+        """Get API key from environment."""
+        return SecurityConfig.get_secret("OPENAI_API_KEY")
+
+# ❌ WRONG: Hardcoded secrets
+class BadConfig:
+    DATABASE_URL = "postgresql://user:password123@localhost/db"  # Security risk!
+    API_KEY = "sk-abc123def456"  # Never hardcode keys!
+
+# ✅ CORRECT: .env file usage
+"""
+# .env file (never commit to version control)
+DATABASE_URL=postgresql://user:secure_password@localhost/db
+OPENAI_API_KEY=sk-your-secret-key-here
+ENVIRONMENT=development
+LOG_LEVEL=DEBUG
+"""
+```
+
+### 3.2 **Input Validation & Sanitization**
+```python
+# ✅ CORRECT: Comprehensive input validation
+from pydantic import BaseModel, validator, Field
+from typing import List, Optional
+
+class ModelInput(BaseModel):
+    """Validated model input with security checks."""
+    
+    features: List[float] = Field(..., min_items=1, max_items=1000)
+    model_name: str = Field(..., regex=r'^[a-zA-Z0-9_-]+$', max_length=50)
+    confidence_threshold: float = Field(0.5, ge=0.0, le=1.0)
+    
+    @validator('features')
+    def validate_features(cls, v):
+        """Validate feature values are reasonable."""
+        if any(abs(x) > 1e6 for x in v):  # Prevent extreme values
+            raise ValueError("Feature values too large")
+        return v
+    
+    @validator('model_name')
+    def validate_model_name(cls, v):
+        """Validate model name is safe."""
+        if '..' in v or '/' in v:  # Prevent path traversal
+            raise ValueError("Invalid model name")
+        return v
+
+# ❌ WRONG: No input validation
+def bad_predict(features, model_name):
+    # Direct use without validation - security risk!
+    model = load_model(f"/models/{model_name}")  # Path traversal vulnerability
+    return model.predict(features)  # No input validation
+```
+
+## 4. 📊 **LOGGING & MONITORING**
+
+### 4.1 **Structured Logging**
+```python
+# ✅ CORRECT: Structured logging for AI/ML
+import logging
+import structlog
+from typing import Any, Dict
+
+def setup_logging(log_level: str = "INFO") -> None:
+    """Configure structured logging for AI/ML projects."""
+    logging.basicConfig(
+        format="%(message)s",
+        stream=sys.stdout,
+        level=getattr(logging, log_level.upper())
+    )
+    
+    structlog.configure(
+        processors=[
+            structlog.stdlib.filter_by_level,
+            structlog.stdlib.add_logger_name,
+            structlog.stdlib.add_log_level,
+            structlog.processors.TimeStamper(fmt="iso"),
+            structlog.processors.JSONRenderer()
+        ],
+        wrapper_class=structlog.stdlib.BoundLogger,
+        logger_factory=structlog.stdlib.LoggerFactory(),
+        cache_logger_on_first_use=True,
+    )
+
+class MLLogger:
+    """Structured logger for ML operations."""
+    
+    def __init__(self, name: str):
+        self.logger = structlog.get_logger(name)
+    
+    def log_training_start(self, model_info: Dict[str, Any]) -> None:
+        """Log training start with context."""
+        self.logger.info(
+            "Training started",
+            model_type=model_info.get("type"),
+            dataset_size=model_info.get("dataset_size"),
+            features=model_info.get("num_features"),
+            hyperparameters=model_info.get("hyperparameters")
+        )
+    
+    def log_prediction(self, input_shape: tuple, prediction_time: float) -> None:
+        """Log prediction with performance metrics."""
+        self.logger.info(
+            "Prediction completed",
+            input_shape=input_shape,
+            prediction_time_ms=prediction_time * 1000,
+            throughput_per_second=input_shape[0] / prediction_time if prediction_time > 0 else 0
+        )
+    
+    def log_error(self, error: Exception, context: Dict[str, Any]) -> None:
+        """Log errors with full context."""
+        self.logger.error(
+            "Operation failed",
+            error_type=type(error).__name__,
+            error_message=str(error),
+            **context
+        )
+
+# ❌ WRONG: Basic print statements
+def bad_logging():
+    print("Training started")  # No context, no structure
+    print(f"Error: {e}")       # No proper error handling
+```
+
+### 4.2 **Performance Monitoring**
+```python
+# ✅ CORRECT: Performance monitoring decorators
+import time
+import psutil
+import functools
+from typing import Callable, Any
+
+def monitor_performance(func: Callable) -> Callable:
+    """Decorator to monitor function performance."""
+    
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs) -> Any:
+        # Memory before
+        process = psutil.Process()
+        memory_before = process.memory_info().rss
+        
+        # Timing
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        
+        # Memory after
+        memory_after = process.memory_info().rss
+        
+        # Log performance metrics
+        logger = structlog.get_logger(func.__module__)
+        logger.info(
+            "Function performance",
+            function_name=func.__name__,
+            execution_time_seconds=end_time - start_time,
+            memory_increase_mb=(memory_after - memory_before) / 1024 / 1024,
+            args_count=len(args),
+            kwargs_count=len(kwargs)
+        )
+        
+        return result
+    
+    return wrapper
+
+@monitor_performance
+def train_model(X: np.ndarray, y: np.ndarray) -> Model:
+    """Train model with automatic performance monitoring."""
+    # Training logic here
+    pass
+```
+
+## 5. 🧪 **TESTING FUNDAMENTALS**
+
+### 5.1 **Test Organization**
+```python
+# ✅ CORRECT: Comprehensive test structure
+import pytest
+import numpy as np
+from unittest.mock import Mock, patch
+from src.models.classifier import RandomForestClassifier
+
+class TestRandomForestClassifier:
+    """Comprehensive test suite for RandomForest classifier."""
+    
+    @pytest.fixture
+    def sample_data(self):
+        """Provide consistent test data."""
+        X = np.random.rand(100, 5)
+        y = np.random.randint(0, 2, 100)
+        return X, y
+    
+    @pytest.fixture
+    def trained_model(self, sample_data):
+        """Provide pre-trained model for tests."""
+        X, y = sample_data
+        model = RandomForestClassifier(n_estimators=10, random_state=42)
+        return model.fit(X, y)
+    
+    def test_model_initialization(self):
+        """Test model can be initialized with default parameters."""
+        model = RandomForestClassifier()
+        assert model.n_estimators == 100
+        assert model.random_state is None
+    
+    def test_model_training(self, sample_data):
+        """Test model training with valid data."""
+        X, y = sample_data
+        model = RandomForestClassifier(random_state=42)
+        
+        trained_model = model.fit(X, y)
+        
+        assert trained_model.is_fitted
+        assert hasattr(trained_model, '_sklearn_model')
+    
+    def test_model_prediction(self, trained_model, sample_data):
+        """Test model prediction functionality."""
+        X, _ = sample_data
+        predictions = trained_model.predict(X)
+        
+        assert len(predictions) == len(X)
+        assert all(pred in [0, 1] for pred in predictions)
+    
+    def test_invalid_input_handling(self):
+        """Test model handles invalid input gracefully."""
+        model = RandomForestClassifier()
+        
+        with pytest.raises(ValueError, match="Model must be fitted"):
+            model.predict(np.random.rand(10, 5))
+    
+    @pytest.mark.parametrize("n_estimators,expected_type", [
+        (50, int),
+        (100, int),
+        (200, int)
+    ])
+    def test_parametrized_training(self, sample_data, n_estimators, expected_type):
+        """Test training with different parameters."""
+        X, y = sample_data
+        model = RandomForestClassifier(n_estimators=n_estimators)
+        model.fit(X, y)
+        
+        assert isinstance(model.n_estimators, expected_type)
+        assert model.n_estimators == n_estimators
+
+# ❌ WRONG: Poor testing practices
+def test_something():
+    assert True  # Meaningless test
+
+def test_model():
+    model = RandomForestClassifier()
+    # No proper setup, no assertions, no error handling
+```
+
+## 6. 📈 **PERFORMANCE & OPTIMIZATION**
+
+### 6.1 **Memory Management**
+```python
+# ✅ CORRECT: Memory-efficient data processing
+from typing import Generator, Iterator
+import gc
+
+def process_large_dataset(
+    data_source: str, 
+    batch_size: int = 1000
+) -> Generator[pd.DataFrame, None, None]:
+    """Process large datasets in memory-efficient batches."""
+    
+    chunk_iterator = pd.read_csv(data_source, chunksize=batch_size)
+    
+    for chunk in chunk_iterator:
+        # Process chunk
+        processed_chunk = preprocess_data(chunk)
+        
+        yield processed_chunk
+        
+        # Explicit memory cleanup
+        del chunk
+        del processed_chunk
+        gc.collect()
+
+def efficient_model_inference(
+    model: Model, 
+    data: np.ndarray, 
+    batch_size: int = 100
+) -> np.ndarray:
+    """Efficient batch inference for large datasets."""
+    
+    results = []
+    
+    for i in range(0, len(data), batch_size):
+        batch = data[i:i + batch_size]
+        batch_predictions = model.predict(batch)
+        results.append(batch_predictions)
+        
+        # Clear batch from memory
+        del batch
+    
+    return np.concatenate(results)
+
+# ❌ WRONG: Memory inefficient
+def bad_data_processing():
+    # Loading entire dataset into memory
+    all_data = pd.read_csv("huge_dataset.csv")  # Memory explosion!
+    processed_data = []
+    
+    for row in all_data.iterrows():
+        processed_data.append(process_row(row))  # Growing list
+    
+    return processed_data  # Doubles memory usage
+```
+
+### 6.2 **Algorithmic Efficiency**
+```python
+# ✅ CORRECT: Efficient algorithms and data structures
+from collections import defaultdict, Counter
+import bisect
+
+class EfficientDataProcessor:
+    """Demonstrates efficient algorithm choices."""
+    
+    def __init__(self):
+        self._cache: Dict[str, Any] = {}
+        self._sorted_keys: List[str] = []
+    
+    def find_similar_items(self, item: str, items: List[str]) -> List[str]:
+        """Efficient similarity search using sets."""
+        item_set = set(item.lower().split())
+        similarities = []
+        
+        for candidate in items:
+            candidate_set = set(candidate.lower().split())
+            similarity = len(item_set & candidate_set) / len(item_set | candidate_set)
+            
+            if similarity > 0.5:
+                similarities.append((candidate, similarity))
+        
+        # Sort by similarity (most similar first)
+        return [item for item, _ in sorted(similarities, key=lambda x: x[1], reverse=True)]
+    
+    def efficient_counting(self, items: List[str]) -> Dict[str, int]:
+        """Use Counter for efficient counting."""
+        return Counter(items)  # O(n) vs manual loop O(n) but optimized
+    
+    def efficient_grouping(self, items: List[tuple]) -> Dict[str, List]:
+        """Use defaultdict for efficient grouping."""
+        groups = defaultdict(list)
+        for key, value in items:
+            groups[key].append(value)
+        return dict(groups)
+
+# ❌ WRONG: Inefficient algorithms
+class InefficiientProcessor:
+    def find_similar_items(self, item: str, items: List[str]) -> List[str]:
+        """Inefficient O(n²) similarity calculation."""
+        similarities = []
+        for candidate in items:
+            similarity = 0
+            for word in item.split():
+                if word in candidate:  # Inefficient string search
+                    similarity += 1
+            similarities.append((candidate, similarity))
+        
+        # Inefficient sorting
+        for i in range(len(similarities)):
+            for j in range(i + 1, len(similarities)):
+                if similarities[i][1] < similarities[j][1]:
+                    similarities[i], similarities[j] = similarities[j], similarities[i]
+        
+        return [item for item, _ in similarities]
+```
+
+## 7. 🔄 **VERSION CONTROL & COLLABORATION**
+
+### 7.1 **Git Best Practices**
+```bash
+# ✅ CORRECT: Semantic commit messages
+git commit -m "feat: add Random Forest model implementation
+
+- Implement RandomForestClassifier with sklearn backend
+- Add comprehensive parameter validation
+- Include performance monitoring decorators
+- Add unit tests with 95% coverage
+
+Closes #123"
+
+git commit -m "fix: resolve data leakage in preprocessing pipeline
+
+- Move scaler fitting after train/test split
+- Update pipeline tests to catch data leakage
+- Add validation checks for proper data isolation
+
+Fixes #456"
+
+git commit -m "docs: update API documentation for model factory
+
+- Add type hints to all factory methods
+- Include usage examples in docstrings
+- Update README with factory pattern explanation"
+
+# ❌ WRONG: Poor commit messages
+git commit -m "fix stuff"
+git commit -m "updates"
+git commit -m "wip"
+```
+
+### 7.2 **Branch Strategy**
+```bash
+# ✅ CORRECT: Git Flow branch strategy
+main                    # Production-ready code
+├── develop            # Integration branch
+├── feature/model-factory   # Feature development
+├── feature/data-pipeline   # Another feature
+├── hotfix/security-fix     # Critical fixes
+└── release/v1.2.0         # Release preparation
+
+# Branch naming conventions:
+# feature/ISSUE-brief-description
+# bugfix/ISSUE-brief-description
+# hotfix/ISSUE-brief-description
+# release/version-number
+```
+
+## 8. 📋 **CODE QUALITY CHECKLIST**
+
+### **Before every commit:**
+- [ ] **Code passes all linting** (black, flake8, mypy)
+- [ ] **All tests pass** (unit, integration, e2e)
+- [ ] **Test coverage ≥90%** for new code
+- [ ] **No hardcoded values** or secrets
+- [ ] **Type hints** on all public functions
+- [ ] **Docstrings** for all public classes/methods
+- [ ] **Error handling** implemented
+- [ ] **Logging** added for important operations
+- [ ] **Performance** impact considered
+- [ ] **Security** vulnerabilities checked
+- [ ] **Dependencies** properly declared
+- [ ] **Documentation** updated if needed
+
+### **Before every Pull Request:**
+- [ ] **Branch is up to date** with main/develop
+- [ ] **PR description** explains changes clearly
+- [ ] **Breaking changes** documented
+- [ ] **Migration guide** provided if needed
+- [ ] **Reviewers assigned** appropriately
+- [ ] **Labels and milestones** set
+- [ ] **Related issues** linked
+- [ ] **Screenshots/demos** for UI changes
+
+### **AI/ML Specific Checks:**
+- [ ] **No data leakage** in pipelines
+- [ ] **Reproducible results** (random seeds set)
+- [ ] **Model artifacts** properly versioned
+- [ ] **Experiment tracking** implemented
+- [ ] **Data validation** in place
+- [ ] **Resource usage** optimized
+- [ ] **Bias and fairness** considered
+- [ ] **Model interpretability** addressed
+
+## 9. 🚫 **COMMON PITFALLS TO AVOID**
+
+### 9.1 **Code Smells**
+```python
+# ❌ ANTI-PATTERN: Long parameter lists
+def bad_function(param1, param2, param3, param4, param5, param6, param7, param8):
+    pass
+
+# ✅ CORRECT: Use configuration objects
+@dataclass
+class ProcessingConfig:
+    batch_size: int = 32
+    learning_rate: float = 0.001
+    epochs: int = 100
+    patience: int = 10
+
+def good_function(data: np.ndarray, config: ProcessingConfig):
+    pass
+
+# ❌ ANTI-PATTERN: Deep nesting
+def bad_nested_function(data):
+    if data:
+        if len(data) > 0:
+            if isinstance(data[0], dict):
+                if 'key' in data[0]:
+                    if data[0]['key'] is not None:
+                        return process_data(data)
+    return None
+
+# ✅ CORRECT: Early returns and guard clauses
+def good_function(data):
+    if not data or len(data) == 0:
+        return None
+    
+    if not isinstance(data[0], dict):
+        return None
+    
+    if 'key' not in data[0] or data[0]['key'] is None:
+        return None
+    
+    return process_data(data)
+```
+
+## 10. 🎯 **TEAM COLLABORATION STANDARDS**
+
+### 10.1 **Code Review Guidelines**
+- **Review within 24 hours** of PR creation
+- **Focus on logic, not style** (automated tools handle style)
+- **Provide constructive feedback** with examples
+- **Approve only when confident** in code quality
+- **Test changes locally** when needed
+- **Check for security implications**
+- **Verify documentation updates**
+
+### 10.2 **Communication Standards**
+- **Use issue templates** for bug reports and features
+- **Tag relevant team members** in discussions
+- **Document decisions** in issues or wiki
+- **Share knowledge** through code comments and docs
+- **Conduct regular code walkthroughs**
+- **Maintain team coding standards** document
+
+### 10.3 **Release Process**
+- **Semantic versioning** (MAJOR.MINOR.PATCH)
+- **Changelog maintenance** for each release
+- **Release notes** with migration guides
+- **Backward compatibility** consideration
+- **Deprecation warnings** before breaking changes
+- **Security updates** prioritized and fast-tracked

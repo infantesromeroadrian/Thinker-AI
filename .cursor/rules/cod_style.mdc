@@ -1,0 +1,399 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Comprehensive Python coding style guidelines for AI/ML projects with strict PEP 8 compliance, type safety, and performance optimization.
+globs: src/**/*.py, tests/**/*.py, scripts/**/*.py, notebooks/**/*.py
+alwaysApply: true
+---
+
+# 🐍 PYTHON CODING STYLE GUIDE FOR AI/ML PROJECTS
+
+## 1. 📝 **PEP 8 STRICT COMPLIANCE**
+
+### 1.1 **Naming Conventions**
+```python
+# ✅ CORRECT: Snake_case for functions, variables, modules
+def preprocess_training_data(raw_data: pd.DataFrame) -> pd.DataFrame:
+    learning_rate = 0.001
+    model_accuracy = calculate_model_accuracy(predictions, labels)
+    return processed_data
+
+# ✅ CORRECT: PascalCase for classes
+class NeuralNetworkTrainer:
+    def __init__(self, config: TrainingConfig) -> None:
+        self.config = config
+
+# ✅ CORRECT: SCREAMING_SNAKE_CASE for constants
+MAX_EPOCHS = 1000
+DEFAULT_BATCH_SIZE = 32
+MODEL_SAVE_PATH = "/models/trained/"
+
+# ❌ WRONG: Mixed conventions
+def ProcessData(): pass  # Should be process_data()
+class neural_network(): pass  # Should be NeuralNetwork
+maxEpochs = 100  # Should be MAX_EPOCHS
+```
+
+### 1.2 **Line Length and Formatting**
+```python
+# ✅ CORRECT: Max 88 characters (Black formatter standard)
+def train_deep_learning_model(
+    X_train: np.ndarray,
+    y_train: np.ndarray,
+    X_val: np.ndarray,
+    y_val: np.ndarray,
+    config: ModelConfig,
+) -> TrainedModel:
+    """Train a deep learning model with validation."""
+    pass
+
+# ✅ CORRECT: Multi-line function calls
+model = ModelFactory.create_model(
+    model_type="transformer",
+    hidden_size=768,
+    num_layers=12,
+    attention_heads=12,
+    dropout_rate=0.1,
+)
+```
+
+## 2. 🏗️ **OBJECT-ORIENTED PROGRAMMING EXCELLENCE**
+
+### 2.1 **Advanced Encapsulation**
+```python
+from abc import ABC, abstractmethod
+from typing import Protocol, runtime_checkable
+
+# ✅ CORRECT: Strict encapsulation with protocols
+@runtime_checkable
+class ModelInterface(Protocol):
+    def train(self, data: TrainingData) -> None: ...
+    def predict(self, input_data: np.ndarray) -> np.ndarray: ...
+    def save(self, path: Path) -> None: ...
+
+class DeepLearningModel:
+    """A deep learning model with strict encapsulation."""
+    
+    def __init__(self, config: ModelConfig) -> None:
+        self.__config = config  # Private attribute
+        self._model = None  # Protected attribute
+        self._is_trained = False  # Protected state
+        self.__optimizer = self.__create_optimizer()  # Private method result
+    
+    @property
+    def is_trained(self) -> bool:
+        """Public read-only access to training state."""
+        return self._is_trained
+    
+    @property
+    def config(self) -> ModelConfig:
+        """Public read-only access to configuration."""
+        return self.__config.copy()  # Return copy to prevent mutation
+    
+    def __create_optimizer(self) -> Optimizer:
+        """Private method for optimizer creation."""
+        return OptimizerFactory.create(self.__config.optimizer_type)
+```
+
+### 2.2 **Composition over Inheritance**
+```python
+# ✅ CORRECT: Composition pattern for AI components
+class AIDataPipeline:
+    """AI data pipeline using composition."""
+    
+    def __init__(
+        self,
+        preprocessor: DataPreprocessor,
+        feature_engineer: FeatureEngineer,
+        validator: DataValidator,
+        logger: Logger,
+    ) -> None:
+        self._preprocessor = preprocessor
+        self._feature_engineer = feature_engineer
+        self._validator = validator
+        self._logger = logger
+    
+    def process(self, raw_data: RawData) -> ProcessedData:
+        """Process data through the pipeline."""
+        self._logger.info("Starting data processing pipeline")
+        
+        # Validate input
+        self._validator.validate_input(raw_data)
+        
+        # Preprocess
+        cleaned_data = self._preprocessor.clean(raw_data)
+        
+        # Feature engineering
+        features = self._feature_engineer.extract_features(cleaned_data)
+        
+        # Validate output
+        self._validator.validate_output(features)
+        
+        return ProcessedData(features)
+```
+
+## 3. 🔧 **FUNCTIONAL PROGRAMMING & PURITY**
+
+### 3.1 **Pure Functions for Data Processing**
+```python
+# ✅ CORRECT: Pure functions for data transformations
+def normalize_features(
+    features: np.ndarray,
+    mean: Optional[np.ndarray] = None,
+    std: Optional[np.ndarray] = None,
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Normalize features using z-score normalization.
+    
+    Args:
+        features: Input features to normalize
+        mean: Pre-computed mean (if None, compute from features)
+        std: Pre-computed standard deviation (if None, compute from features)
+        
+    Returns:
+        Tuple of (normalized_features, computed_mean, computed_std)
+    """
+    if mean is None:
+        mean = np.mean(features, axis=0)
+    if std is None:
+        std = np.std(features, axis=0)
+    
+    # Avoid division by zero
+    std = np.where(std == 0, 1, std)
+    
+    normalized = (features - mean) / std
+    return normalized, mean, std
+```
+
+## 4. 🏷️ **TYPE SAFETY & ANNOTATIONS**
+
+### 4.1 **Comprehensive Type Hints**
+```python
+from typing import (
+    Dict, List, Optional, Union, Callable, TypeVar, Generic,
+    Protocol, Literal, Final, ClassVar, overload
+)
+from numpy.typing import NDArray
+import pandas as pd
+
+# Type aliases for clarity
+Features = NDArray[np.float64]
+Labels = NDArray[np.int32]
+ModelWeights = Dict[str, NDArray[np.float64]]
+LossFunction = Callable[[Features, Labels], float]
+
+# Generic types for reusability
+T = TypeVar('T')
+ModelType = TypeVar('ModelType', bound='BaseModel')
+
+def train_ensemble_model(
+    models: Dict[str, ModelType],
+    training_data: pd.DataFrame,
+    validation_data: Optional[pd.DataFrame] = None,
+    weights: Optional[Dict[str, float]] = None,
+    callbacks: List[Callable[[int, float], None]] = None,
+) -> Dict[str, Union[ModelType, ModelMetrics]]:
+    """Train ensemble of models with comprehensive type safety."""
+    pass
+```
+
+## 5. 🛡️ **ERROR HANDLING & ROBUSTNESS**
+
+### 5.1 **Custom Exception Hierarchy**
+```python
+# ✅ CORRECT: Comprehensive exception hierarchy
+class AIProjectException(Exception):
+    """Base exception for AI project."""
+    
+    def __init__(self, message: str, error_code: Optional[str] = None) -> None:
+        super().__init__(message)
+        self.error_code = error_code
+        self.timestamp = datetime.utcnow()
+
+class DataValidationError(AIProjectException):
+    """Raised when data validation fails."""
+    
+    def __init__(self, message: str, invalid_data_info: Dict[str, Any]) -> None:
+        super().__init__(message, "DATA_VALIDATION_ERROR")
+        self.invalid_data_info = invalid_data_info
+
+class ModelTrainingError(AIProjectException):
+    """Raised when model training fails."""
+    
+    def __init__(self, message: str, training_state: Dict[str, Any]) -> None:
+        super().__init__(message, "MODEL_TRAINING_ERROR")
+        self.training_state = training_state
+```
+
+## 6. ⚡ **PERFORMANCE & OPTIMIZATION**
+
+### 6.1 **Memory-Efficient Data Processing**
+```python
+def batch_process_large_dataset(
+    dataset_path: Path,
+    batch_size: int = 1000,
+    transform_fn: Optional[Callable[[pd.DataFrame], pd.DataFrame]] = None,
+) -> Generator[pd.DataFrame, None, None]:
+    """
+    Process large dataset in batches to manage memory usage.
+    
+    Args:
+        dataset_path: Path to dataset file
+        batch_size: Number of rows per batch
+        transform_fn: Optional transformation function
+        
+    Yields:
+        Processed batches of data
+    """
+    chunk_reader = pd.read_csv(dataset_path, chunksize=batch_size)
+    
+    for chunk in chunk_reader:
+        # Apply transformations if provided
+        if transform_fn is not None:
+            chunk = transform_fn(chunk)
+        
+        # Yield processed chunk
+        yield chunk
+        
+        # Clear memory
+        del chunk
+```
+
+## 7. 📊 **AI/ML SPECIFIC PATTERNS**
+
+### 7.1 **Model Factory and Registry**
+```python
+# ✅ CORRECT: Flexible model factory pattern
+class ModelRegistry:
+    """Registry for available model types."""
+    
+    _models: ClassVar[Dict[str, Type[BaseModel]]] = {}
+    
+    @classmethod
+    def register(cls, name: str):
+        """Decorator to register model classes."""
+        def decorator(model_class: Type[BaseModel]):
+            cls._models[name] = model_class
+            return model_class
+        return decorator
+    
+    @classmethod
+    def create_model(cls, name: str, **kwargs) -> BaseModel:
+        """Create model instance by name."""
+        if name not in cls._models:
+            available = list(cls._models.keys())
+            raise ValueError(f"Unknown model '{name}'. Available: {available}")
+        
+        model_class = cls._models[name]
+        return model_class(**kwargs)
+
+# Usage
+@ModelRegistry.register("random_forest")
+class RandomForestModel(BaseModel):
+    def __init__(self, n_estimators: int = 100, max_depth: Optional[int] = None):
+        self.n_estimators = n_estimators
+        self.max_depth = max_depth
+        self._model = None
+```
+
+## 8. 🚫 **CODE ANTI-PATTERNS TO AVOID**
+
+### 8.1 **Common AI/ML Anti-Patterns**
+```python
+# ❌ WRONG: Data leakage in preprocessing
+def bad_preprocessing(data):
+    # DON'T: Fit scaler on entire dataset before split
+    scaler = StandardScaler()
+    scaled_data = scaler.fit_transform(data)
+    train, test = train_test_split(scaled_data)
+    return train, test
+
+# ✅ CORRECT: Proper data preprocessing
+def good_preprocessing(data):
+    # DO: Split first, then fit on train only
+    train, test = train_test_split(data)
+    scaler = StandardScaler()
+    train_scaled = scaler.fit_transform(train)
+    test_scaled = scaler.transform(test)  # Only transform, don't fit
+    return train_scaled, test_scaled, scaler
+
+# ❌ WRONG: Mutable default arguments
+def bad_train_model(data, config={}):  # Dangerous!
+    config["epochs"] = config.get("epochs", 100)
+    return train_with_config(data, config)
+
+# ✅ CORRECT: Immutable defaults
+def good_train_model(data, config: Optional[Dict] = None):
+    if config is None:
+        config = {}
+    config = config.copy()  # Don't modify original
+    config.setdefault("epochs", 100)
+    return train_with_config(data, config)
+```
+
+## 9. 📋 **CODE QUALITY CHECKLIST**
+
+### **Before every commit:**
+- [ ] **Type hints:** All functions have complete type annotations
+- [ ] **Docstrings:** All public methods have comprehensive docstrings
+- [ ] **Error handling:** Specific exceptions with meaningful messages
+- [ ] **Testing:** Unit tests cover all new code (90%+ coverage)
+- [ ] **Performance:** No obvious performance bottlenecks
+- [ ] **Memory:** No memory leaks or excessive memory usage
+- [ ] **Security:** No hardcoded secrets or vulnerabilities
+- [ ] **Logging:** Appropriate logging for debugging and monitoring
+- [ ] **Documentation:** Code is self-documenting and well-commented
+- [ ] **Standards:** Follows all PEP 8 and project conventions
+
+### **Tools to use:**
+```bash
+# Code formatting
+black src/ tests/
+isort src/ tests/
+
+# Type checking
+mypy src/
+
+# Linting
+flake8 src/ tests/
+pylint src/
+
+# Security scanning
+bandit -r src/
+
+# Testing
+pytest tests/ --cov=src --cov-report=html
+```
+
+### **IDE Configuration:**
+```json
+// .vscode/settings.json
+{
+    "python.linting.enabled": true,
+    "python.linting.mypyEnabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.formatting.provider": "black",
+    "python.sortImports.provider": "isort",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    }
+}
+```
+
+## 10. 🔍 **FINAL VALIDATION RULES**
+
+### **Mandatory Checks:**
+1. **MUST** use type hints for all function parameters and returns
+2. **MUST** include docstrings for all public classes and methods
+3. **MUST** handle exceptions specifically, never use bare `except:`
+4. **MUST** use dependency injection instead of hard dependencies
+5. **MUST** follow single responsibility principle per class/function
+6. **MUST** use composition over inheritance for complex relationships
+7. **MUST** implement proper logging with structured messages
+8. **MUST** write unit tests with 90%+ coverage minimum
+9. **MUST** use context managers for resource management
+10. **MUST** avoid mutable default arguments

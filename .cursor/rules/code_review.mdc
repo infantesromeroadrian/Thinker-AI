@@ -1,0 +1,422 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Comprehensive code review guidelines for AI/ML projects with automated analysis, security scanning, and architectural validation.
+globs: src/**/*.py, tests/**/*.py, notebooks/**/*.py, scripts/**/*.py, docs/**/*.md
+alwaysApply: true
+---
+
+# 🔍 COMPREHENSIVE CODE REVIEW GUIDE FOR AI/ML PROJECTS
+
+## 1. 🎯 **PRE-REVIEW AUTOMATED CHECKS**
+
+### 1.1 **Mandatory Tool Validation**
+```bash
+# ✅ MUST pass all automated checks before human review
+pre-commit run --all-files
+black --check src/ tests/
+isort --check-only src/ tests/
+mypy src/
+flake8 src/ tests/
+pylint src/ --fail-under=8.0
+bandit -r src/ -f json
+pytest tests/ --cov=src --cov-fail-under=90
+```
+
+### 1.2 **AI/ML Specific Checks**
+```bash
+# ✅ Data science specific validations
+jupyter nbconvert --execute notebooks/*.ipynb --to notebook
+python -m scripts.validate_models --check-serialization
+python -m scripts.check_data_leakage --scan-pipelines
+python -m scripts.validate_metrics --check-consistency
+```
+
+## 2. 📋 **STRUCTURED REVIEW CHECKLIST**
+
+### 2.1 **Code Quality Assessment (30 points)**
+
+#### **Type Safety & Documentation (10 points)**
+- [ ] **10/10:** All functions have complete type hints and comprehensive docstrings
+- [ ] **8/10:** >90% of functions have type hints, good docstrings
+- [ ] **6/10:** >70% of functions have type hints, basic docstrings
+- [ ] **4/10:** >50% of functions have type hints, minimal docstrings
+- [ ] **0/10:** Missing type hints and/or docstrings
+
+```python
+# ✅ EXCELLENT (10/10): Complete type safety and documentation
+def train_classification_model(
+    X_train: NDArray[np.float64],
+    y_train: NDArray[np.int32],
+    model_config: ModelConfig,
+    validation_split: float = 0.2,
+    random_state: Optional[int] = None,
+) -> Tuple[ClassificationModel, ModelMetrics]:
+    """
+    Train a classification model with comprehensive validation.
+    
+    Args:
+        X_train: Training features with shape (n_samples, n_features)
+        y_train: Training labels with shape (n_samples,)
+        model_config: Configuration object with model hyperparameters
+        validation_split: Fraction of data to use for validation (0.0-1.0)
+        random_state: Random seed for reproducibility
+        
+    Returns:
+        Tuple containing:
+            - Trained classification model
+            - Validation metrics including accuracy, precision, recall, F1
+            
+    Raises:
+        DataValidationError: If input data shapes are incompatible
+        ModelTrainingError: If training fails due to configuration issues
+        
+    Example:
+        >>> config = ModelConfig(model_type="random_forest", n_estimators=100)
+        >>> model, metrics = train_classification_model(X, y, config)
+        >>> print(f"Model accuracy: {metrics.accuracy:.3f}")
+    """
+    pass
+
+# ❌ POOR (0/10): No type hints, no docstring
+def train_model(X, y, config):
+    pass
+```
+
+#### **Error Handling & Robustness (10 points)**
+- [ ] **10/10:** Comprehensive exception hierarchy, specific error handling, proper resource cleanup
+- [ ] **8/10:** Good exception handling with specific exceptions
+- [ ] **6/10:** Basic exception handling, some specific exceptions
+- [ ] **4/10:** Minimal exception handling, mostly generic exceptions
+- [ ] **0/10:** No exception handling or bare except clauses
+
+#### **Performance & Memory Efficiency (10 points)**
+- [ ] **10/10:** Optimal algorithms, memory-efficient, proper caching, profiled
+- [ ] **8/10:** Good performance, some optimization, reasonable memory usage
+- [ ] **6/10:** Adequate performance, basic optimization
+- [ ] **4/10:** Poor performance, no optimization considerations
+- [ ] **0/10:** Inefficient algorithms, memory leaks, no performance consideration
+
+### 2.2 **AI/ML Specific Assessment (25 points)**
+
+#### **Data Handling & Pipeline Integrity (10 points)**
+- [ ] **10/10:** No data leakage, proper train/val/test splits, data validation, schema checks
+- [ ] **8/10:** Good data practices, minor issues
+- [ ] **6/10:** Adequate data handling, some concerns
+- [ ] **4/10:** Poor data practices, potential leakage
+- [ ] **0/10:** Major data leakage, no validation
+
+```python
+# ✅ EXCELLENT (10/10): Proper data handling
+class DataPipeline:
+    def create_train_test_split(
+        self, 
+        dataset: pd.DataFrame,
+        target_column: str,
+        test_size: float = 0.2,
+        stratify: bool = True,
+        random_state: int = 42
+    ) -> TrainTestSplit:
+        """Create train/test split with proper data handling."""
+        
+        # Validate input data
+        self._validate_dataset_schema(dataset)
+        self._check_data_quality(dataset)
+        
+        # Separate features and labels
+        X = dataset.drop(columns=[target_column])
+        y = dataset[target_column]
+        
+        # Stratified split to maintain class distribution
+        stratify_param = y if stratify else None
+        
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, 
+            test_size=test_size,
+            stratify=stratify_param,
+            random_state=random_state
+        )
+        
+        # Create preprocessing pipeline - FIT ONLY ON TRAINING DATA
+        self.preprocessor = self._create_preprocessor()
+        X_train_processed = self.preprocessor.fit_transform(X_train)
+        X_test_processed = self.preprocessor.transform(X_test)  # Only transform!
+        
+        return TrainTestSplit(
+            X_train=X_train_processed,
+            X_test=X_test_processed,
+            y_train=y_train,
+            y_test=y_test,
+            preprocessor=self.preprocessor
+        )
+
+# ❌ POOR (0/10): Data leakage
+def bad_preprocessing(data):
+    # MAJOR ISSUE: Fitting scaler on entire dataset before split!
+    scaler = StandardScaler()
+    scaled_data = scaler.fit_transform(data)  # Data leakage!
+    return train_test_split(scaled_data)
+```
+
+#### **Model Design & Architecture (8 points)**
+- [ ] **8/8:** Clear model interfaces, proper abstraction, extensible design
+- [ ] **6/8:** Good model design, minor architectural issues
+- [ ] **4/8:** Adequate design, some coupling issues
+- [ ] **2/8:** Poor design, tight coupling
+- [ ] **0/8:** No clear design, monolithic structure
+
+#### **Experiment Tracking & Reproducibility (7 points)**
+- [ ] **7/7:** Complete experiment tracking, reproducible results, proper versioning
+- [ ] **5/7:** Good tracking, mostly reproducible
+- [ ] **3/7:** Basic tracking, some reproducibility
+- [ ] **1/7:** Minimal tracking, poor reproducibility
+- [ ] **0/7:** No tracking, irreproducible results
+
+### 2.3 **Security & Compliance Assessment (15 points)**
+
+#### **Security Best Practices (10 points)**
+```python
+# ✅ EXCELLENT (10/10): Comprehensive security
+class SecureModelAPI:
+    def __init__(self, config: SecurityConfig):
+        self._api_key_hash = self._hash_api_key(config.api_key)
+        self._rate_limiter = RateLimiter(max_requests=100, window=3600)
+        self._input_sanitizer = InputSanitizer()
+        self._audit_logger = AuditLogger()
+    
+    def predict(self, request: PredictionRequest) -> PredictionResponse:
+        """Secure prediction endpoint with comprehensive protection."""
+        
+        # Authentication
+        if not self._authenticate_request(request.api_key):
+            self._audit_logger.log_unauthorized_access(request.source_ip)
+            raise UnauthorizedError("Invalid API key")
+        
+        # Rate limiting
+        if not self._rate_limiter.allow_request(request.source_ip):
+            raise RateLimitExceededError("Too many requests")
+        
+        # Input validation and sanitization
+        sanitized_input = self._input_sanitizer.sanitize(request.data)
+        self._validate_input_schema(sanitized_input)
+        
+        # Size limits to prevent DoS
+        if len(sanitized_input) > MAX_INPUT_SIZE:
+            raise InputTooLargeError("Input exceeds maximum size")
+        
+        try:
+            # Secure prediction in isolated environment
+            with self._create_secure_context() as context:
+                prediction = self._model.predict(sanitized_input, context)
+                
+            return PredictionResponse(prediction=prediction)
+            
+        except Exception as e:
+            self._audit_logger.log_error(e, request.user_id)
+            raise PredictionError("Prediction failed") from e
+
+# ❌ POOR (0/10): Major security issues
+def bad_predict(data):
+    # No authentication, no validation, direct eval - DANGEROUS!
+    result = eval(data)  # Code injection vulnerability!
+    return result
+```
+
+#### **Data Privacy & Compliance (5 points)**
+- [ ] **5/5:** Full GDPR/privacy compliance, data anonymization, audit trails
+- [ ] **4/5:** Good privacy practices, minor gaps
+- [ ] **3/5:** Basic privacy consideration
+- [ ] **1/5:** Minimal privacy protection
+- [ ] **0/5:** No privacy consideration
+
+### 2.4 **Testing & Validation Assessment (10 points)**
+
+#### **Test Coverage & Quality (10 points)**
+```python
+# ✅ EXCELLENT (10/10): Comprehensive testing
+class TestModelTrainer:
+    """Comprehensive test suite with multiple testing strategies."""
+    
+    @pytest.fixture
+    def mock_dependencies(self):
+        """Setup mock dependencies for testing."""
+        return {
+            'data_loader': Mock(spec=DataLoader),
+            'preprocessor': Mock(spec=DataPreprocessor),
+            'model_factory': Mock(spec=ModelFactory),
+            'evaluator': Mock(spec=ModelEvaluator)
+        }
+    
+    def test_successful_training_flow(self, mock_dependencies):
+        """Test normal training flow with proper mocking."""
+        # Arrange
+        trainer = ModelTrainer(**mock_dependencies)
+        config = TrainingConfig(model_type="random_forest")
+        
+        mock_dependencies['data_loader'].load.return_value = create_sample_data()
+        mock_dependencies['model_factory'].create.return_value = Mock()
+        
+        # Act
+        result = trainer.train_model(config)
+        
+        # Assert
+        assert result is not None
+        assert result.metrics.accuracy > 0
+        mock_dependencies['data_loader'].load.assert_called_once()
+        mock_dependencies['evaluator'].evaluate.assert_called_once()
+    
+    def test_training_with_invalid_data(self, mock_dependencies):
+        """Test error handling with invalid data."""
+        trainer = ModelTrainer(**mock_dependencies)
+        config = TrainingConfig(model_type="random_forest")
+        
+        # Setup error condition
+        mock_dependencies['data_loader'].load.side_effect = DataValidationError("Invalid data")
+        
+        # Test exception handling
+        with pytest.raises(TrainingFailedError) as exc_info:
+            trainer.train_model(config)
+        
+        assert "Data validation failed" in str(exc_info.value)
+```
+
+## 3. 🚫 **CRITICAL REVIEW BLOCKERS**
+
+### 3.1 **Immediate Rejection Criteria**
+- [ ] **Security vulnerabilities** (code injection, hardcoded secrets)
+- [ ] **Data leakage** in ML pipelines
+- [ ] **No type hints** on public interfaces
+- [ ] **Bare except clauses** without specific handling
+- [ ] **Hardcoded file paths or URLs**
+- [ ] **Missing tests** for new functionality
+- [ ] **Breaking changes** without version updates
+- [ ] **Memory leaks** or resource leaks
+- [ ] **API breaking changes** without deprecation
+- [ ] **Compliance violations** (license, privacy)
+
+### 3.2 **Review Completion Blockers**
+```python
+# ❌ BLOCKERS: These must be fixed before approval
+
+# 1. Security vulnerability
+password = "hardcoded_password_123"  # BLOCKER: Hardcoded secret
+
+# 2. Data leakage
+scaler.fit(full_dataset)  # BLOCKER: Data leakage
+train, test = split(full_dataset)
+
+# 3. No error handling
+result = risky_operation()  # BLOCKER: No exception handling
+
+# 4. No type hints
+def important_function(data):  # BLOCKER: Missing type hints
+    return process(data)
+
+# 5. Resource leak
+file = open("data.txt")  # BLOCKER: File not closed
+data = file.read()
+```
+
+## 4. 📊 **AUTOMATED REVIEW TOOLS INTEGRATION**
+
+### 4.1 **Required Tool Chain**
+```yaml
+# .github/workflows/code-review.yml
+name: Automated Code Review
+on: [pull_request]
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      # Code formatting
+      - name: Check Black formatting
+        run: black --check src/ tests/
+        
+      # Type checking
+      - name: Type checking with mypy
+        run: mypy src/
+        
+      # Security scanning
+      - name: Security scan with bandit
+        run: bandit -r src/ -f json -o security-report.json
+        
+      # Test coverage
+      - name: Run tests with coverage
+        run: |
+          pytest tests/ --cov=src --cov-report=xml --cov-fail-under=90
+          
+      # AI/ML specific checks
+      - name: Check for data leakage
+        run: python scripts/check_data_leakage.py
+```
+
+## 5. 📋 **REVIEW COMPLETION CHECKLIST**
+
+### **Before Approving ANY Code Review:**
+- [ ] All automated checks pass (black, mypy, flake8, tests)
+- [ ] Security scan shows no vulnerabilities
+- [ ] No data leakage in ML pipelines
+- [ ] Type hints on all public interfaces
+- [ ] Comprehensive error handling with specific exceptions
+- [ ] Test coverage ≥90% for new code
+- [ ] Documentation updated for API changes
+- [ ] Performance impact assessed and acceptable
+- [ ] Memory usage within acceptable limits
+- [ ] Breaking changes properly versioned and documented
+- [ ] Related tests updated and passing
+- [ ] Architecture integrity maintained
+- [ ] Dependencies properly managed
+- [ ] Logging and monitoring adequate
+- [ ] Code follows project conventions consistently
+
+### **AI/ML Specific Checklist:**
+- [ ] No data leakage between train/test sets
+- [ ] Model interfaces properly abstracted
+- [ ] Experiment tracking implemented
+- [ ] Model artifacts properly versioned
+- [ ] Metrics calculation verified
+- [ ] Data validation implemented
+- [ ] Pipeline integrity maintained
+- [ ] Resource usage optimized for production
+- [ ] Model explainability considered
+- [ ] Bias and fairness evaluation included
+
+### **Final Approval Criteria:**
+- [ ] **Minimum 85/100** overall quality score
+- [ ] **Zero security vulnerabilities**
+- [ ] **All tests passing**
+- [ ] **Performance benchmarks met**
+- [ ] **Documentation complete**
+- [ ] **Architectural consistency maintained**
+
+## 6. 🎯 **REVIEW SCORING SYSTEM**
+
+### **Quality Score Calculation:**
+```
+Total Score = Code Quality (30) + AI/ML Specific (25) + Security (15) + Testing (10) + Architecture (20)
+
+Grade Scale:
+A+ (95-100): Exceptional quality, production ready
+A  (90-94):  High quality, minor improvements needed
+B+ (85-89):  Good quality, some improvements needed
+B  (80-84):  Adequate quality, several improvements needed
+C+ (75-79):  Below standard, significant improvements needed
+F  (<75):    Unacceptable, major rework required
+
+Minimum passing score: 85/100 (B+ grade)
+```
+
+### **Priority Actions by Score:**
+- **95-100:** Approve immediately, use as example for team
+- **90-94:** Approve with minor suggestions
+- **85-89:** Request improvements, approve after fixes
+- **80-84:** Request significant improvements before re-review
+- **75-79:** Major rework required, architectural discussion needed
+- **<75:** Reject, fundamental redesign required
+

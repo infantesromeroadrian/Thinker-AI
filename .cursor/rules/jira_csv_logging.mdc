@@ -1,0 +1,858 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Comprehensive guidelines for automated project tracking, CSV logging, and Jira integration for AI/ML development workflows.
+globs: logs/**/*.csv, jira/**/*.csv, tracking/**/*.csv, reports/**/*.csv, .github/workflows/*.yml
+alwaysApply: true
+---
+
+# 📊 AUTOMATED PROJECT TRACKING & JIRA INTEGRATION FOR AI/ML
+
+## 1. 🏗️ **COMPREHENSIVE CSV LOGGING STRUCTURE**
+
+### 1.1 **Enhanced Jira-Compatible Fields**
+```csv
+Issue Key,Project Key,Summary,Description,Issue Type,Priority,Status,Resolution,
+Assignee,Reporter,Created Date,Updated Date,Resolved Date,Due Date,
+Time Original Estimate,Time Spent,Time Remaining,Story Points,Epic Link,
+Sprint,Labels,Components,Fix Version,Affects Version,Environment,
+AI Model Type,Dataset Size,Algorithm Used,Performance Metric,Baseline Score,
+Achieved Score,Data Source,Feature Count,Training Time,Inference Time,
+Memory Usage,GPU Utilization,Code Coverage,Test Status,Deployment Stage,
+Git Commit Hash,Branch Name,Pull Request,Code Review Status,
+Business Value,Technical Debt,Risk Level,Compliance Status
+```
+
+### 1.2 **AI/ML Specific Tracking Fields**
+```python
+# ✅ EXCELLENT: Structured AI/ML tracking data
+from dataclasses import dataclass, asdict
+from typing import Optional, List, Dict, Any
+from datetime import datetime
+import csv
+
+@dataclass
+class AIMLIssueTracker:
+    """Comprehensive tracking for AI/ML development issues."""
+    
+    # Core Jira Fields
+    issue_key: str
+    project_key: str = "AIML"
+    summary: str = ""
+    description: str = ""
+    issue_type: str = "Story"  # Story, Bug, Epic, Task, Sub-task
+    priority: str = "Medium"   # Highest, High, Medium, Low, Lowest
+    status: str = "To Do"      # To Do, In Progress, Code Review, Testing, Done
+    assignee: str = ""
+    reporter: str = ""
+    
+    # Time Tracking
+    created_date: str = ""
+    updated_date: str = ""
+    resolved_date: Optional[str] = None
+    due_date: Optional[str] = None
+    time_estimate: str = "0h"     # Original estimate
+    time_spent: str = "0h"        # Actual time spent
+    time_remaining: str = "0h"    # Remaining estimate
+    story_points: int = 0
+    
+    # Project Organization
+    epic_link: Optional[str] = None
+    sprint: Optional[str] = None
+    labels: List[str] = None
+    components: List[str] = None
+    fix_version: Optional[str] = None
+    
+    # AI/ML Specific Fields
+    ai_model_type: str = ""           # RandomForest, NeuralNetwork, etc.
+    dataset_size: int = 0             # Number of samples
+    algorithm_used: str = ""          # Specific algorithm implementation
+    performance_metric: str = ""      # Accuracy, F1, RMSE, etc.
+    baseline_score: Optional[float] = None
+    achieved_score: Optional[float] = None
+    data_source: str = ""             # Source of training data
+    feature_count: int = 0            # Number of features
+    training_time: str = "0h"         # Time to train model
+    inference_time_ms: float = 0.0    # Average inference time
+    memory_usage_mb: float = 0.0      # Peak memory usage
+    gpu_utilization: float = 0.0      # GPU utilization percentage
+    
+    # Code Quality
+    code_coverage: float = 0.0        # Test coverage percentage
+    test_status: str = "Pending"      # Passed, Failed, Pending
+    deployment_stage: str = "Dev"     # Dev, Staging, Production
+    
+    # Version Control
+    git_commit_hash: str = ""
+    branch_name: str = ""
+    pull_request: str = ""
+    code_review_status: str = "Pending"  # Approved, Changes Requested, Pending
+    
+    # Business & Risk
+    business_value: str = "Medium"    # High, Medium, Low
+    technical_debt: str = "None"      # High, Medium, Low, None
+    risk_level: str = "Low"           # High, Medium, Low
+    compliance_status: str = "Compliant"  # Compliant, Non-compliant, Under Review
+    
+    def __post_init__(self):
+        """Initialize default values and validate data."""
+        if not self.created_date:
+            self.created_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        if not self.updated_date:
+            self.updated_date = self.created_date
+        if self.labels is None:
+            self.labels = []
+        if self.components is None:
+            self.components = []
+    
+    def to_csv_row(self) -> Dict[str, Any]:
+        """Convert to CSV-compatible dictionary."""
+        data = asdict(self)
+        # Convert lists to comma-separated strings for CSV
+        data['labels'] = ','.join(self.labels) if self.labels else ""
+        data['components'] = ','.join(self.components) if self.components else ""
+        return data
+    
+    def update_time_tracking(self, time_spent_delta: str) -> None:
+        """Update time tracking information."""
+        self.time_spent = self._add_time(self.time_spent, time_spent_delta)
+        self.updated_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    def set_ai_metrics(self, metrics: Dict[str, Any]) -> None:
+        """Update AI/ML specific metrics."""
+        self.performance_metric = metrics.get('metric_type', self.performance_metric)
+        self.achieved_score = metrics.get('score', self.achieved_score)
+        self.training_time = metrics.get('training_time', self.training_time)
+        self.inference_time_ms = metrics.get('inference_time_ms', self.inference_time_ms)
+        self.memory_usage_mb = metrics.get('memory_mb', self.memory_usage_mb)
+        self.updated_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+```
+
+## 2. 🤖 **AUTOMATED TRACKING INTEGRATION**
+
+### 2.1 **Git Hooks for Automatic Logging**
+```bash
+#!/bin/bash
+# .git/hooks/post-commit
+# Automatic CSV logging on commit
+
+COMMIT_HASH=$(git rev-parse HEAD)
+BRANCH_NAME=$(git branch --show-current)
+COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+AUTHOR=$(git log -1 --pretty=format:'%an')
+DATE=$(date '+%Y-%m-%d %H:%M:%S')
+
+# Extract Jira issue key from commit message
+ISSUE_KEY=$(echo "$COMMIT_MESSAGE" | grep -oE '[A-Z]+-[0-9]+' | head -1)
+
+if [ ! -z "$ISSUE_KEY" ]; then
+    # Update CSV log with commit information
+    python scripts/update_tracking_log.py \
+        --issue-key "$ISSUE_KEY" \
+        --commit-hash "$COMMIT_HASH" \
+        --branch-name "$BRANCH_NAME" \
+        --author "$AUTHOR" \
+        --message "$COMMIT_MESSAGE"
+fi
+```
+
+### 2.2 **GitHub Actions Integration**
+```yaml
+# .github/workflows/project-tracking.yml
+name: Automated Project Tracking
+
+on:
+  push:
+    branches: [ main, develop, 'feature/*' ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_run:
+    workflows: ["CI/CD Pipeline"]
+    types:
+      - completed
+
+jobs:
+  update-tracking:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: |
+          pip install pandas requests python-dotenv jira
+          
+      - name: Extract commit information
+        id: commit-info
+        run: |
+          echo "commit_hash=${{ github.sha }}" >> $GITHUB_OUTPUT
+          echo "branch_name=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          echo "author=${{ github.actor }}" >> $GITHUB_OUTPUT
+          
+      - name: Update project tracking
+        env:
+          JIRA_URL: ${{ secrets.JIRA_URL }}
+          JIRA_USERNAME: ${{ secrets.JIRA_USERNAME }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+        run: |
+          python scripts/automated_tracking.py \
+            --commit-hash "${{ steps.commit-info.outputs.commit_hash }}" \
+            --branch-name "${{ steps.commit-info.outputs.branch_name }}" \
+            --author "${{ steps.commit-info.outputs.author }}" \
+            --action "${{ github.event_name }}"
+            
+      - name: Update test results
+        if: github.event_name == 'workflow_run'
+        run: |
+          python scripts/update_test_metrics.py \
+            --workflow-result "${{ github.event.workflow_run.conclusion }}"
+            
+      - name: Generate reports
+        run: |
+          python scripts/generate_tracking_reports.py \
+            --output-dir reports/ \
+            --format both  # CSV and HTML
+            
+      - name: Upload tracking artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: project-tracking-reports
+          path: reports/
+```
+
+### 2.3 **Automated Tracking Script**
+```python
+# scripts/automated_tracking.py
+import pandas as pd
+import argparse
+from pathlib import Path
+from datetime import datetime
+from typing import Dict, Any, Optional
+import re
+import subprocess
+import json
+
+class AutomatedProjectTracker:
+    """Automated project tracking for AI/ML development."""
+    
+    def __init__(self, csv_path: str = "logs/project_tracking.csv"):
+        self.csv_path = Path(csv_path)
+        self.csv_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        # Initialize CSV if it doesn't exist
+        if not self.csv_path.exists():
+            self._initialize_csv()
+    
+    def _initialize_csv(self) -> None:
+        """Initialize CSV with proper headers."""
+        headers = [
+            "Issue Key", "Project Key", "Summary", "Description", "Issue Type",
+            "Priority", "Status", "Assignee", "Reporter", "Created Date",
+            "Updated Date", "Time Spent", "Story Points", "Epic Link",
+            "Sprint", "Labels", "AI Model Type", "Performance Metric",
+            "Achieved Score", "Git Commit Hash", "Branch Name", "Code Coverage",
+            "Test Status", "Business Value", "Risk Level"
+        ]
+        
+        df = pd.DataFrame(columns=headers)
+        df.to_csv(self.csv_path, index=False)
+    
+    def extract_issue_from_commit(self, commit_message: str) -> Optional[str]:
+        """Extract Jira issue key from commit message."""
+        # Match patterns like AIML-123, PROJ-456, etc.
+        pattern = r'([A-Z]+-\d+)'
+        match = re.search(pattern, commit_message)
+        return match.group(1) if match else None
+    
+    def get_commit_info(self, commit_hash: str) -> Dict[str, Any]:
+        """Get detailed commit information."""
+        try:
+            # Get commit details
+            commit_info = subprocess.run([
+                'git', 'show', '--format=%an|%ae|%ad|%s|%b', '--no-patch', commit_hash
+            ], capture_output=True, text=True, check=True)
+            
+            lines = commit_info.stdout.strip().split('|')
+            
+            # Get file changes
+            file_changes = subprocess.run([
+                'git', 'diff-tree', '--no-commit-id', '--name-status', '-r', commit_hash
+            ], capture_output=True, text=True, check=True)
+            
+            return {
+                'author': lines[0] if len(lines) > 0 else '',
+                'email': lines[1] if len(lines) > 1 else '',
+                'date': lines[2] if len(lines) > 2 else '',
+                'subject': lines[3] if len(lines) > 3 else '',
+                'body': lines[4] if len(lines) > 4 else '',
+                'files_changed': file_changes.stdout.strip().split('\n') if file_changes.stdout.strip() else []
+            }
+        except subprocess.CalledProcessError:
+            return {}
+    
+    def analyze_code_changes(self, files_changed: list) -> Dict[str, Any]:
+        """Analyze the type and scope of code changes."""
+        analysis = {
+            'change_type': 'Other',
+            'ai_related': False,
+            'test_files': 0,
+            'source_files': 0,
+            'config_files': 0,
+            'model_files': 0
+        }
+        
+        for file_change in files_changed:
+            if not file_change:
+                continue
+                
+            parts = file_change.split('\t')
+            if len(parts) < 2:
+                continue
+                
+            status, filename = parts[0], parts[1]
+            
+            if filename.endswith('.py'):
+                if '/test' in filename or filename.startswith('test_'):
+                    analysis['test_files'] += 1
+                elif '/models/' in filename or 'model' in filename.lower():
+                    analysis['model_files'] += 1
+                    analysis['ai_related'] = True
+                else:
+                    analysis['source_files'] += 1
+                    
+            elif filename.endswith(('.yml', '.yaml', '.json', '.toml')):
+                analysis['config_files'] += 1
+        
+        # Determine change type
+        if analysis['model_files'] > 0:
+            analysis['change_type'] = 'AI/ML Model'
+        elif analysis['test_files'] > 0:
+            analysis['change_type'] = 'Testing'
+        elif analysis['config_files'] > 0:
+            analysis['change_type'] = 'Configuration'
+        elif analysis['source_files'] > 0:
+            analysis['change_type'] = 'Feature/Bug Fix'
+        
+        return analysis
+    
+    def update_tracking(
+        self, 
+        commit_hash: str, 
+        branch_name: str, 
+        author: str,
+        action: str = "commit"
+    ) -> None:
+        """Update tracking with commit information."""
+        
+        commit_info = self.get_commit_info(commit_hash)
+        if not commit_info:
+            return
+        
+        issue_key = self.extract_issue_from_commit(commit_info.get('subject', ''))
+        if not issue_key:
+            # Create a generic entry for commits without issue keys
+            issue_key = f"AUTO-{commit_hash[:8]}"
+        
+        analysis = self.analyze_code_changes(commit_info.get('files_changed', []))
+        
+        # Load existing data
+        try:
+            df = pd.read_csv(self.csv_path)
+        except pd.errors.EmptyDataError:
+            df = pd.DataFrame()
+        
+        # Check if issue already exists
+        if issue_key in df['Issue Key'].values:
+            # Update existing issue
+            idx = df[df['Issue Key'] == issue_key].index[0]
+            df.at[idx, 'Updated Date'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            df.at[idx, 'Git Commit Hash'] = commit_hash
+            df.at[idx, 'Branch Name'] = branch_name
+            
+            # Update status based on branch and action
+            if action == "pull_request" and "main" in branch_name:
+                df.at[idx, 'Status'] = "Code Review"
+            elif action == "push" and branch_name == "main":
+                df.at[idx, 'Status'] = "Done"
+                
+        else:
+            # Create new issue entry
+            new_row = {
+                'Issue Key': issue_key,
+                'Project Key': 'AIML',
+                'Summary': commit_info.get('subject', '')[:100],
+                'Description': commit_info.get('body', '')[:500],
+                'Issue Type': 'Task' if analysis['change_type'] == 'AI/ML Model' else 'Story',
+                'Priority': 'High' if analysis['ai_related'] else 'Medium',
+                'Status': 'In Progress',
+                'Assignee': author,
+                'Reporter': author,
+                'Created Date': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                'Updated Date': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                'Time Spent': '1h',  # Default estimate
+                'Story Points': 3 if analysis['ai_related'] else 2,
+                'Epic Link': 'AIML-EPIC-1' if analysis['ai_related'] else '',
+                'Labels': 'ai-ml' if analysis['ai_related'] else 'development',
+                'AI Model Type': 'Machine Learning' if analysis['ai_related'] else '',
+                'Git Commit Hash': commit_hash,
+                'Branch Name': branch_name,
+                'Business Value': 'High' if analysis['ai_related'] else 'Medium',
+                'Risk Level': 'Medium' if analysis['ai_related'] else 'Low'
+            }
+            
+            df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
+        
+        # Save updated data
+        df.to_csv(self.csv_path, index=False)
+        print(f"Updated tracking for {issue_key}")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Automated project tracking")
+    parser.add_argument("--commit-hash", required=True)
+    parser.add_argument("--branch-name", required=True)
+    parser.add_argument("--author", required=True)
+    parser.add_argument("--action", default="commit")
+    
+    args = parser.parse_args()
+    
+    tracker = AutomatedProjectTracker()
+    tracker.update_tracking(
+        args.commit_hash,
+        args.branch_name,
+        args.author,
+        args.action
+    )
+```
+
+## 3. 📈 **ADVANCED REPORTING & ANALYTICS**
+
+### 3.1 **Automated Report Generation**
+```python
+# scripts/generate_tracking_reports.py
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from datetime import datetime, timedelta
+import json
+from pathlib import Path
+from typing import Dict, Any, List
+
+class ProjectAnalytics:
+    """Generate comprehensive project analytics and reports."""
+    
+    def __init__(self, csv_path: str = "logs/project_tracking.csv"):
+        self.csv_path = Path(csv_path)
+        self.df = pd.read_csv(csv_path) if csv_path.exists() else pd.DataFrame()
+        
+    def generate_velocity_report(self) -> Dict[str, Any]:
+        """Generate team velocity and productivity metrics."""
+        if self.df.empty:
+            return {}
+        
+        # Convert dates
+        self.df['Created Date'] = pd.to_datetime(self.df['Created Date'])
+        self.df['Updated Date'] = pd.to_datetime(self.df['Updated Date'])
+        
+        # Calculate velocity by week
+        self.df['Week'] = self.df['Created Date'].dt.isocalendar().week
+        velocity_by_week = self.df.groupby('Week')['Story Points'].sum()
+        
+        # Completion rate
+        completed_issues = len(self.df[self.df['Status'] == 'Done'])
+        total_issues = len(self.df)
+        completion_rate = (completed_issues / total_issues * 100) if total_issues > 0 else 0
+        
+        return {
+            'velocity_by_week': velocity_by_week.to_dict(),
+            'completion_rate': completion_rate,
+            'total_story_points': self.df['Story Points'].sum(),
+            'completed_story_points': self.df[self.df['Status'] == 'Done']['Story Points'].sum(),
+            'average_cycle_time': self._calculate_average_cycle_time()
+        }
+    
+    def generate_ai_ml_metrics(self) -> Dict[str, Any]:
+        """Generate AI/ML specific project metrics."""
+        ai_issues = self.df[self.df['AI Model Type'].notna() & (self.df['AI Model Type'] != '')]
+        
+        if ai_issues.empty:
+            return {}
+        
+        return {
+            'total_ai_issues': len(ai_issues),
+            'completed_ai_issues': len(ai_issues[ai_issues['Status'] == 'Done']),
+            'average_model_score': ai_issues['Achieved Score'].mean(),
+            'model_types_distribution': ai_issues['AI Model Type'].value_counts().to_dict(),
+            'performance_trends': self._calculate_performance_trends(ai_issues)
+        }
+    
+    def generate_risk_analysis(self) -> Dict[str, Any]:
+        """Generate risk analysis report."""
+        return {
+            'high_risk_issues': len(self.df[self.df['Risk Level'] == 'High']),
+            'technical_debt_issues': len(self.df[self.df['Technical Debt'].isin(['High', 'Medium'])]),
+            'overdue_issues': self._count_overdue_issues(),
+            'blocked_issues': len(self.df[self.df['Status'] == 'Blocked']),
+            'risk_distribution': self.df['Risk Level'].value_counts().to_dict()
+        }
+    
+    def export_jira_import_csv(self, output_path: str) -> None:
+        """Export data in Jira import format."""
+        if self.df.empty:
+            return
+        
+        # Jira import format
+        jira_columns = [
+            'Issue Key', 'Summary', 'Description', 'Issue Type', 'Priority',
+            'Status', 'Assignee', 'Reporter', 'Created', 'Updated',
+            'Time Original Estimate', 'Time Spent', 'Story Points',
+            'Epic Link', 'Sprint', 'Labels', 'Components'
+        ]
+        
+        export_df = self.df.copy()
+        
+        # Map our columns to Jira columns
+        column_mapping = {
+            'Created Date': 'Created',
+            'Updated Date': 'Updated',
+            'Time Estimate': 'Time Original Estimate'
+        }
+        
+        export_df = export_df.rename(columns=column_mapping)
+        
+        # Filter to Jira columns that exist in our data
+        available_columns = [col for col in jira_columns if col in export_df.columns]
+        export_df = export_df[available_columns]
+        
+        export_df.to_csv(output_path, index=False)
+        print(f"Jira import file exported to: {output_path}")
+```
+
+## 4. 🔄 **WORKFLOW AUTOMATION**
+
+### 4.1 **Jira API Integration**
+```python
+# scripts/jira_integration.py
+from jira import JIRA
+import pandas as pd
+from typing import Dict, Any, List, Optional
+import os
+from datetime import datetime
+
+class JiraAutomation:
+    """Automated Jira integration for AI/ML projects."""
+    
+    def __init__(self):
+        self.jira_url = os.getenv('JIRA_URL')
+        self.username = os.getenv('JIRA_USERNAME')
+        self.api_token = os.getenv('JIRA_API_TOKEN')
+        self.project_key = os.getenv('JIRA_PROJECT_KEY', 'AIML')
+        
+        if not all([self.jira_url, self.username, self.api_token]):
+            raise ValueError("Missing required Jira credentials in environment variables")
+        
+        self.jira = JIRA(
+            server=self.jira_url,
+            basic_auth=(self.username, self.api_token)
+        )
+    
+    def create_ai_ml_issue(self, issue_data: Dict[str, Any]) -> str:
+        """Create AI/ML specific issue in Jira."""
+        
+        # AI/ML specific custom fields
+        custom_fields = {
+            'customfield_10001': issue_data.get('ai_model_type', ''),      # AI Model Type
+            'customfield_10002': issue_data.get('dataset_size', 0),       # Dataset Size
+            'customfield_10003': issue_data.get('performance_metric', ''), # Performance Metric
+            'customfield_10004': issue_data.get('achieved_score', 0.0),   # Achieved Score
+            'customfield_10005': issue_data.get('baseline_score', 0.0),   # Baseline Score
+        }
+        
+        issue_dict = {
+            'project': {'key': self.project_key},
+            'summary': issue_data['summary'],
+            'description': issue_data.get('description', ''),
+            'issuetype': {'name': issue_data.get('issue_type', 'Story')},
+            'priority': {'name': issue_data.get('priority', 'Medium')},
+            'assignee': {'name': issue_data.get('assignee', '')},
+            'labels': issue_data.get('labels', []),
+            **custom_fields
+        }
+        
+        # Add epic link if provided
+        if issue_data.get('epic_link'):
+            issue_dict['customfield_10014'] = issue_data['epic_link']  # Epic Link field
+        
+        new_issue = self.jira.create_issue(fields=issue_dict)
+        
+        # Add time tracking if provided
+        if issue_data.get('time_estimate'):
+            self.jira.add_worklog(
+                new_issue,
+                timeSpent=issue_data['time_estimate'],
+                comment="Initial time estimate"
+            )
+        
+        return new_issue.key
+    
+    def sync_csv_to_jira(self, csv_path: str) -> List[str]:
+        """Sync CSV data to Jira issues."""
+        df = pd.read_csv(csv_path)
+        created_issues = []
+        
+        for _, row in df.iterrows():
+            try:
+                # Check if issue already exists
+                if pd.notna(row.get('Issue Key', '')) and row['Issue Key'].startswith(self.project_key):
+                    # Update existing issue
+                    self._update_existing_issue(row)
+                else:
+                    # Create new issue
+                    issue_key = self.create_ai_ml_issue(row.to_dict())
+                    created_issues.append(issue_key)
+                    
+            except Exception as e:
+                print(f"Error processing row {row.get('Summary', 'Unknown')}: {str(e)}")
+        
+        return created_issues
+    
+    def generate_sprint_report(self, sprint_id: str) -> Dict[str, Any]:
+        """Generate comprehensive sprint report."""
+        sprint_issues = self.jira.search_issues(
+            f'project = {self.project_key} AND sprint = {sprint_id}',
+            expand='changelog'
+        )
+        
+        report = {
+            'sprint_id': sprint_id,
+            'total_issues': len(sprint_issues),
+            'completed_issues': 0,
+            'total_story_points': 0,
+            'completed_story_points': 0,
+            'ai_ml_issues': 0,
+            'bug_count': 0,
+            'story_count': 0,
+            'task_count': 0,
+            'cycle_times': [],
+            'performance_improvements': []
+        }
+        
+        for issue in sprint_issues:
+            # Basic metrics
+            if issue.fields.status.name in ['Done', 'Closed']:
+                report['completed_issues'] += 1
+                if hasattr(issue.fields, 'customfield_10016'):  # Story Points
+                    points = getattr(issue.fields, 'customfield_10016', 0) or 0
+                    report['completed_story_points'] += points
+            
+            # Issue type counts
+            issue_type = issue.fields.issuetype.name
+            if issue_type == 'Bug':
+                report['bug_count'] += 1
+            elif issue_type == 'Story':
+                report['story_count'] += 1
+            elif issue_type == 'Task':
+                report['task_count'] += 1
+            
+            # AI/ML specific tracking
+            if hasattr(issue.fields, 'customfield_10001'):  # AI Model Type
+                ai_model_type = getattr(issue.fields, 'customfield_10001', '')
+                if ai_model_type:
+                    report['ai_ml_issues'] += 1
+                    
+                    # Track performance improvements
+                    baseline = getattr(issue.fields, 'customfield_10005', 0) or 0
+                    achieved = getattr(issue.fields, 'customfield_10004', 0) or 0
+                    if baseline > 0 and achieved > baseline:
+                        improvement = ((achieved - baseline) / baseline) * 100
+                        report['performance_improvements'].append({
+                            'issue_key': issue.key,
+                            'model_type': ai_model_type,
+                            'improvement_percent': improvement
+                        })
+        
+        return report
+```
+
+## 5. 📊 **COMPLIANCE & AUDIT TRACKING**
+
+### 5.1 **Audit Trail Management**
+```python
+# scripts/audit_compliance.py
+import pandas as pd
+from datetime import datetime, timedelta
+from typing import Dict, Any, List
+import hashlib
+import json
+
+class ComplianceAuditor:
+    """Audit and compliance tracking for AI/ML projects."""
+    
+    def __init__(self, csv_path: str = "logs/project_tracking.csv"):
+        self.csv_path = csv_path
+        self.audit_log_path = "logs/audit_trail.json"
+    
+    def generate_compliance_report(self) -> Dict[str, Any]:
+        """Generate comprehensive compliance report."""
+        df = pd.read_csv(self.csv_path)
+        
+        compliance_metrics = {
+            'data_governance': self._check_data_governance(df),
+            'model_documentation': self._check_model_documentation(df),
+            'code_review_compliance': self._check_code_review_compliance(df),
+            'testing_compliance': self._check_testing_compliance(df),
+            'security_compliance': self._check_security_compliance(df),
+            'audit_trail_integrity': self._verify_audit_trail()
+        }
+        
+        # Calculate overall compliance score
+        compliance_scores = [metric.get('score', 0) for metric in compliance_metrics.values()]
+        overall_score = sum(compliance_scores) / len(compliance_scores) if compliance_scores else 0
+        
+        return {
+            'overall_compliance_score': overall_score,
+            'compliance_grade': self._get_compliance_grade(overall_score),
+            'detailed_metrics': compliance_metrics,
+            'recommendations': self._generate_compliance_recommendations(compliance_metrics),
+            'report_date': datetime.now().isoformat()
+        }
+    
+    def _check_data_governance(self, df: pd.DataFrame) -> Dict[str, Any]:
+        """Check data governance compliance."""
+        ai_issues = df[df['AI Model Type'].notna() & (df['AI Model Type'] != '')]
+        
+        if ai_issues.empty:
+            return {'score': 100, 'status': 'N/A', 'details': 'No AI/ML issues to evaluate'}
+        
+        # Check for required data source documentation
+        documented_sources = ai_issues['Data Source'].notna() & (ai_issues['Data Source'] != '')
+        documentation_rate = documented_sources.sum() / len(ai_issues) * 100
+        
+        return {
+            'score': documentation_rate,
+            'status': 'Compliant' if documentation_rate >= 90 else 'Non-compliant',
+            'details': f'{documentation_rate:.1f}% of AI/ML issues have documented data sources',
+            'missing_documentation': len(ai_issues) - documented_sources.sum()
+        }
+    
+    def log_audit_event(self, event_type: str, details: Dict[str, Any]) -> str:
+        """Log audit event with tamper-proof hash."""
+        timestamp = datetime.now().isoformat()
+        event_id = hashlib.sha256(f"{timestamp}{event_type}{json.dumps(details, sort_keys=True)}".encode()).hexdigest()[:16]
+        
+        audit_entry = {
+            'event_id': event_id,
+            'timestamp': timestamp,
+            'event_type': event_type,
+            'details': details,
+            'user': details.get('user', 'system'),
+            'hash': self._calculate_entry_hash(event_id, timestamp, event_type, details)
+        }
+        
+        # Append to audit log
+        try:
+            with open(self.audit_log_path, 'r') as f:
+                audit_log = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            audit_log = []
+        
+        audit_log.append(audit_entry)
+        
+        with open(self.audit_log_path, 'w') as f:
+            json.dump(audit_log, f, indent=2)
+        
+        return event_id
+```
+
+## 6. 📋 **IMPLEMENTATION CHECKLIST**
+
+### **Setup Requirements:**
+- [ ] **Jira instance configured** with AI/ML custom fields
+- [ ] **GitHub repository** with proper webhook integration
+- [ ] **CSV logging directory** created with proper permissions
+- [ ] **Environment variables** set for Jira API access
+- [ ] **Git hooks** installed for automatic tracking
+- [ ] **CI/CD pipeline** configured with tracking steps
+
+### **Daily Operations:**
+- [ ] **Commit messages** include Jira issue keys
+- [ ] **Pull requests** linked to relevant issues
+- [ ] **Time tracking** updated accurately
+- [ ] **AI/ML metrics** recorded for model changes
+- [ ] **Test results** automatically logged
+- [ ] **Code coverage** tracked and reported
+
+### **Weekly Reviews:**
+- [ ] **Velocity reports** generated and reviewed
+- [ ] **Risk assessment** updated
+- [ ] **Compliance metrics** checked
+- [ ] **Technical debt** evaluated
+- [ ] **Performance trends** analyzed
+- [ ] **Sprint planning** based on data insights
+
+### **Monthly Audits:**
+- [ ] **Audit trail integrity** verified
+- [ ] **Compliance report** generated
+- [ ] **Data governance** reviewed
+- [ ] **Security assessment** completed
+- [ ] **Process improvements** identified
+- [ ] **Stakeholder reports** distributed
+
+## 7. 🎯 **BEST PRACTICES SUMMARY**
+
+### **DO:**
+- ✅ **Automate tracking** wherever possible
+- ✅ **Include Jira keys** in commit messages
+- ✅ **Track AI/ML metrics** consistently
+- ✅ **Document data sources** and lineage
+- ✅ **Maintain audit trails** for compliance
+- ✅ **Generate regular reports** for stakeholders
+- ✅ **Use structured data** formats
+- ✅ **Integrate with CI/CD** pipelines
+
+### **DON'T:**
+- ❌ **Manual data entry** without validation
+- ❌ **Skip time tracking** for accurate planning
+- ❌ **Ignore compliance** requirements
+- ❌ **Mix personal and project** tracking
+- ❌ **Forget to backup** tracking data
+- ❌ **Use inconsistent** field formats
+- ❌ **Skip security** considerations
+- ❌ **Ignore data quality** issues
+
+## 8. 📊 **EXAMPLE USAGE**
+
+### **Sample CSV Entry:**
+```csv
+Issue Key,Project Key,Summary,Description,Issue Type,Priority,Status,Assignee,Created Date,AI Model Type,Performance Metric,Achieved Score,Git Commit Hash
+AIML-101,AIML,"Implement Random Forest classifier","Added Random Forest model for user classification with 95% accuracy",Story,High,Done,john.doe,2024-01-15 10:30:00,RandomForest,Accuracy,0.95,a1b2c3d4e5f6
+AIML-102,AIML,"Optimize model inference speed","Reduced inference time from 100ms to 20ms using batch processing",Task,Medium,In Progress,jane.smith,2024-01-16 14:20:00,NeuralNetwork,Inference Time,20.0,f6e5d4c3b2a1
+```
+
+### **Automated Report Output:**
+```json
+{
+  "velocity_report": {
+    "completion_rate": 85.5,
+    "total_story_points": 156,
+    "completed_story_points": 134
+  },
+  "ai_ml_metrics": {
+    "total_ai_issues": 25,
+    "completed_ai_issues": 20,
+    "average_model_score": 0.89,
+    "model_types": {
+      "RandomForest": 12,
+      "NeuralNetwork": 8,
+      "SVM": 5
+    }
+  }
+}
+```
+

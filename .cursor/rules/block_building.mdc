@@ -1,0 +1,259 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Advanced guidelines for modular AI/ML development with comprehensive block management, dependency tracking, and architectural visualization.
+globs: architecture/**/*.md, diagrams/**/*.md, architecture/**/*.txt, src/**/*.py, tests/**/*.py
+alwaysApply: true
+---
+
+## 🏗️ BLOCK-BY-BLOCK DEVELOPMENT METHODOLOGY
+
+### 1. **Block Definition & Planning**
+- **MUST** define block interface contracts before implementation
+- **MUST** specify input/output schemas with type hints
+- **MUST** define block responsibilities using Single Responsibility Principle
+- **MUST** identify block dependencies and create dependency graph
+
+  ```python
+  # ✅ EXAMPLE: Block Interface Definition
+  class DataPreprocessingBlock:
+      """
+      Responsible for: Data cleaning, normalization, feature engineering
+      Input: Raw dataset (pd.DataFrame)
+      Output: Processed dataset (pd.DataFrame)
+      Dependencies: ConfigurationBlock, LoggingBlock
+      """
+      def __init__(self, config: Config, logger: Logger):
+          self.config = config
+          self.logger = logger
+      
+      def process(self, raw_data: pd.DataFrame) -> pd.DataFrame:
+          pass
+  ```
+
+### 2. **Advanced Architecture Visualization**
+- **MUST** use Mermaid diagrams for live documentation
+- **MUST** show data flow, control flow, and dependency relationships
+- **MUST** include block states (pending, active, completed, failed)
+- **MUST** highlight critical paths and bottlenecks
+
+  ```mermaid
+  graph TD
+      A[Data Ingestion Block] -->|Raw Data| B[Data Preprocessing Block]
+      B -->|Clean Data| C[Feature Engineering Block]
+      C -->|Features| D[Model Training Block]
+      D -->|Trained Model| E[Model Evaluation Block]
+      E -->|Metrics| F[Model Deployment Block]
+      
+      classDef modified fill:#ff9999
+      classDef pending fill:#ffff99
+      classDef completed fill:#99ff99
+      
+      class B,C modified
+      class F pending
+      class A,D,E completed
+  ```
+
+### 3. **Block Implementation Strategy**
+
+#### **3.1 Test-Driven Block Development (TDD)**
+- **MUST** write tests before block implementation
+- **MUST** define block behavior through tests
+- **MUST** achieve 90%+ code coverage per block
+
+  ```python
+  # ✅ EXAMPLE: Block Test Definition
+  def test_data_preprocessing_block():
+      # Arrange
+      raw_data = create_sample_data()
+      config = create_test_config()
+      block = DataPreprocessingBlock(config)
+      
+      # Act
+      processed_data = block.process(raw_data)
+      
+      # Assert
+      assert processed_data.isnull().sum().sum() == 0
+      assert processed_data.shape[1] >= raw_data.shape[1]
+  ```
+
+#### **3.2 Block Isolation & Containerization**
+- **MUST** ensure blocks can run independently
+- **MUST** use dependency injection for block coupling
+- **MUST** implement circuit breaker patterns for external dependencies
+
+  ```python
+  # ✅ EXAMPLE: Block Dependency Injection
+  class ModelTrainingBlock:
+      def __init__(self, 
+                   data_loader: DataLoaderInterface,
+                   model_factory: ModelFactoryInterface,
+                   metrics_tracker: MetricsInterface):
+          self.data_loader = data_loader
+          self.model_factory = model_factory
+          self.metrics_tracker = metrics_tracker
+  ```
+
+### 4. **Enhanced Relationship Management**
+
+#### **4.1 Dependency Graph Tracking**
+- **MUST** maintain live dependency graph in `architecture/dependencies.md`
+- **MUST** use semantic versioning for block interfaces
+- **MUST** implement backward compatibility for interface changes
+
+  ```markdown
+  # Block Dependency Matrix
+  | Block | Depends On | Provides To | Version | Status |
+  |-------|------------|-------------|---------|--------|
+  | DataPreprocessing | Config, Logger | FeatureEngineering | v2.1.0 | ✅ Active |
+  | FeatureEngineering | DataPreprocessing | ModelTraining | v1.5.0 | 🟡 Modified |
+  | ModelTraining | FeatureEngineering | ModelEvaluation | v3.0.0 | 🔴 Breaking |
+  ```
+
+#### **4.2 Impact Analysis Automation**
+- **MUST** implement automated impact analysis on block changes
+- **MUST** run impact tests on dependent blocks
+- **MUST** generate impact reports before deployment
+
+  ```bash
+  # ✅ EXAMPLE: Impact Analysis Command
+  python scripts/analyze_impact.py --changed-block=DataPreprocessing --depth=3
+  ```
+
+### 5. **Advanced Change Management**
+
+#### **5.1 Visual Change Tracking**
+- **MUST** use color-coded diagrams for change visualization
+- **MUST** maintain change log with impact scope
+- **MUST** create before/after architecture snapshots
+
+  ```markdown
+  # Change Tracking Legend
+  🔴 Breaking Changes - Requires dependent block updates
+  🟡 Modified - May affect dependent blocks
+  🟢 New Features - Additive changes only
+  ⚫ Deprecated - Will be removed in future versions
+  ```
+
+#### **5.2 Rollback Strategy**
+- **MUST** implement rollback mechanisms for each block
+- **MUST** maintain block version history
+- **MUST** test rollback procedures regularly
+
+### 6. **Quality Assurance & Validation**
+
+#### **6.1 Block Health Monitoring**
+- **MUST** implement health checks for each block
+- **MUST** monitor block performance metrics
+- **MUST** set up alerts for block failures
+
+  ```python
+  # ✅ EXAMPLE: Block Health Check
+  class BlockHealthChecker:
+      def check_block_health(self, block: BaseBlock) -> HealthStatus:
+          metrics = {
+              'response_time': self._measure_response_time(block),
+              'memory_usage': self._measure_memory_usage(block),
+              'error_rate': self._calculate_error_rate(block)
+          }
+          return HealthStatus(metrics)
+  ```
+
+#### **6.2 Integration Testing Strategy**
+- **MUST** test block integration at every change
+- **MUST** use contract testing between blocks
+- **MUST** implement end-to-end pipeline testing
+
+### 7. **Documentation & Communication**
+
+#### **7.1 Living Documentation**
+- **MUST** update documentation automatically with code changes
+- **MUST** generate API documentation for block interfaces
+- **MUST** maintain decision records for architectural choices
+
+#### **7.2 Block Status Dashboard**
+- **MUST** create real-time dashboard showing block status
+- **MUST** display block dependencies and health metrics
+- **MUST** provide quick access to block documentation
+
+### 8. **Performance & Optimization**
+
+#### **8.1 Block Performance Profiling**
+- **MUST** profile each block for performance bottlenecks
+- **MUST** set performance SLAs for critical blocks
+- **MUST** implement caching strategies where appropriate
+
+#### **8.2 Resource Management**
+- **MUST** monitor resource usage per block
+- **MUST** implement resource limits and quotas
+- **MUST** optimize resource allocation based on usage patterns
+
+### 9. **Security & Compliance**
+
+#### **9.1 Block Security Scanning**
+- **MUST** scan blocks for security vulnerabilities
+- **MUST** implement security best practices per block
+- **MUST** maintain security compliance documentation
+
+#### **9.2 Access Control**
+- **MUST** implement proper access controls between blocks
+- **MUST** audit block interactions for security
+- **MUST** encrypt sensitive data between blocks
+
+### 10. **AI/ML Specific Considerations**
+
+#### **10.1 Model Versioning & Lineage**
+- **MUST** track model lineage through blocks
+- **MUST** version control model artifacts
+- **MUST** maintain experiment tracking per block
+
+#### **10.2 Data Pipeline Integrity**
+- **MUST** validate data schemas between blocks
+- **MUST** implement data quality checks per block
+- **MUST** maintain data lineage documentation
+
+### 🚫 **ANTI-PATTERNS TO AVOID**
+
+#### **❌ DON'T DO:**
+- Implement multiple blocks simultaneously without proper testing
+- Create circular dependencies between blocks
+- Ignore block interface contracts
+- Skip impact analysis on changes
+- Hard-code dependencies within blocks
+- Mix concerns within a single block
+- Deploy without proper rollback mechanisms
+- Ignore block performance degradation
+- Skip documentation updates
+- Create overly complex block hierarchies
+
+#### **✅ DO INSTEAD:**
+- Complete one block at a time with full testing
+- Design clear unidirectional dependencies
+- Strictly adhere to interface contracts
+- Always run impact analysis before changes
+- Use dependency injection patterns
+- Maintain single responsibility per block
+- Always test rollback procedures
+- Monitor and optimize block performance
+- Keep documentation current with changes
+- Design simple, understandable block relationships
+
+### 📋 **BLOCK DEVELOPMENT CHECKLIST**
+
+Before completing any block:
+- [ ] Interface contract defined with type hints
+- [ ] Unit tests written and passing (90%+ coverage)
+- [ ] Integration tests with dependent blocks passing
+- [ ] Performance benchmarks established
+- [ ] Security scan completed
+- [ ] Documentation updated
+- [ ] Impact analysis completed
+- [ ] Rollback procedure tested
+- [ ] Health checks implemented
+- [ ] Monitoring metrics configured
+- [ ] Code review completed
+- [ ] Architecture diagram updated
+

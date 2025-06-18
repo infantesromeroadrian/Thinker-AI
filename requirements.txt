@@ -1,0 +1,39 @@
+# Thinker AI Auxiliary Window - Dependencies
+# Professional auxiliary window for AI assistance and cybersecurity tools
+
+# Core GUI Framework (included with Python, but listed for completeness)
+# tkinter - GUI framework (built-in with Python)
+
+# Performance Monitoring
+psutil>=5.9.0
+
+# Networking and HTTP requests
+requests>=2.31.0
+
+# Enhanced Security Features
+cryptography>=41.0.0
+
+# Data Processing and Analysis
+numpy>=1.24.0
+
+# Modern GUI Framework
+customtkinter>=5.2.0
+
+# Speech Recognition
+SpeechRecognition>=3.10.0
+pyaudio>=0.2.11
+
+# Optional: Advanced AI/ML capabilities (if needed in future)
+# openai>=1.0.0
+# transformers>=4.30.0
+# torch>=2.0.0
+
+# Development and Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.5.0
+
+# Documentation (optional)
+# sphinx>=7.0.0 

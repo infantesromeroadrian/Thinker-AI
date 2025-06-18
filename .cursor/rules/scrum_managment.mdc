@@ -1,0 +1,384 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Comprehensive Scrum and Agile management framework for AI/ML projects with specialized ceremonies, metrics, and best practices.
+globs: tasks/**/*.md, jira/**/*.md, sprints/**/*.md, retrospectives/**/*.md, planning/**/*.md
+alwaysApply: true
+---
+
+# 🏃‍♂️ SCRUM & AGILE MANAGEMENT FOR AI/ML PROJECTS
+
+## 1. 🎯 **AI/ML SCRUM ROLES & STRUCTURE**
+
+### 1.1 **Specialized Roles**
+```markdown
+🔹 **Product Owner (AI/ML Focus)**
+- Define AI/ML product vision and strategy
+- Manage AI/ML feature backlog and priorities
+- Define acceptance criteria for model performance
+- Stakeholder communication for AI/ML outcomes
+
+🔹 **Scrum Master (AI/ML Specialized)**
+- Facilitate AI/ML specific ceremonies
+- Remove impediments related to data and infrastructure
+- Coach team on AI/ML best practices
+- Ensure compliance with AI/ML governance
+
+🔹 **Development Team (Cross-functional)**
+- Data Scientists & ML Engineers
+- Software Engineers & DevOps Engineers
+- Data Engineers & Analytics Engineers
+- QA Engineers with ML testing expertise
+
+🔹 **Additional AI/ML Roles**
+- Data Steward (data quality and governance)
+- MLOps Engineer (model deployment and monitoring)
+- AI Ethics Officer (bias and fairness evaluation)
+```
+
+### 1.2 **AI/ML Sprint Structure (2 weeks)**
+```markdown
+**Week 1: Research & Development**
+Day 1-2: Sprint Planning & Data Analysis
+Day 3-5: Model Development & Experimentation
+Day 6-7: Initial Model Validation
+
+**Week 2: Validation & Integration**
+Day 8-9: Model Testing & Performance Evaluation
+Day 10-11: Integration & Documentation
+Day 12-14: Sprint Review & Retrospective
+```
+
+## 2. 📋 **AI/ML BACKLOG MANAGEMENT**
+
+### 2.1 **User Story Template**
+```markdown
+🤖 **AI/ML Model Story:**
+As a [user role]
+I want [AI/ML capability]
+So that [business value]
+
+**Model Acceptance Criteria:**
+- Model achieves minimum [metric] of [threshold]
+- Inference time < [time limit]
+- Bias metrics within acceptable range
+- Model explainability requirements met
+
+**Example:**
+As a customer service manager
+I want an automated sentiment analysis model
+So that I can prioritize support tickets by urgency
+
+**Acceptance Criteria:**
+- Model achieves minimum F1-score of 0.85
+- Inference time < 100ms per prediction
+- Bias evaluation across demographics completed
+```
+
+### 2.2 **Prioritization Framework**
+```python
+# AI/ML Story Prioritization
+def calculate_priority_score(story):
+    """Calculate priority based on AI/ML factors."""
+    factors = {
+        'business_value': story.get('business_value', 5) * 0.3,
+        'technical_risk': (10 - story.get('technical_risk', 5)) * 0.2,
+        'data_availability': story.get('data_availability', 5) * 0.2,
+        'model_complexity': (10 - story.get('model_complexity', 5)) * 0.15,
+        'compliance_impact': story.get('compliance_impact', 5) * 0.15
+    }
+    return sum(factors.values())
+```
+
+## 3. 🗓️ **SPRINT PLANNING & EXECUTION**
+
+### 3.1 **Sprint Planning Template**
+```markdown
+# Sprint [Number] Planning
+
+## 🎯 Sprint Goal
+[Clear, measurable AI/ML objective]
+
+## 📊 Sprint Metrics
+- **Velocity Target:** [Story Points]
+- **Model Performance Target:** [Metric and threshold]
+- **Code Coverage Target:** ≥90%
+
+## 📋 Sprint Backlog Allocation
+- 🔬 **Research & Experimentation:** 40% capacity
+- 🛠️ **Development & Integration:** 35% capacity
+- 🧪 **Testing & Validation:** 20% capacity
+- 📚 **Documentation:** 5% capacity
+
+## 🚧 Impediments & Dependencies
+- [ ] Data access approval pending (Blocker)
+- [ ] GPU resources allocation needed (High)
+- [ ] Model review with stakeholders (Medium)
+```
+
+### 3.2 **Daily Standup Structure**
+```markdown
+🌅 **Daily Standup (15 minutes):**
+
+**Each member answers:**
+1. **Yesterday:** What AI/ML work did I complete?
+2. **Today:** What AI/ML work will I focus on?
+3. **Blockers:** What's preventing my progress?
+
+**AI/ML Specific Updates:**
+- Model training progress and results
+- Data quality issues discovered
+- Infrastructure constraints
+- Experiment insights
+
+**Example:**
+👨‍💻 **Data Scientist:** Completed feature engineering, achieved 0.82 F1-score. Today: hyperparameter tuning. Blocker: Need larger GPU instance.
+```
+
+## 4. 📊 **AI/ML METRICS & TRACKING**
+
+### 4.1 **Sprint Health Dashboard**
+```python
+from dataclasses import dataclass
+
+@dataclass
+class AIMLSprintMetrics:
+    """AI/ML Sprint metrics tracker."""
+    sprint_number: int
+    velocity_planned: int
+    velocity_achieved: int
+    models_developed: int
+    models_deployed: int
+    experiment_success_rate: float
+    code_coverage: float
+    
+    def calculate_health_score(self) -> float:
+        """Calculate sprint health (0-100)."""
+        velocity_score = min(100, (self.velocity_achieved / self.velocity_planned) * 100)
+        quality_score = self.code_coverage
+        ml_success_score = self.experiment_success_rate * 100
+        
+        return (velocity_score + quality_score + ml_success_score) / 3
+```
+
+### 4.2 **Velocity Tracking**
+```markdown
+| Sprint | Traditional | ML Dev | Data Eng | MLOps | Total |
+|--------|-------------|--------|----------|-------|-------|
+| 13     | 15 pts      | 8 pts  | 5 pts    | 3 pts | 31    |
+| 14     | 18 pts      | 6 pts  | 7 pts    | 4 pts | 35    |
+| 15     | 12 pts      | 10 pts | 4 pts    | 6 pts | 32    |
+
+**Velocity Factors:**
+- Data availability and quality
+- Model experimentation cycles
+- Infrastructure constraints
+- Compliance requirements
+```
+
+## 5. 🔄 **AI/ML SCRUM CEREMONIES**
+
+### 5.1 **Sprint Review (2 hours)**
+```markdown
+**Agenda:**
+1. **Sprint Goals Review** (15 min): Performance targets achieved
+2. **Live Demo** (45 min): Model functionality, metrics, pipelines
+3. **Stakeholder Feedback** (30 min): Business input, technical questions
+4. **Metrics Review** (15 min): Velocity, performance trends
+5. **Next Sprint Preview** (15 min): Goals, priorities, dependencies
+
+**Demo Checklist:**
+- [ ] Model predictions working end-to-end
+- [ ] Performance metrics displayed
+- [ ] Data lineage demonstrated
+- [ ] Error handling shown
+- [ ] Monitoring functional
+```
+
+### 5.2 **Sprint Retrospective (1.5 hours)**
+```markdown
+**AI/ML Retrospective Structure:**
+
+**Categories for Discussion:**
+🔬 **Experimentation:** Design effectiveness, hypothesis validation
+📊 **Data & Infrastructure:** Quality, availability, performance
+🤖 **Model Development:** Workflows, deployment efficiency
+👥 **Collaboration:** Cross-functional coordination, knowledge sharing
+
+**Action Item Template:**
+| Action | Owner | Timeline | Success Criteria |
+|--------|-------|----------|------------------|
+| Automated model validation | ML Engineer | Next Sprint | 100% models have tests |
+| Data quality monitoring | Data Engineer | 2 Sprints | Zero production issues |
+```
+
+## 6. ✅ **DEFINITION OF DONE FOR AI/ML**
+
+### 6.1 **Model Development DoD**
+```markdown
+**Code Quality & Testing**
+- [ ] Code review completed and approved
+- [ ] Unit tests written with ≥90% coverage
+- [ ] Integration tests passing
+- [ ] Code follows team standards
+
+**Model Performance & Validation**
+- [ ] Model meets minimum performance thresholds
+- [ ] Cross-validation completed
+- [ ] Bias and fairness evaluation completed
+- [ ] Model interpretability requirements met
+
+**Infrastructure & Deployment**
+- [ ] Data lineage documented
+- [ ] Model versioning configured
+- [ ] Deployment pipeline tested
+- [ ] Monitoring and alerting configured
+
+**Documentation & Compliance**
+- [ ] Model documentation updated
+- [ ] API documentation current
+- [ ] Compliance requirements verified
+- [ ] Risk assessment completed
+```
+
+## 7. 🎯 **ESTIMATION & PLANNING**
+
+### 7.1 **AI/ML Planning Poker**
+```markdown
+**Modified Fibonacci for AI/ML:**
+- **1 pt:** Config change, minor bug fix
+- **2 pts:** Data analysis, simple feature engineering
+- **3 pts:** Baseline model implementation
+- **5 pts:** Model experimentation, complex features
+- **8 pts:** New architecture, infrastructure setup
+- **13 pts:** End-to-end ML pipeline
+- **21 pts:** Research spike, major architectural change
+
+**Estimation Factors:**
+- 🔍 Research uncertainty
+- 📊 Data dependency and quality
+- 🧪 Expected experimentation cycles
+- 🏗️ Infrastructure complexity
+- 👥 Cross-team dependencies
+```
+
+### 7.2 **Risk Management**
+```markdown
+**Risk Categories:**
+🔴 **High Risk:** Data unavailability, model performance failure
+🟡 **Medium Risk:** Team unavailability, requirement changes
+🟢 **Low Risk:** Tool updates, performance optimization
+
+**Risk Matrix:**
+| Risk | Probability | Impact | Mitigation |
+|------|------------|--------|------------|
+| Data pipeline failure | Medium | High | Automated backups |
+| Model below target | Low | High | Multiple algorithms |
+| Infrastructure scaling | High | Medium | Load testing |
+```
+
+## 8. 🛠️ **TOOLS & AUTOMATION**
+
+### 8.1 **Tool Stack**
+```yaml
+project_management: "Jira with AI/ML custom fields"
+collaboration: "Slack + Jira integration"
+experiment_tracking: "MLflow"
+model_registry: "MLflow Model Registry"
+monitoring: "Evidently AI"
+ci_cd: "GitHub Actions"
+deployment: "Docker + Kubernetes"
+```
+
+### 8.2 **Automated Reporting**
+```python
+class AIMLScrumDashboard:
+    """Automated Scrum reporting for AI/ML."""
+    
+    def generate_sprint_summary(self, sprint_id):
+        return {
+            'completion_rate': self._calculate_completion(),
+            'velocity': self._get_velocity_data(),
+            'ml_experiments': self._count_experiments(),
+            'model_performance': self._get_best_scores(),
+            'recommendations': self._generate_recommendations()
+        }
+```
+
+## 9. 📈 **CONTINUOUS IMPROVEMENT**
+
+### 9.1 **Team Maturity Assessment**
+```markdown
+**Maturity Dimensions (1-5 scale):**
+1. **Agile Practices:** Scrum implementation quality
+2. **ML Engineering:** Development best practices
+3. **Data Management:** Governance and quality
+4. **Collaboration:** Cross-functional effectiveness
+5. **Automation:** CI/CD and MLOps maturity
+6. **Measurement:** Metrics and monitoring
+7. **Innovation:** Experimentation culture
+8. **Compliance:** Governance and ethics
+```
+
+### 9.2 **Monthly Kaizen**
+```markdown
+**Improvement Session (2 hours):**
+1. **Current State Analysis** (30 min): Review metrics
+2. **Root Cause Analysis** (30 min): Identify problems
+3. **Solution Generation** (45 min): Brainstorm improvements
+4. **Action Planning** (15 min): Define specific actions
+
+**Focus Areas:**
+- 🚀 Process streamlining
+- 🛠️ Tool enhancement
+- 📚 Knowledge building
+- 🤝 Collaboration improvement
+- 📊 Better measurement
+```
+
+## 10. 📋 **IMPLEMENTATION CHECKLIST**
+
+### **Week 1 - Setup:**
+- [ ] Define AI/ML Scrum roles and responsibilities
+- [ ] Configure project management tools
+- [ ] Create initial AI/ML product backlog
+- [ ] Establish Definition of Done for AI/ML
+- [ ] Set up tracking and reporting automation
+
+### **Week 2-4 - Process:**
+- [ ] Conduct first sprint planning with AI/ML estimation
+- [ ] Run daily standups with AI/ML updates
+- [ ] Execute sprint review with model demonstrations
+- [ ] Facilitate AI/ML focused retrospectives
+- [ ] Implement continuous improvement feedback loops
+
+### **Success Metrics:**
+- [ ] Team velocity stable and predictable
+- [ ] Sprint goals achieved >80% of time
+- [ ] Stakeholder satisfaction >8/10
+- [ ] Model delivery frequency increased
+- [ ] Technical debt <20% of capacity
+
+## 11. 🎯 **BEST PRACTICES SUMMARY**
+
+### **DO:**
+- ✅ Allocate 40% capacity for research and experimentation
+- ✅ Include model performance targets in sprint goals
+- ✅ Track AI/ML specific metrics alongside traditional ones
+- ✅ Conduct bias and fairness evaluations regularly
+- ✅ Maintain clear documentation for model decisions
+- ✅ Implement automated testing for ML pipelines
+- ✅ Plan for infrastructure and resource needs
+
+### **DON'T:**
+- ❌ Skip model validation and testing phases
+- ❌ Ignore data quality and governance requirements
+- ❌ Underestimate experimentation time needs
+- ❌ Deploy models without proper monitoring
+- ❌ Mix research and production development
+- ❌ Forget stakeholder communication and feedback
+- ❌ Neglect compliance and ethical considerations
+

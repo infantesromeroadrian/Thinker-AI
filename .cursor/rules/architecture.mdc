@@ -1,0 +1,459 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Reglas de Arquitectura de Software para Proyectos Python + IA
+
+## 1. ESTRUCTURA DE CAPAS (LAYERED ARCHITECTURE)
+
+### 1.1 Arquitectura de 4 Capas
+```
+📁 proyecto/
+├── 📁 src/
+│   ├── 📁 presentation/     # Capa de Presentación
+│   ├── 📁 business/         # Capa de Lógica de Negocio
+│   ├── 📁 data/            # Capa de Acceso a Datos
+│   └── 📁 infrastructure/   # Capa de Infraestructura
+├── 📁 tests/               # Pruebas
+├── 📁 docs/                # Documentación
+├── 📁 config/              # Configuraciones
+└── 📁 scripts/             # Scripts de utilidad
+```
+
+### 1.2 Responsabilidades por Capa
+
+#### **Capa de Presentación** (`presentation/`)
+- APIs REST/GraphQL
+- Interfaces de usuario
+- Validación de entrada
+- Serialización/Deserialización
+
+#### **Capa de Lógica de Negocio** (`business/`)
+- Modelos de IA/ML
+- Algoritmos de procesamiento
+- Reglas de negocio
+- Servicios de aplicación
+
+#### **Capa de Acceso a Datos** (`data/`)
+- Repositorios
+- Modelos de datos
+- Conexiones a bases de datos
+- Cache y almacenamiento
+
+#### **Capa de Infraestructura** (`infrastructure/`)
+- Configuraciones
+- Logging
+- Monitoreo
+- Servicios externos
+
+## 2. MÉTODO DE TRABAJO POR BLOQUES
+
+### 2.1 Principio de Módulos Independientes
+```python
+# ✅ CORRECTO: Módulos con responsabilidad única
+class DataPreprocessor:
+    def clean_data(self, data): pass
+    def normalize_data(self, data): pass
+
+class ModelTrainer:
+    def train_model(self, data): pass
+    def validate_model(self, model): pass
+
+class ModelEvaluator:
+    def evaluate_performance(self, model, test_data): pass
+```
+
+### 2.2 Bloques Funcionales Estándar para IA
+```
+📁 ai_modules/
+├── 📄 data_preprocessing.py    # Limpieza y preparación
+├── 📄 feature_engineering.py  # Ingeniería de características
+├── 📄 model_training.py       # Entrenamiento de modelos
+├── 📄 model_evaluation.py     # Evaluación y métricas
+├── 📄 model_deployment.py     # Despliegue de modelos
+└── 📄 data_pipeline.py        # Pipeline de datos
+```
+
+## 3. PROGRAMACIÓN ORIENTADA A OBJETOS (POO)
+
+### 3.1 Principios SOLID Aplicados
+
+#### **Single Responsibility Principle**
+```python
+# ✅ Una clase, una responsabilidad
+class DataValidator:
+    def validate_input_format(self, data): pass
+    def check_data_quality(self, data): pass
+
+class ModelPredictor:
+    def load_model(self, model_path): pass
+    def predict(self, input_data): pass
+```
+
+#### **Open/Closed Principle**
+```python
+# ✅ Abierto para extensión, cerrado para modificación
+from abc import ABC, abstractmethod
+
+class BaseModel(ABC):
+    @abstractmethod
+    def train(self, data): pass
+    @abstractmethod
+    def predict(self, input_data): pass
+
+class RandomForestModel(BaseModel):
+    def train(self, data): pass
+    def predict(self, input_data): pass
+```
+
+#### **Liskov Substitution Principle**
+```python
+# ✅ Las subclases deben poder sustituir a sus clases base
+def process_with_model(model: BaseModel, data):
+    return model.predict(data)  # Funciona con cualquier implementación
+```
+
+### 3.2 Patrones de Diseño para IA
+
+#### **Factory Pattern**
+```python
+class ModelFactory:
+    @staticmethod
+    def create_model(model_type: str):
+        if model_type == "random_forest":
+            return RandomForestModel()
+        elif model_type == "neural_network":
+            return NeuralNetworkModel()
+        raise ValueError(f"Unknown model type: {model_type}")
+```
+
+#### **Strategy Pattern**
+```python
+class DataProcessor:
+    def __init__(self, strategy):
+        self.strategy = strategy
+    
+    def process(self, data):
+        return self.strategy.execute(data)
+```
+
+## 4. ESTÁNDARES DE CODIFICACIÓN
+
+### 4.1 PEP 8 Estricto
+```python
+# ✅ Nombres descriptivos y consistentes
+class DataPreprocessor:
+    def __init__(self, config: Dict[str, Any]) -> None:
+        self.config = config
+        self._logger = self._setup_logger()
+    
+    def preprocess_training_data(self, raw_data: pd.DataFrame) -> pd.DataFrame:
+        """
+        Preprocesa los datos de entrenamiento.
+        
+        Args:
+            raw_data: DataFrame con datos sin procesar
+            
+        Returns:
+            DataFrame con datos procesados
+        """
+        cleaned_data = self._remove_null_values(raw_data)
+        normalized_data = self._normalize_features(cleaned_data)
+        return normalized_data
+```
+
+### 4.2 Documentación y Type Hints
+```python
+from typing import Dict, List, Optional, Union, Any
+import pandas as pd
+import numpy as np
+
+class ModelTrainer:
+    """Clase responsable del entrenamiento de modelos de ML."""
+    
+    def train_model(
+        self, 
+        X_train: np.ndarray, 
+        y_train: np.ndarray,
+        model_params: Optional[Dict[str, Any]] = None
+    ) -> Any:
+        """
+        Entrena un modelo con los datos proporcionados.
+        
+        Args:
+            X_train: Características de entrenamiento
+            y_train: Etiquetas de entrenamiento
+            model_params: Parámetros del modelo (opcional)
+            
+        Returns:
+            Modelo entrenado
+            
+        Raises:
+            ValueError: Si los datos de entrada no son válidos
+        """
+        pass
+```
+
+## 5. GESTIÓN DE CONFIGURACIÓN
+
+### 5.1 Archivo de Configuración Central
+```python
+# config/settings.py
+from pydantic import BaseSettings
+from typing import Dict, Any
+
+class AIProjectSettings(BaseSettings):
+    # Database
+    database_url: str
+    
+    # Model Configuration
+    model_type: str = "random_forest"
+    model_params: Dict[str, Any] = {}
+    
+    # Training Configuration
+    batch_size: int = 32
+    epochs: int = 100
+    learning_rate: float = 0.001
+    
+    # API Configuration
+    api_host: str = "localhost"
+    api_port: int = 8000
+    
+    class Config:
+        env_file = ".env"
+        env_file_encoding = "utf-8"
+```
+
+### 5.2 Variables de Entorno
+```bash
+# .env
+DATABASE_URL=postgresql://user:pass@localhost/dbname
+MODEL_TYPE=neural_network
+API_HOST=0.0.0.0
+API_PORT=8080
+OPENAI_API_KEY=your_api_key_here
+```
+
+## 6. MANEJO DE ERRORES Y LOGGING
+
+### 6.1 Sistema de Logging Estructurado
+```python
+import logging
+import structlog
+from pathlib import Path
+
+def setup_logging(log_level: str = "INFO") -> None:
+    """Configura el sistema de logging estructurado."""
+    logging.basicConfig(
+        format="%(message)s",
+        stream=sys.stdout,
+        level=log_level,
+    )
+    
+    structlog.configure(
+        processors=[
+            structlog.stdlib.filter_by_level,
+            structlog.stdlib.add_logger_name,
+            structlog.stdlib.add_log_level,
+            structlog.processors.TimeStamper(fmt="iso"),
+            structlog.dev.ConsoleRenderer()
+        ],
+        wrapper_class=structlog.stdlib.BoundLogger,
+        logger_factory=structlog.stdlib.LoggerFactory(),
+        cache_logger_on_first_use=True,
+    )
+
+class AIService:
+    def __init__(self):
+        self.logger = structlog.get_logger(__name__)
+    
+    def process_data(self, data):
+        self.logger.info("Starting data processing", data_size=len(data))
+        try:
+            result = self._internal_process(data)
+            self.logger.info("Data processing completed successfully")
+            return result
+        except Exception as e:
+            self.logger.error("Data processing failed", error=str(e))
+            raise
+```
+
+### 6.2 Excepciones Personalizadas
+```python
+class AIProjectException(Exception):
+    """Excepción base para el proyecto."""
+    pass
+
+class DataValidationError(AIProjectException):
+    """Error en validación de datos."""
+    pass
+
+class ModelTrainingError(AIProjectException):
+    """Error durante el entrenamiento del modelo."""
+    pass
+
+class PredictionError(AIProjectException):
+    """Error durante la predicción."""
+    pass
+```
+
+## 7. TESTING Y CALIDAD
+
+### 7.1 Estructura de Pruebas
+```
+📁 tests/
+├── 📁 unit/                # Pruebas unitarias
+├── 📁 integration/         # Pruebas de integración
+├── 📁 e2e/                 # Pruebas end-to-end
+├── 📁 fixtures/            # Datos de prueba
+└── 📄 conftest.py          # Configuración de pytest
+```
+
+### 7.2 Pruebas para Modelos de IA
+```python
+import pytest
+import numpy as np
+from unittest.mock import Mock, patch
+
+class TestModelTrainer:
+    @pytest.fixture
+    def sample_data(self):
+        return {
+            'X_train': np.random.rand(100, 10),
+            'y_train': np.random.randint(0, 2, 100)
+        }
+    
+    def test_model_training_success(self, sample_data):
+        trainer = ModelTrainer()
+        model = trainer.train_model(
+            sample_data['X_train'], 
+            sample_data['y_train']
+        )
+        assert model is not None
+    
+    def test_model_training_with_invalid_data(self):
+        trainer = ModelTrainer()
+        with pytest.raises(DataValidationError):
+            trainer.train_model(None, None)
+```
+
+## 8. DESPLIEGUE Y DOCKER
+
+### 8.1 Dockerfile Multi-etapa
+```dockerfile
+# Dockerfile
+FROM python:3.11-slim as base
+
+WORKDIR /app
+
+# Dependencias del sistema
+RUN apt-get update && apt-get install -y \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Dependencias Python
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Código de la aplicación
+COPY src/ ./src/
+COPY config/ ./config/
+
+# Usuario no root
+RUN useradd --create-home --shell /bin/bash app
+USER app
+
+EXPOSE 8000
+CMD ["python", "-m", "src.main"]
+```
+
+### 8.2 Docker Compose para Desarrollo
+```yaml
+# docker-compose.yml
+version: '3.8'
+
+services:
+  ai-app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/aidb
+    depends_on:
+      - db
+    volumes:
+      - ./src:/app/src
+      - ./config:/app/config
+  
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: aidb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+```
+
+## 9. MONITOREO Y OBSERVABILIDAD
+
+### 9.1 Métricas de Modelos
+```python
+from prometheus_client import Counter, Histogram, Gauge
+import time
+
+# Métricas
+PREDICTION_REQUESTS = Counter('ai_prediction_requests_total', 'Total prediction requests')
+PREDICTION_DURATION = Histogram('ai_prediction_duration_seconds', 'Prediction duration')
+MODEL_ACCURACY = Gauge('ai_model_accuracy', 'Current model accuracy')
+
+class MonitoredPredictor:
+    def predict(self, input_data):
+        PREDICTION_REQUESTS.inc()
+        
+        start_time = time.time()
+        try:
+            result = self.model.predict(input_data)
+            return result
+        finally:
+            PREDICTION_DURATION.observe(time.time() - start_time)
+```
+
+## 10. REGLAS DE VALIDACIÓN
+
+### ✅ DO (Hacer)
+- Usar type hints en todas las funciones
+- Documentar todas las clases y métodos públicos
+- Seguir PEP 8 estrictamente
+- Implementar logging estructurado
+- Escribir pruebas para cada módulo
+- Usar patrones de diseño apropiados
+- Separar configuración del código
+- Manejar errores explícitamente
+
+### ❌ DON'T (No hacer)
+- Hardcodear valores de configuración
+- Crear clases monolíticas
+- Ignorar manejo de errores
+- Mezclar lógica de negocio con presentación
+- Usar imports relativos complejos
+- Dejar código sin documentar
+- Ignorar warnings del linter
+- Crear dependencias circulares
+
+## 11. CHECKLIST DE REVISIÓN DE CÓDIGO
+
+### Antes de cada commit:
+- [ ] Código pasa todos los tests
+- [ ] Cumple con PEP 8 (usar black, flake8)
+- [ ] Tiene type hints apropiados
+- [ ] Está documentado adecuadamente
+- [ ] No hay hardcoded values
+- [ ] Manejo de errores implementado
+- [ ] Logging apropiado añadido
+
+- [ ] Tests actualizados si es necesario 
