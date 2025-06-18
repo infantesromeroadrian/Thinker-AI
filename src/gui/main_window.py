@@ -27,97 +27,97 @@ ctk.set_default_color_theme("dark-blue")  # "blue", "green", "dark-blue"
 
 class ThinkerMainWindow:
     """Main application window class"""
-    
+
     def __init__(self):
         self.config = get_config()
         self.core = get_core()
         self.logger = get_logger("MainWindow")
-        
+
         # Window components
         self.root = None
         self.style = None
         self.menu_bar = None
         self.status_bar = None
         self.main_frame = None
-        
+
         # UI components
         self.notebook = None
         self.tabs = {}
         self.widgets = {}
-        
+
         # Application state
         self.is_initialized = False
         self.current_theme = "light"
         self.placeholder_active = False
-        
+
         # Streaming state
         self.current_streaming_message = ""
         self.streaming_sender = ""
         self.is_streaming = False
-        
+
         # Voice recording state
         self.is_voice_recording = False
         self.speech_service_available = False
-        
+
         # Shutdown state
         self.is_shutting_down = False
-        
+
         self.logger.info("MainWindow initialized")
-    
+
     @Performance.time_function
     def initialize(self) -> bool:
         """Initialize the main window and all components"""
         try:
             # Create main window
             self._create_main_window()
-            
+
             # Setup styling
             self._setup_styling()
-            
+
             # Create menu bar
             self._create_menu_bar()
-            
+
             # Create main content area
             self._create_main_content()
-            
+
             # Create status bar
             self._create_status_bar()
-            
+
             # Setup event handlers
             self._setup_event_handlers()
-            
+
             # Start core application
             if not self.core.start():
                 raise Exception("Failed to start core application")
-            
+
             # Initialize periodic updates
             self._start_periodic_updates()
-            
+
             self.is_initialized = True
             self.logger.info("Main window initialized successfully")
             return True
-            
+
         except Exception as e:
             self.logger.log_exception(e, "Main window initialization")
             return False
-    
+
     def _create_main_window(self) -> None:
         """Create the main CustomTkinter window"""
         self.root = ctk.CTk()
         self.root.title(self.config.APP_NAME)
         self.root.minsize(self.config.MIN_WINDOW_WIDTH, self.config.MIN_WINDOW_HEIGHT)
-        
+
         # Center the window
         UIHelpers.center_window(
             self.root, 
             self.config.WINDOW_WIDTH, 
             self.config.WINDOW_HEIGHT
         )
-        
+
         # Configure window behavior
         self.root.resizable(True, True)
         self.root.protocol("WM_DELETE_WINDOW", self._on_window_close)
-        
+
         # Set window icon (if available)
         try:
             # You can add an icon file here
@@ -125,23 +125,23 @@ class ThinkerMainWindow:
             pass
         except Exception:
             pass
-        
+
         self.logger.debug("Modern CustomTkinter window created")
-    
+
     def _setup_styling(self) -> None:
         """Setup CustomTkinter styling and themes"""
         # CustomTkinter handles styling automatically, but we can customize
         colors = self.config.get_color_scheme()
-        
+
         # Configure CustomTkinter appearance
         ctk.set_appearance_mode("dark")  # "dark", "light", "system"
         ctk.set_default_color_theme("dark-blue")  # "blue", "green", "dark-blue"
-        
+
         # Set custom fonts globally
         ctk.FontManager.load_font("src/fonts/custom.ttf") if hasattr(ctk, 'FontManager') else None
-        
+
         self.logger.debug("Modern CustomTkinter styling configured")
-    
+
     def _create_menu_bar(self) -> None:
         """Create minimalist translucent menu bar"""
         self.menu_bar = tk.Menu(
@@ -154,7 +154,7 @@ class ThinkerMainWindow:
             relief="flat"
         )
         self.root.configure(menu=self.menu_bar)
-        
+
         # Minimal Chat Menu
         chat_menu = tk.Menu(
             self.menu_bar, 
@@ -170,7 +170,7 @@ class ThinkerMainWindow:
         chat_menu.add_command(label="💾 Exportar", command=self._export_chat)
         chat_menu.add_separator()
         chat_menu.add_command(label="❌ Salir", command=self._on_window_close)
-        
+
         # Minimal System Menu
         system_menu = tk.Menu(
             self.menu_bar, 
@@ -186,7 +186,7 @@ class ThinkerMainWindow:
         system_menu.add_command(label="🧪 Test", command=self._test_qwen_connection)
         system_menu.add_command(label="🎤 Test Voz", command=self._test_speech_recognition)
         system_menu.add_command(label="🔧 Diagnóstico Voz", command=self._advanced_microphone_diagnosis)
-        
+
         # Minimal Help Menu
         help_menu = tk.Menu(
             self.menu_bar, 
@@ -199,30 +199,30 @@ class ThinkerMainWindow:
         )
         self.menu_bar.add_cascade(label="❓", menu=help_menu)
         help_menu.add_command(label="ℹ️ Info", command=self._show_about)
-        
+
         self.logger.debug("Minimalist menu bar created")
-    
+
     # Dummy methods for compatibility
     def _new_conversation(self):
         """Start new conversation (compatibility method)"""
         self._clear_chat()
-    
+
     def _quit_app(self):
         """Quit application (compatibility method)"""
         self._on_window_close()
-    
+
     def _increase_font_size(self):
         """Increase font size (placeholder)"""
         pass
-    
+
     def _decrease_font_size(self):
         """Decrease font size (placeholder)"""
         pass
-    
+
     def _open_preferences(self):
         """Open preferences (placeholder)"""
         UIHelpers.show_info(self.root, "Preferencias", "Funcionalidad en desarrollo...")
-    
+
     def _create_main_content(self) -> None:
         """Create the main content area - Minimalist AI Chat Interface"""
         # Ultra-minimal main frame with transparency
@@ -233,16 +233,16 @@ class ThinkerMainWindow:
             bg_color="transparent"
         )
         self.main_frame.pack(fill=tk.BOTH, expand=True, padx=0, pady=0)
-        
+
         # Create minimalist AI chat interface
         self._create_minimalist_chat_interface()
-        
+
         self.logger.debug("Minimalist AI Chat interface created")
-    
+
     def _create_minimalist_chat_interface(self) -> None:
         """Create ultra-minimalist translucent chat interface"""
         colors = self.config.get_color_scheme()
-        
+
         # Header - Ultra minimal floating
         header_frame = ctk.CTkFrame(
             self.main_frame, 
@@ -252,7 +252,7 @@ class ThinkerMainWindow:
         )
         header_frame.pack(fill=tk.X, pady=(20, 0), padx=20)
         header_frame.pack_propagate(False)
-        
+
         # Minimal title - just the essence
         title_label = ctk.CTkLabel(
             header_frame, 
@@ -261,7 +261,7 @@ class ThinkerMainWindow:
             text_color=self.config.TEXT_COLOR
         )
         title_label.pack(side=tk.LEFT, padx=20, pady=15)
-        
+
         # Minimal status indicator - floating dot
         self.widgets["status_indicator"] = ctk.CTkLabel(
             header_frame,
@@ -270,7 +270,7 @@ class ThinkerMainWindow:
             font=ctk.CTkFont(size=20)
         )
         self.widgets["status_indicator"].pack(side=tk.RIGHT, padx=20, pady=15)
-        
+
         # Chat area - Floating translucent container
         chat_container = ctk.CTkFrame(
             self.main_frame,
@@ -279,7 +279,7 @@ class ThinkerMainWindow:
             bg_color="transparent"
         )
         chat_container.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
-        
+
         # Chat display - Visible pero limpio
         self.widgets["chat_display"] = ctk.CTkTextbox(
             chat_container, 
@@ -293,7 +293,7 @@ class ThinkerMainWindow:
         self.widgets["chat_display"].pack(fill=tk.BOTH, expand=True, padx=25, pady=25)
         # Chat display: disabled (solo lectura del historial)
         self.widgets["chat_display"].configure(state="disabled")
-        
+
         # Input area - Floating at bottom
         input_container = ctk.CTkFrame(
             self.main_frame,
@@ -303,7 +303,7 @@ class ThinkerMainWindow:
         )
         input_container.pack(fill=tk.X, padx=20, pady=(0, 20))
         input_container.pack_propagate(False)
-        
+
         # Etiqueta indicativa
         input_label = ctk.CTkLabel(
             input_container,
@@ -312,7 +312,7 @@ class ThinkerMainWindow:
             text_color="#888888"
         )
         input_label.pack(pady=(8, 0), padx=20, anchor="w")
-        
+
         # Input field - ULTRA VISIBLE con contraste máximo
         self.widgets["chat_input"] = ctk.CTkTextbox(
             input_container,
@@ -326,12 +326,12 @@ class ThinkerMainWindow:
             border_color=("#00D4FF", "#00D4FF")  # Borde neón azul brillante
         )
         self.widgets["chat_input"].pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(20, 10), pady=(5, 15))
-        
+
         # Placeholder contrastante para fondo blanco
         self.widgets["chat_input"].insert("1.0", "💬 Escribe tu mensaje aquí...")
         self.widgets["chat_input"].configure(text_color="#0066CC")  # Azul oscuro sobre fondo blanco
         self.placeholder_active = True
-        
+
         # Voice button - Microphone for speech recognition
         self.widgets["voice_button"] = ctk.CTkButton(
             input_container,
@@ -346,7 +346,7 @@ class ThinkerMainWindow:
             border_width=0
         )
         self.widgets["voice_button"].pack(side=tk.RIGHT, padx=(0, 5), pady=(5, 15))
-        
+
         # Send button - Minimal floating circle
         self.widgets["send_button"] = ctk.CTkButton(
             input_container, 
@@ -361,7 +361,7 @@ class ThinkerMainWindow:
             border_width=0
         )
         self.widgets["send_button"].pack(side=tk.RIGHT, padx=(0, 20), pady=(5, 15))
-        
+
         # Event bindings MÍNIMOS - solo lo esencial
         self.widgets["chat_input"].bind("<Return>", self._on_enter_key)
         # TEMPORALMENTE quitamos otros bindings que pueden interferir
@@ -369,22 +369,22 @@ class ThinkerMainWindow:
         # self.widgets["chat_input"].bind("<FocusIn>", self._on_input_focus_in)
         # self.widgets["chat_input"].bind("<FocusOut>", self._on_input_focus_out)
         # self.widgets["chat_input"].bind("<KeyPress>", self._on_key_press)
-        
+
         # Welcome message - Minimalist with voice info
         welcome_msg = "🚀 Listo para conversar con streaming en tiempo real\n🎤 Usa el botón rojo para dictado de voz (Menu ⚙️ > 🔧 Diagnóstico Voz si hay problemas)"
         self._add_chat_message("💭", welcome_msg)
-        
+
         # FORZAR focus en el campo de texto
         self.widgets["chat_input"].focus_force()  # Forzar focus
-        
+
         # Debug: Información básica del widget (sin 'state' que no es compatible)
         print(f"🔍 DEBUG - Chat input creado:")
         print(f"   Widget: {self.widgets['chat_input']}")
         print(f"   Tipo: {type(self.widgets['chat_input'])}")
-        
+
         # Test simple: Programar verificación después de que se muestre
         self.root.after(500, self._test_input_functionality)
-    
+
     def _test_input_functionality(self):
         """Test para verificar funcionalidad del campo de entrada"""
         try:
@@ -393,45 +393,45 @@ class ThinkerMainWindow:
             print(f"   Tipo de widget: {type(widget)}")
             print(f"   ¿Existe?: {widget is not None}")
             print(f"   Geometría: {widget.winfo_geometry()}")
-            
+
             # Test: Insertar texto programáticamente
             current_content = widget.get("1.0", "end-1c")
             print(f"   Contenido actual: '{current_content}'")
-            
+
             # Test: ¿Responde a configuración?
             widget.delete("1.0", tk.END)
             widget.insert("1.0", "✅ TEST: ¡CAMPO FUNCIONANDO! Haz click aquí ⬅️")
             widget.configure(text_color="#008000")  # Verde oscuro sobre fondo blanco
-            
+
             print(f"   ✅ El widget responde a comandos programáticos")
             print(f"   👆 BUSCA EL TEXTO VERDE EN LA VENTANA Y HAZ CLICK")
-            
+
         except Exception as e:
             print(f"   ❌ Error en test: {e}")
-    
+
     def _on_enter_key(self, event):
         """Handle Enter key press"""
         self._send_chat_message()
         return "break"  # Prevent default behavior
-    
+
     def _on_ctrl_enter(self, event):
         """Handle Ctrl+Enter for new line"""
         return None  # Allow default behavior (new line)
-    
+
     def _on_key_press(self, event):
         """Handle key press - clear placeholder on typing"""
         self._clear_placeholder()
-        
+
     def _on_input_focus_in(self, event):
         """Handle input focus in - clear placeholder"""
         self._clear_placeholder()
-        
+
     def _on_input_focus_out(self, event):
         """Handle input focus out - restore placeholder if empty"""
         content = self.widgets["chat_input"].get("1.0", tk.END).strip()
         if not content:
             self._set_placeholder()
-    
+
     def _clear_placeholder(self):
         """Clear placeholder text"""
         if hasattr(self, 'placeholder_active') and self.placeholder_active:
@@ -440,7 +440,7 @@ class ThinkerMainWindow:
                 self.widgets["chat_input"].delete("1.0", tk.END)
             self.widgets["chat_input"].configure(text_color="#000000")  # Negro sobre fondo blanco
             self.placeholder_active = False
-    
+
     def _set_placeholder(self):
         """Set placeholder text"""
         if not hasattr(self, 'placeholder_active') or not self.placeholder_active:
@@ -448,24 +448,24 @@ class ThinkerMainWindow:
             self.widgets["chat_input"].insert("1.0", "💬 Escribe tu mensaje aquí...")
             self.widgets["chat_input"].configure(text_color="#0066CC")  # Azul oscuro sobre fondo blanco
             self.placeholder_active = True
-    
 
-    
+
+
     def _clear_chat(self):
         """Clear the chat display"""
         if UIHelpers.ask_yes_no(self.root, "Confirmar", "¿Deseas limpiar toda la conversación?"):
             self.widgets["chat_display"].configure(state="normal")
             self.widgets["chat_display"].delete("1.0", tk.END)
             self.widgets["chat_display"].configure(state="disabled")
-            
+
             # Add minimal welcome message again
             self._add_chat_message("💭", 
                                   "Chat limpio. Listo para streaming. ¿Qué necesitas?")
-            
-            self.logger.log_user_action("Chat Cleared")
-    
 
-    
+            self.logger.log_user_action("Chat Cleared")
+
+
+
     def _create_status_bar(self) -> None:
         """Create minimalist translucent status bar"""
         # Ultra-minimal floating status bar
@@ -476,7 +476,7 @@ class ThinkerMainWindow:
             fg_color=("#2A2A2A", "#1A1A1A")
         )
         self.status_bar.pack(side=tk.BOTTOM, fill=tk.X, padx=20, pady=(0, 20))
-        
+
         # Just time - minimal info
         self.widgets["time_label"] = ctk.CTkLabel(
             self.status_bar, 
@@ -485,7 +485,7 @@ class ThinkerMainWindow:
             text_color="#888888"
         )
         self.widgets["time_label"].pack(side=tk.RIGHT, padx=15, pady=3)
-        
+
         # Just session - minimal
         session_text = f"🔗 {self.core.session_id[:6]}"
         self.widgets["session_label"] = ctk.CTkLabel(
@@ -495,43 +495,43 @@ class ThinkerMainWindow:
             text_color="#666666"
         )
         self.widgets["session_label"].pack(side=tk.LEFT, padx=15, pady=3)
-        
+
         self.logger.debug("Minimalist status bar created")
-    
+
     def _setup_event_handlers(self) -> None:
         """Setup event handlers and bindings"""
         # Window close event
         self.root.protocol("WM_DELETE_WINDOW", self._on_window_close)
-        
+
         # Keyboard shortcuts
         self.root.bind("<Control-q>", lambda e: self._on_window_close())
         self.root.bind("<F1>", lambda e: self._show_about())
         self.root.bind("<F5>", lambda e: self._show_system_status())
         self.root.bind("<Control-l>", lambda e: self._clear_chat())
-        
+
         self.logger.debug("Event handlers setup")
-    
+
     def _start_periodic_updates(self) -> None:
         """Start periodic UI updates"""
         self._update_time()
-    
+
     def _update_time(self) -> None:
         """Update the time display in status bar"""
         if self.widgets.get("time_label"):
             current_time = datetime.now().strftime("%H:%M:%S")
             self.widgets["time_label"].configure(text=current_time)
-        
+
         # Schedule next update
         if self.is_initialized:
             self.root.after(1000, self._update_time)
-    
+
     # Event handler methods
     def _on_window_close(self) -> None:
         """Handle window close event"""
         try:
             if self.is_shutting_down:
                 return  # Already shutting down, prevent duplicate calls
-                
+
             if UIHelpers.ask_yes_no(self.root, "Confirmar Salida", "¿Estás seguro de que quieres salir?"):
                 self.logger.log_user_action("Application close requested by user")
                 self.shutdown()
@@ -550,76 +550,76 @@ class ThinkerMainWindow:
                     self.root.quit()
             except (_tkinter.TclError, tk.TclError):
                 pass  # Ignore Tkinter errors during force quit
-    
+
     def _send_chat_message(self, event=None) -> None:
         """Send chat message to AI assistant"""
         if not self.widgets.get("chat_input"):
             return
-        
+
         # Get message from CTkTextbox
         message = self.widgets["chat_input"].get("1.0", tk.END).strip()
-        
+
         # Skip si es placeholder o vacío
         if not message or message == "💬 Escribe tu mensaje aquí...":
             return
-        
+
         # Clear input and restore placeholder
         self.widgets["chat_input"].delete("1.0", tk.END)
         self._set_placeholder()
-        
+
         # Add user message to chat
         self._add_chat_message("👤 Tú", message)
-        
+
         # Show processing status with better feedback
         self._show_processing_status(message)
-        
+
         # Process message in background
         ThreadingHelpers.run_in_background(
             lambda: self._process_ai_message(message),
             callback=self._on_ai_response_received,
             error_callback=self._handle_ai_error
         )
-    
+
     def _on_ai_response_received(self, result):
         """Called when AI response is received"""
         # Re-enable send button with minimalist styling
         self.root.after(0, lambda: self.widgets["send_button"].configure(
             state="normal", text="→"))
-        
+
         # Restore status indicator
         if self.widgets.get("status_indicator"):
             self.root.after(0, lambda: self.widgets["status_indicator"].configure(
                 text="●", 
                 text_color=self.config.SUCCESS_COLOR
             ))
-        
+
         # Focus back to input
         self.root.after(0, lambda: self.widgets["chat_input"].focus_set())
-    
+
     def _process_ai_message(self, message: str) -> None:
         """Process AI message in background with streaming"""
         try:
             # Start streaming message
             self._start_streaming_message("🤖 AI Assistant")
-            
+
             # Create stream callback
             def stream_callback(chunk: str):
                 self.root.after(0, lambda: self._append_streaming_chunk(chunk))
-            
+
             # Execute AI operation with streaming
             result = self.core.execute_ai_operation("chat", {
                 "message": message,
                 "stream_callback": stream_callback
             })
-            
+
             # Finalize streaming
             self.root.after(0, lambda: self._finalize_streaming_message())
-            
+
         except Exception as e:
             self.logger.log_exception(e, "AI message processing")
             error_msg = "Encontré un error procesando tu solicitud. Por favor, intenta de nuevo."
             self.root.after(0, lambda: self._add_chat_message("🚨 Sistema", error_msg))
-    
+
     def _handle_ai_error(self, error: Exception) -> None:
         """Handle AI operation errors"""
         self.logger.log_exception(error, "AI operation error")
@@ -628,121 +628,121 @@ class ThinkerMainWindow:
             "Verifica que el servidor esté funcionando correctamente y reintenta."
         )
         self.root.after(0, lambda: self._add_chat_message("🚨 Sistema", error_msg))
-        
+
         # Re-enable send button with minimalist styling
         self.root.after(0, lambda: self.widgets["send_button"].configure(
             state="normal", text="→"))
-        
+
         # Update status indicator to show error
         if self.widgets.get("status_indicator"):
             self.root.after(0, lambda: self.widgets["status_indicator"].configure(
                 text="⚠", 
                 text_color=self.config.ERROR_COLOR
             ))
-    
+
     def _show_processing_status(self, message: str) -> None:
         """Show minimalist processing status"""
         # Minimal status indication
         button_text = "…"
         status_text = "🌊 Streaming..."
-        
+
         # Update button
         self.widgets["send_button"].configure(state="disabled", text=button_text)
-        
+
         # Show minimal status in chat
         self._add_chat_message("💭", status_text)
-        
+
         # Update status indicator
         if self.widgets.get("status_indicator"):
             self.widgets["status_indicator"].configure(
                 text="◐", 
                 text_color=self.config.ACCENT_COLOR
             )
-    
+
     def _add_chat_message(self, sender: str, message: str) -> None:
         """Add message to chat display with modern styling"""
         if not self.widgets.get("chat_display"):
             return
-        
+
         chat_display = self.widgets["chat_display"]
         chat_display.configure(state="normal")
-        
+
         timestamp = datetime.now().strftime("%H:%M")
         formatted_message = f"[{timestamp}] {sender}: {message}\n\n"
-        
+
         chat_display.insert(tk.END, formatted_message)
         chat_display.configure(state="disabled")
-        
+
         # Auto-scroll to bottom
         chat_display.see(tk.END)
-    
+
     def _start_streaming_message(self, sender: str) -> None:
         """Start a new streaming message"""
         self.is_streaming = True
         self.streaming_sender = sender
         self.current_streaming_message = ""
-        
+
         # Add initial empty message
         chat_display = self.widgets["chat_display"]
         chat_display.configure(state="normal")
-        
+
         timestamp = datetime.now().strftime("%H:%M")
         initial_message = f"[{timestamp}] {sender}: "
-        
+
         chat_display.insert(tk.END, initial_message)
         chat_display.configure(state="disabled")
         chat_display.see(tk.END)
-    
+
     def _append_streaming_chunk(self, chunk: str) -> None:
         """Append a chunk to the streaming message"""
         if not self.is_streaming:
             return
-        
+
         self.current_streaming_message += chunk
-        
+
         # Update the chat display
         chat_display = self.widgets["chat_display"]
         chat_display.configure(state="normal")
-        
+
         # Insert the new chunk at the end
         chat_display.insert(tk.END, chunk)
         chat_display.configure(state="disabled")
         chat_display.see(tk.END)
-    
+
     def _finalize_streaming_message(self) -> None:
         """Finalize the streaming message"""
         if not self.is_streaming:
             return
-        
+
         self.is_streaming = False
-        
+
         # Add completion indicator and final newlines
         chat_display = self.widgets["chat_display"]
         chat_display.configure(state="normal")
         chat_display.insert(tk.END, " ✅\n\n")  # Checkmark to indicate completion
         chat_display.configure(state="disabled")
         chat_display.see(tk.END)
-        
+
         # Clear streaming state
         self.current_streaming_message = ""
         self.streaming_sender = ""
-    
+
     # Voice recognition methods
     def _toggle_voice_recording(self) -> None:
         """Toggle voice recording on/off"""
         if not self._check_speech_availability():
             return
-        
+
         if self.is_voice_recording:
             self._stop_voice_recording()
         else:
             self._start_voice_recording()
-    
+
     def _check_speech_availability(self) -> bool:
         """Check if speech recognition is available"""
         try:
             result = self.core.execute_speech_operation("get_status", {})
-            
+
             if result.get("status") == "error":
                 # Show detailed error but allow user to try anyway
                 response = UIHelpers.ask_yes_no(
@@ -756,11 +756,11 @@ class ThinkerMainWindow:
                     self.speech_service_available = True
                     return True
                 return False
-            
+
             # Check microphone but be more lenient
             mic_available = result.get("microphone_available", False)
             mic_count = result.get("available_microphones", 0)
-            
+
             if not mic_available and mic_count == 0:
                 response = UIHelpers.ask_yes_no(
                     self.root,
@@ -778,10 +778,10 @@ class ThinkerMainWindow:
                     self.speech_service_available = True
                     return True
                 return False
-            
+
             self.speech_service_available = True
             return True
-            
+
         except Exception as e:
             self.logger.log_exception(e, "Speech availability check")
             response = UIHelpers.ask_yes_no(
@@ -794,38 +794,43 @@ class ThinkerMainWindow:
                 self.speech_service_available = True
                 return True
             return False
-    
+
     def _start_voice_recording(self) -> None:
-        """Start voice recording"""
+        """Start voice recording in continuous mode"""
         try:
             self.is_voice_recording = True
-            
+
             # Update button appearance
             self.widgets["voice_button"].configure(
                 text="⏹️",
                 fg_color="#00FF88"  # Green while recording
             )
-            
+
             # Show recording status
-            self._add_chat_message("🎤 Sistema", "🔴 Grabando... Habla ahora")
-            
+            self._add_chat_message("🎤 Sistema", "🔴 Modo conversación continua activado. Habla cuando quieras.")
+
             # Update status indicator
             if self.widgets.get("status_indicator"):
                 self.widgets["status_indicator"].configure(
                     text="🎤",
                     text_color="#FF6B6B"
                 )
-            
-            # Start recording
-            result = self.core.execute_speech_operation("record_once", {
+
+            # Start continuous listening
+            result = self.core.execute_speech_operation("start_listening", {
                 "callback": self._on_voice_text_received,
-                "timeout": 5.0,
-                "phrase_time_limit": 10.0
+                "error_callback": self._on_voice_recognition_error,
+                "start_callback": self._on_voice_recognition_start,
+                "stop_callback": self._on_voice_recognition_stop
             })
-            
-            if result.get("status") == "error":
+
+            # Handle boolean result from start_listening
+            if isinstance(result, bool):
+                if not result:
+                    raise Exception("Failed to start speech recognition")
+            elif isinstance(result, dict) and result.get("status") == "error":
                 raise Exception(result.get("result", "Unknown error"))
-                
+
         except Exception as e:
             self.logger.log_exception(e, "Start voice recording")
             self._stop_voice_recording()
@@ -834,65 +839,94 @@ class ThinkerMainWindow:
                 "Error de Grabación",
                 f"No se pudo iniciar la grabación:\n\n{str(e)}"
             )
-    
+
+    def _on_voice_recognition_error(self, error: Exception) -> None:
+        """Handle voice recognition errors"""
+        self.logger.log_exception(error, "Voice recognition")
+        self._add_chat_message("❌ Error de Dictado", f"Error en el reconocimiento: {str(error)}")
+
+        # Don't stop recording on errors - just notify and continue
+
+    def _on_voice_recognition_start(self) -> None:
+        """Handle voice recognition start event"""
+        # Update status to show active listening
+        if self.widgets.get("status_indicator"):
+            self.widgets["status_indicator"].configure(
+                text="🔴",  # Red dot indicates active listening
+                text_color="#FF6B6B"
+            )
+
+    def _on_voice_recognition_stop(self) -> None:
+        """Handle voice recognition stop event"""
+        # Update status to show ready for next input
+        if self.widgets.get("status_indicator"):
+            self.widgets["status_indicator"].configure(
+                text="🎤",  # Microphone icon indicates ready
+                text_color="#FF6B6B"
+            )
+
     def _stop_voice_recording(self) -> None:
         """Stop voice recording"""
         try:
             self.is_voice_recording = False
-            
+
             # Update button appearance
             self.widgets["voice_button"].configure(
                 text="🎤",
                 fg_color="#FF6B6B"  # Back to red
             )
-            
+
             # Restore status indicator
             if self.widgets.get("status_indicator"):
                 self.widgets["status_indicator"].configure(
                     text="●",
                     text_color=self.config.SUCCESS_COLOR
                 )
-            
+
             # Stop recording
             self.core.execute_speech_operation("stop_listening", {})
-            
+
         except Exception as e:
             self.logger.log_exception(e, "Stop voice recording")
-    
+
     def _on_voice_text_received(self, text: str) -> None:
         """Handle recognized voice text and send directly"""
         try:
-            self._stop_voice_recording()
-            
             if text and text.strip():
                 # Log the voice input
                 self.logger.log_user_action("Voice Message Sent", f"Text: {text.strip()}")
-                
+
                 # Send the voice text directly as a message
                 self._process_ai_message(text.strip())
-                
+
+                # Add a message to indicate continuous mode is still active
+                self.root.after(1000, lambda: self._add_chat_message(
+                    "🎤 Sistema", 
+                    "Modo conversación continua activo. Puedes seguir hablando cuando quieras."
+                ))
+
             else:
                 # Only show error messages in chat, not recognition results
                 self._add_chat_message("⚠️ Dictado", 
                     "No se detectó voz clara. Habla más cerca del micrófono.")
-                
+
         except Exception as e:
             self.logger.log_exception(e, "Voice text processing")
             self._add_chat_message("❌ Dictado", f"Error procesando el texto: {str(e)}")
-    
+
     def _test_speech_recognition(self) -> None:
         """Test speech recognition system"""
         self._add_chat_message("🧪 Sistema", "Iniciando test de reconocimiento de voz...")
-        
+
         def run_test():
             try:
                 result = self.core.execute_speech_operation("test_recognition", {})
-                
+
                 if result.get("status") == "success":
                     recognized_text = result.get("recognized_text", "")
                     engine = result.get("engine", "unknown")
                     language = result.get("language", "unknown")
-                    
+
                     self.root.after(0, lambda: self._add_chat_message(
                         "✅ Test Exitoso",
                         f"Motor: {engine}\nIdioma: {language}\nTexto reconocido: \"{recognized_text}\""
@@ -908,36 +942,36 @@ class ThinkerMainWindow:
                         "❌ Test Fallido",
                         f"Error en el test: {error}"
                     ))
-                    
+
             except Exception as e:
                 self.root.after(0, lambda: self._add_chat_message(
                     "❌ Test Fallido",
                     f"Error durante el test: {str(e)}"
                 ))
-        
+
         # Run test in background
         ThreadingHelpers.run_in_background(run_test)
-    
+
     def _advanced_microphone_diagnosis(self) -> None:
         """Run advanced microphone diagnosis"""
         self._add_chat_message("🔧 Diagnóstico", "Iniciando diagnóstico avanzado del micrófono...")
-        
+
         def run_diagnosis():
             try:
                 result = self.core.execute_speech_operation("advanced_diagnosis", {})
-                
+
                 if result.get("status") == "success":
                     diagnosis = result.get("diagnosis", {})
-                    
+
                     # Create diagnosis report
                     report = "🔧 DIAGNÓSTICO AVANZADO DEL MICRÓFONO\n"
                     report += "=" * 50 + "\n\n"
-                    
+
                     # System info
                     sys_info = diagnosis.get("system_info", {})
                     report += f"💻 Sistema: {sys_info.get('platform', 'Unknown')} {sys_info.get('version', '')}\n"
                     report += f"🐍 Python: {sys_info.get('python_version', 'Unknown')}\n\n"
-                    
+
                     # PyAudio info
                     pyaudio_info = diagnosis.get("pyaudio_info", {})
                     if "error" in pyaudio_info:
@@ -945,11 +979,11 @@ class ThinkerMainWindow:
                     else:
                         report += f"🔊 PyAudio: v{pyaudio_info.get('version', 'Unknown')}\n"
                         report += f"📱 Dispositivos totales: {pyaudio_info.get('device_count', 0)}\n\n"
-                    
+
                     # Microphone info
                     mic_info = diagnosis.get("microphone_info", {})
                     input_devices = mic_info.get("input_devices", [])
-                    
+
                     report += f"🎤 Dispositivos de entrada encontrados: {len(input_devices)}\n"
                     if input_devices:
                         for i, device in enumerate(input_devices[:5]):  # Show first 5
@@ -958,54 +992,54 @@ class ThinkerMainWindow:
                             report += f"  ... y {len(input_devices) - 5} más\n"
                     else:
                         report += "  ❌ No se encontraron dispositivos de entrada\n"
-                    
+
                     report += f"\n📢 SpeechRecognition detectó: {mic_info.get('sr_count', 0)} micrófonos\n"
-                    
+
                     # Default device
                     default_device = mic_info.get("default_device")
                     if default_device:
                         report += f"🎯 Dispositivo por defecto: {default_device['name']}\n"
                     elif "default_device_error" in mic_info:
                         report += f"❌ Error dispositivo por defecto: {mic_info['default_device_error']}\n"
-                    
+
                     report += "\n"
-                    
+
                     # Recommendations
                     recommendations = diagnosis.get("recommendations", [])
                     if recommendations:
                         report += "💡 RECOMENDACIONES:\n"
                         for i, rec in enumerate(recommendations, 1):
                             report += f"  {i}. {rec}\n"
-                    
+
                     # Show in chat
                     self.root.after(0, lambda: self._add_chat_message("📋 Diagnóstico Completo", report))
-                    
+
                 else:
                     error = result.get("result", "Error desconocido")
                     self.root.after(0, lambda: self._add_chat_message("❌ Diagnóstico Fallido", f"Error: {error}"))
-                    
+
             except Exception as e:
                 self.root.after(0, lambda: self._add_chat_message(
                     "❌ Diagnóstico Fallido", 
                     f"Error durante el diagnóstico: {str(e)}"
                 ))
-        
+
         # Run diagnosis in background
         ThreadingHelpers.run_in_background(run_diagnosis)
 
-    
+
     # Menu action methods
     def _export_chat(self):
         """Export chat conversation to file"""
         from datetime import datetime
-        
+
         filename = UIHelpers.save_file(
             self.root,
             title="Exportar Conversación",
             default_extension=".txt",
             filetypes=[("Archivos de texto", "*.txt"), ("Todos los archivos", "*.*")]
         )
-        
+
         if filename:
             try:
                 chat_content = self.widgets["chat_display"].get("1.0", tk.END)
@@ -1013,20 +1047,20 @@ class ThinkerMainWindow:
                     f.write(f"Conversación Thinker AI - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
                     f.write("=" * 60 + "\n\n")
                     f.write(chat_content)
-                
+
                 UIHelpers.show_info_dialog(self.root, "Éxito", f"Conversación exportada a:\n{filename}")
                 self.logger.log_user_action("Chat Exported", filename)
-                
+
             except Exception as e:
                 UIHelpers.show_error_dialog(self.root, "Error", f"Error al exportar: {str(e)}")
                 self.logger.log_exception(e, "Chat export")
-    
+
     def _open_preferences(self):
         """Open preferences dialog (placeholder)"""
         UIHelpers.show_info_dialog(self.root, "Preferencias", 
                                   "Las preferencias estarán disponibles en futuras versiones.")
         self.logger.log_user_action("Open Preferences")
-    
+
     def _show_shortcuts(self):
         """Show keyboard shortcuts"""
         shortcuts_text = """
@@ -1043,13 +1077,13 @@ General:
 • F5: Actualizar estado
         """
         UIHelpers.show_info_dialog(self.root, "Atajos de Teclado", shortcuts_text)
-    
+
     def _restart_core(self): 
         """Restart core system"""
         self.core.stop()
         self.core.start()
         self.logger.log_user_action("Core Restarted")
-    
+
     def _show_system_status(self) -> None:
         """Show detailed system status including Qwen3-32B status"""
         status = self.core.get_system_status()
@@ -1057,7 +1091,7 @@ General:
         status_text += f"Core Status: {status['core_status']}\n"
         status_text += f"Session ID: {status['session_id']}\n"
         status_text += f"Uptime: {status['uptime']}\n\n"
-        
+
         # Check Qwen2.5-7B server status
         qwen_status = self._check_qwen_status()
         status_text += f"🤖 Qwen2.5-7B-Instruct-1M Model Status:\n"
@@ -1068,7 +1102,7 @@ General:
         if qwen_status.get('error'):
             status_text += f"  Error: {qwen_status['error']}\n"
         status_text += f"  Last Check: {qwen_status['last_check']}\n\n"
-        
+
         # Check Speech Recognition status
         speech_status = self._check_speech_status()
         status_text += f"🎤 Speech Recognition Status:\n"
@@ -1081,13 +1115,13 @@ General:
             status_text += f"  Last Recognition: {speech_status['last_recognition']}\n"
         if speech_status.get('error'):
             status_text += f"  Error: {speech_status['error']}\n\n"
-        
+
         status_text += f"📦 Active Modules ({len(status['active_modules'])}):\n"
         for module in status['active_modules']:
             status_text += f"  • {module}\n"
-        
+
         UIHelpers.show_info_dialog(self.root, "System Status", status_text)
-    
+
     def _check_qwen_status(self) -> Dict[str, Any]:
         """Check Qwen3-32B server status"""
         try:
@@ -1101,42 +1135,42 @@ General:
                 "server_url": "http://172.29.208.1:1234",
                 "last_check": datetime.now().isoformat()
             }
-    
+
     def _check_speech_status(self) -> Dict[str, Any]:
         """Check speech recognition status"""
         try:
             result = self.core.execute_speech_operation("get_status", {})
-            
+
             if result.get("status") == "error":
                 return {
                     "available": False,
                     "error": result.get("result", "Speech service not available")
                 }
-            
+
             # Return the speech service status
             status = result.copy()
             status["available"] = True
             return status
-            
+
         except Exception as e:
             return {
                 "available": False,
                 "error": str(e)
             }
-    
+
     def _test_qwen_connection(self) -> None:
         """Test Qwen2.5-7B-Instruct-1M connection with a simple message"""
         self._add_chat_message("💻 Sistema", "🧪 Iniciando test de conexión con Qwen2.5-7B-Instruct-1M...")
-        
+
         # Show processing
         self.widgets["send_button"].configure(state="disabled", text="🧪 Testing...")
-        
+
         def test_connection():
             """Background test function"""
             try:
                 from src.services.qwen_service import get_qwen_service
                 qwen_service = get_qwen_service()
-                
+
                 # Simple test message without streaming for quick test
                 result = qwen_service.chat(
                     message="Hola, ¿puedes responder brevemente que estás funcionando?",
@@ -1144,7 +1178,7 @@ General:
                     max_tokens=50,
                     stream=False  # Disable streaming for quick test
                 )
-                
+
                 if result.get("status") == "success":
                     response = result.get("result", "Test exitoso")
                     response_time = result.get("response_time", 0)
@@ -1158,7 +1192,7 @@ General:
                         "❌ Test Fallido",
                         f"Error en la conexión: {error}"
                     ))
-                    
+
             except Exception as e:
                 self.root.after(0, lambda: self._add_chat_message(
                     "❌ Test Fallido",
@@ -1169,10 +1203,10 @@ General:
                 self.root.after(0, lambda: self.widgets["send_button"].configure(
                     state="normal", text="📤 Enviar Mensaje"
                 ))
-        
+
         # Run test in background
         ThreadingHelpers.run_in_background(test_connection)
-    
+
     def _show_about(self) -> None:
         """Show about dialog"""
         about_text = (
@@ -1189,7 +1223,7 @@ General:
             "¡Disfruta conversando con tu asistente AI!"
         )
         UIHelpers.show_info_dialog(self.root, "Acerca de Thinker AI", about_text)
-    
+
     def _show_documentation(self) -> None:
         """Show documentation"""
         doc_text = (
@@ -1208,34 +1242,34 @@ General:
             "¿Necesitas ayuda? ¡Pregúntale directamente al AI!"
         )
         UIHelpers.show_info_dialog(self.root, "Documentación", doc_text)
-    
+
     def run(self) -> None:
         """Start the main application loop"""
         if not self.is_initialized:
             if not self.initialize():
                 self.logger.error("Failed to initialize main window")
                 return
-        
+
         self.logger.info("Starting main application loop")
-        
+
         try:
             self.root.mainloop()
         except Exception as e:
             self.logger.log_exception(e, "Main loop error")
         finally:
             self.shutdown()
-    
+
     def shutdown(self) -> None:
         """Shutdown the application with proper error handling"""
         # Prevent multiple shutdown calls
         if self.is_shutting_down:
             return
-            
+
         self.is_shutting_down = True
-        
+
         try:
             self.logger.info("Shutting down application")
-            
+
             # Stop core services first
             if self.core:
                 try:
@@ -1243,7 +1277,7 @@ General:
                     self.logger.info("Core services stopped successfully")
                 except Exception as e:
                     self.logger.log_exception(e, "Core shutdown error")
-            
+
             # Handle GUI cleanup with specific exception handling
             if self.root:
                 try:
@@ -1256,7 +1290,7 @@ General:
                         self.logger.info("GUI already destroyed - cleanup complete")
                     else:
                         raise UIError(f"GUI quit error: {str(e)}", "GUI_QUIT_FAILED")
-                
+
                 try:
                     # Then try to destroy the window
                     self.root.destroy()
@@ -1269,9 +1303,9 @@ General:
                         self.logger.info("GUI destroy command unavailable - window already cleaned up")
                     else:
                         raise UIError(f"GUI destroy error: {str(e)}", "GUI_DESTROY_FAILED")
-            
+
             self.logger.info("Application shutdown completed successfully")
-            
+
         except UIError as e:
             # Handle our custom UI errors with appropriate logging
             self.logger.error(f"UI shutdown error: {e.message} (Code: {e.error_code})")

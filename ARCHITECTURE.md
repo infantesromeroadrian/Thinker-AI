@@ -56,7 +56,6 @@ Usuario → GUI → Core Application → AI Services → Qwen2.5-7B → Respuest
 
 ```
 Thinker-AI-Aux/
-├── 📄 main.py                 # ✨ PUNTO DE ENTRADA PRINCIPAL
 ├── 📄 README.md               # 📚 Documentación del usuario
 ├── 📄 ARCHITECTURE.md         # 🏗️ Este documento
 ├── 📄 requirements.txt        # 📦 Dependencias Python
@@ -66,6 +65,7 @@ Thinker-AI-Aux/
 │   └── thinker_aux.log        # 📝 Log principal rotativo
 └── 📂 src/                    # 🎯 CÓDIGO FUENTE MODULAR
     ├── 📄 __init__.py         # 🐍 Paquete Python
+    ├── 📄 main.py             # ✨ PUNTO DE ENTRADA PRINCIPAL
     ├── 📂 config/             # ⚙️ CONFIGURACIÓN CENTRAL
     │   ├── __init__.py        
     │   └── config.py          # 🎛️ Configuración unificada
@@ -88,7 +88,7 @@ Thinker-AI-Aux/
 
 ## 🧩 Componentes Principales
 
-### 1. 🚀 **Punto de Entrada** (`main.py`)
+### 1. 🚀 **Punto de Entrada** (`src/main.py`)
 
 **Responsabilidades:**
 - Configuración del entorno de ejecución
@@ -308,7 +308,7 @@ logger.log_user_action("Chat Sent", "message: 45 chars")
 ### 2. 🚀 **Flujo de Inicialización**
 
 ```
-1. main.py → parse argumentos CLI
+1. src/main.py → parse argumentos CLI
      ↓
 2. setup_environment() → configurar variables
      ↓

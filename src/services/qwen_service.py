@@ -16,7 +16,7 @@ class QwenService:
     """Service to interact with Qwen2.5-7B-Instruct-1M model via local API"""
     
     def __init__(self, 
-                 base_url: str = "http://172.29.208.1:1234",
+                 base_url: str = "http://192.168.1.45:1234",
                  model_name: str = "qwen2.5-7b-instruct-1m"):
         self.base_url = base_url.rstrip('/')
         self.model_name = model_name

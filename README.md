@@ -65,7 +65,7 @@ Thinker-AI-Aux/
 │       ├── __init__.py
 │       ├── logger.py    # Professional logging
 │       └── helpers.py   # Helper utilities
-├── main.py              # Application entry point
+├── src/main.py         # Application entry point
 ├── requirements.txt     # Dependencies (includes requests, customtkinter)
 └── README.md           # This file
 ```
@@ -152,29 +152,29 @@ QWEN_MAX_RETRIES = 3
 
 3. **Run the application**:
    ```bash
-   python main.py
+   python -m src.main
    ```
 
 ### Command Line Options
 
 ```bash
 # Development mode (default)
-python main.py
+python -m src.main
 
 # Production mode
-python main.py --production
+python -m src.main --production
 
 # Skip startup banner
-python main.py --no-banner
+python -m src.main --no-banner
 
 # Enable debug logging
-python main.py --debug
+python -m src.main --debug
 
 # Show version information
-python main.py --version
+python -m src.main --version
 
 # Show help
-python main.py --help
+python -m src.main --help
 ```
 
 ## 💻 Usage

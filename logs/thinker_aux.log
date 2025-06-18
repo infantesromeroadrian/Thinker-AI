@@ -3326,3 +3326,1144 @@ _tkinter.TclError: can't invoke "destroy" command: application has been destroye
 2025-06-18 23:03:59 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: security_logger
 2025-06-18 23:03:59 | ThinkerCore | INFO     | info:78 | Thinker AI Core stopped successfully
 2025-06-18 23:03:59 | Main | INFO     | info:78 | Application shutdown completed
+2025-06-18 23:45:34 | Main | INFO     | _setup_logger:69 | Logger initialized for Main
+2025-06-18 23:45:34 | Main | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:45:34 | Main | INFO     | info:78 | Starting Thinker AI Auxiliary Window initialization
+2025-06-18 23:45:34 | Main | INFO     | info:78 | Environment configured: development
+2025-06-18 23:45:34 | ThinkerCore | INFO     | _setup_logger:69 | Logger initialized for ThinkerCore
+2025-06-18 23:45:34 | ThinkerCore | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:45:34 | ThinkerCore | INFO     | info:78 | ThinkerCore initialized with session 6f07d1ef
+2025-06-18 23:45:34 | TextProcessor | INFO     | _setup_logger:69 | Logger initialized for TextProcessor
+2025-06-18 23:45:34 | TextProcessor | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:45:34 | TextProcessor | INFO     | info:78 | TextProcessor initialized
+2025-06-18 23:45:34 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: text_processor
+2025-06-18 23:45:34 | CodeAnalyzer | INFO     | _setup_logger:69 | Logger initialized for CodeAnalyzer
+2025-06-18 23:45:34 | CodeAnalyzer | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:45:34 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer initialized
+2025-06-18 23:45:34 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: code_analyzer
+2025-06-18 23:45:34 | AssistantChat | INFO     | _setup_logger:69 | Logger initialized for AssistantChat
+2025-06-18 23:45:34 | AssistantChat | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:45:34 | QwenService | INFO     | _setup_logger:69 | Logger initialized for QwenService
+2025-06-18 23:45:34 | QwenService | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:45:34 | QwenService | INFO     | info:78 | QwenService initialized for qwen2.5-7b-instruct-1m at http://172.29.208.1:1234
+2025-06-18 23:45:39 | QwenService | WARNING  | warning:82 | ❌ Failed to connect to Qwen server: HTTPConnectionPool(host='172.29.208.1', port=1234): Max retries exceeded with url: /v1/models (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x108da9150>, 'Connection to 172.29.208.1 timed out. (connect timeout=5)'))
+2025-06-18 23:45:39 | AssistantChat | INFO     | info:78 | AssistantChat initialized with Qwen2.5-7B-Instruct-1M
+2025-06-18 23:45:39 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: assistant_chat
+2025-06-18 23:45:39 | SpeechModule | INFO     | _setup_logger:69 | Logger initialized for SpeechModule
+2025-06-18 23:45:39 | SpeechModule | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:45:39 | SpeechService | INFO     | _setup_logger:69 | Logger initialized for SpeechService
+2025-06-18 23:45:39 | SpeechService | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:45:39 | SpeechService | INFO     | info:78 | SpeechService initialized with google engine
+2025-06-18 23:45:39 | SpeechService | INFO     | info:78 | 🎤 Initializing microphone system...
+2025-06-18 23:45:39 | SpeechService | INFO     | info:78 | 🔍 Found 5 audio devices:
+2025-06-18 23:45:39 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-18 23:45:39 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-18 23:45:39 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-18 23:45:39 | SpeechService | INFO     | info:78 |   [3] Cluely
+2025-06-18 23:45:39 | SpeechService | INFO     | info:78 |   [4] Microsoft Teams Audio
+2025-06-18 23:45:39 | SpeechService | INFO     | info:78 | 🎤 Using default microphone device
+2025-06-18 23:45:43 | SpeechService | INFO     | info:78 | 🔧 Quick ambient noise calibration...
+2025-06-18 23:45:44 | SpeechService | INFO     | info:78 | ✅ Energy threshold set to: 701.3435771455956
+2025-06-18 23:45:44 | SpeechService | INFO     | info:78 | ✅ Microphone initialized successfully
+2025-06-18 23:45:44 | SpeechModule | INFO     | info:78 | SpeechModule initialized successfully
+2025-06-18 23:45:44 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: speech_service
+2025-06-18 23:45:44 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: network_scanner
+2025-06-18 23:45:44 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: vulnerability_checker
+2025-06-18 23:45:44 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: security_logger
+2025-06-18 23:45:44 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-18 23:45:44 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:45:44 | ThinkerAI | DEBUG    | debug:74 | Background thread started for _monitor_performance_loop
+2025-06-18 23:45:44 | ThinkerCore | INFO     | info:78 | Core modules initialized successfully
+2025-06-18 23:45:44 | ThinkerAI | INFO     | info:78 | Performance | _initialize_core_modules | Duration: 10.1884s | Args: 1, Kwargs: 0
+2025-06-18 23:45:44 | ThinkerCore | INFO     | info:78 | Starting Thinker AI Core...
+2025-06-18 23:45:44 | ThinkerAI | DEBUG    | debug:74 | JSON data read from /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-18 23:45:44 | ThinkerCore | DEBUG    | debug:74 | Application state loaded
+2025-06-18 23:45:44 | ThinkerAI | DEBUG    | debug:74 | Delayed execution scheduled: _auto_save_loop in 300s
+2025-06-18 23:45:44 | ThinkerCore | INFO     | info:78 | Thinker AI Core started successfully in 0.00s
+2025-06-18 23:45:44 | Main | INFO     | info:78 | Core services initialized successfully
+2025-06-18 23:45:44 | MainWindow | INFO     | _setup_logger:69 | Logger initialized for MainWindow
+2025-06-18 23:45:44 | MainWindow | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:45:44 | MainWindow | INFO     | info:78 | MainWindow initialized
+2025-06-18 23:45:44 | Main | INFO     | info:78 | Main window created successfully
+2025-06-18 23:45:44 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-18 23:45:44 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:45:44 | ThinkerAI | INFO     | info:78 | Performance | initialize_application | Duration: 10.1918s | Args: 1, Kwargs: 0
+2025-06-18 23:45:44 | Main | INFO     | _setup_logger:69 | Logger initialized for Main
+2025-06-18 23:45:44 | Main | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:45:44 | Main | INFO     | info:78 | Application loop starting
+2025-06-18 23:45:45 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-18 23:45:45 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:45:45 | ThinkerAI | DEBUG    | debug:74 | Window centered: 1000x700 at (400, 234)
+2025-06-18 23:45:45 | MainWindow | DEBUG    | debug:74 | Modern CustomTkinter window created
+2025-06-18 23:45:45 | MainWindow | DEBUG    | debug:74 | Modern CustomTkinter styling configured
+2025-06-18 23:45:45 | MainWindow | DEBUG    | debug:74 | Minimalist menu bar created
+2025-06-18 23:45:45 | MainWindow | DEBUG    | debug:74 | Minimalist AI Chat interface created
+2025-06-18 23:45:45 | MainWindow | DEBUG    | debug:74 | Minimalist status bar created
+2025-06-18 23:45:45 | MainWindow | DEBUG    | debug:74 | Event handlers setup
+2025-06-18 23:45:45 | ThinkerCore | INFO     | info:78 | Starting Thinker AI Core...
+2025-06-18 23:45:45 | ThinkerAI | DEBUG    | debug:74 | JSON data read from /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-18 23:45:45 | ThinkerCore | DEBUG    | debug:74 | Application state loaded
+2025-06-18 23:45:45 | ThinkerAI | DEBUG    | debug:74 | Delayed execution scheduled: _auto_save_loop in 300s
+2025-06-18 23:45:45 | ThinkerCore | INFO     | info:78 | Thinker AI Core started successfully in 0.00s
+2025-06-18 23:45:45 | MainWindow | INFO     | info:78 | Main window initialized successfully
+2025-06-18 23:45:45 | ThinkerAI | INFO     | info:78 | Performance | initialize | Duration: 0.6292s | Args: 1, Kwargs: 0
+2025-06-18 23:45:45 | MainWindow | INFO     | info:78 | Starting main application loop
+2025-06-18 23:45:48 | ThinkerCore | INFO     | info:78 | Speech operation: get_status
+2025-06-18 23:45:48 | SpeechService | INFO     | info:78 | 🎤 Found 5 audio devices
+2025-06-18 23:45:48 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-18 23:45:48 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-18 23:45:48 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-18 23:45:48 | SpeechService | INFO     | info:78 |   ... and 2 more devices
+2025-06-18 23:45:48 | SpeechService | INFO     | info:78 | ✅ Microphones detected - assuming available
+2025-06-18 23:45:48 | ThinkerCore | INFO     | info:78 | Speech operation: record_once
+2025-06-18 23:45:48 | SpeechService | INFO     | info:78 | 🎙️ Starting single recording...
+2025-06-18 23:45:48 | SpeechService | INFO     | info:78 | 🎤 Listening... (timeout: 3.0s, phrase limit: 8.0s)
+2025-06-18 23:45:49 | SpeechService | DEBUG    | debug:74 | 🔧 Energy threshold: 194.17520024497153
+2025-06-18 23:45:51 | SpeechService | INFO     | info:78 | ✅ Audio captured successfully
+2025-06-18 23:45:51 | SpeechService | INFO     | info:78 | 🧠 Processing audio...
+2025-06-18 23:45:53 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 1.99s
+2025-06-18 23:45:53 | ThinkerCore | INFO     | info:78 | Speech operation: stop_listening
+2025-06-18 23:45:53 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-18 23:45:53 | MainWindow | INFO     | info:78 | User Action | 23:45:53 | Voice Message Sent | Text: hola cómo estás
+2025-06-18 23:45:53 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-18 23:45:53 | AssistantChat | INFO     | info:78 | Processing chat message: 15 characters (streaming)
+2025-06-18 23:45:53 | QwenService | DEBUG    | debug:74 | Sending request to Qwen (fast_mode=True): 15 chars, max_tokens=1500
+2025-06-18 23:45:53 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming...
+2025-06-18 23:46:10 | ThinkerAI | INFO     | info:78 | User Action | 23:46:10 | Yes/No Dialog | Title: Confirmar Salida, Result: True
+2025-06-18 23:46:10 | MainWindow | INFO     | info:78 | User Action | 23:46:10 | Application close requested by user
+2025-06-18 23:46:10 | MainWindow | INFO     | info:78 | Shutting down application
+2025-06-18 23:46:10 | ThinkerCore | INFO     | info:78 | Stopping Thinker AI Core...
+2025-06-18 23:46:10 | ThinkerAI | DEBUG    | debug:74 | JSON data written to /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-18 23:46:10 | ThinkerCore | DEBUG    | debug:74 | Application state saved
+2025-06-18 23:46:10 | TextProcessor | INFO     | info:78 | TextProcessor shutdown
+2025-06-18 23:46:10 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: text_processor
+2025-06-18 23:46:10 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer shutdown
+2025-06-18 23:46:10 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: code_analyzer
+2025-06-18 23:46:10 | QwenService | DEBUG    | debug:74 | QwenService session closed
+2025-06-18 23:46:10 | AssistantChat | INFO     | info:78 | AssistantChat shutdown
+2025-06-18 23:46:10 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: assistant_chat
+2025-06-18 23:46:10 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-18 23:46:10 | SpeechService | INFO     | info:78 | SpeechService cleaned up
+2025-06-18 23:46:10 | SpeechModule | INFO     | info:78 | SpeechModule shutdown
+2025-06-18 23:46:10 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: speech_service
+2025-06-18 23:46:10 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: network_scanner
+2025-06-18 23:46:10 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: vulnerability_checker
+2025-06-18 23:46:10 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: security_logger
+2025-06-18 23:46:10 | ThinkerCore | INFO     | info:78 | Thinker AI Core stopped successfully
+2025-06-18 23:46:10 | MainWindow | INFO     | info:78 | Core services stopped successfully
+2025-06-18 23:46:10 | MainWindow | INFO     | info:78 | GUI mainloop quit successfully
+2025-06-18 23:46:10 | MainWindow | INFO     | info:78 | GUI window destroyed successfully
+2025-06-18 23:46:10 | MainWindow | INFO     | info:78 | Application shutdown completed successfully
+2025-06-18 23:46:10 | ThinkerCore | INFO     | info:78 | Stopping Thinker AI Core...
+2025-06-18 23:46:10 | ThinkerAI | DEBUG    | debug:74 | JSON data written to /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-18 23:46:10 | ThinkerCore | DEBUG    | debug:74 | Application state saved
+2025-06-18 23:46:10 | TextProcessor | INFO     | info:78 | TextProcessor shutdown
+2025-06-18 23:46:10 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: text_processor
+2025-06-18 23:46:10 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer shutdown
+2025-06-18 23:46:10 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: code_analyzer
+2025-06-18 23:46:10 | QwenService | DEBUG    | debug:74 | QwenService session closed
+2025-06-18 23:46:10 | AssistantChat | INFO     | info:78 | AssistantChat shutdown
+2025-06-18 23:46:10 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: assistant_chat
+2025-06-18 23:46:10 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-18 23:46:10 | SpeechService | INFO     | info:78 | SpeechService cleaned up
+2025-06-18 23:46:10 | SpeechModule | INFO     | info:78 | SpeechModule shutdown
+2025-06-18 23:46:10 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: speech_service
+2025-06-18 23:46:10 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: network_scanner
+2025-06-18 23:46:10 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: vulnerability_checker
+2025-06-18 23:46:10 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: security_logger
+2025-06-18 23:46:10 | ThinkerCore | INFO     | info:78 | Thinker AI Core stopped successfully
+2025-06-18 23:46:10 | Main | INFO     | info:78 | Application shutdown completed
+2025-06-18 23:46:23 | QwenService | ERROR    | error:86 | ❌ Error en streaming: HTTPConnectionPool(host='172.29.208.1', port=1234): Max retries exceeded with url: /v1/chat/completions (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x108d66450>, 'Connection to 172.29.208.1 timed out. (connect timeout=30)'))
+2025-06-18 23:46:23 | QwenService | INFO     | info:78 | 🔄 Fallback a modo regular...
+2025-06-18 23:46:23 | QwenService | DEBUG    | debug:74 | Using timeout: 30s (base: 30s)
+2025-06-18 23:46:23 | QwenService | INFO     | info:78 | 🔄 Enviando petición a Qwen (intento 1/3)...
+2025-06-18 23:46:41 | Main | INFO     | _setup_logger:69 | Logger initialized for Main
+2025-06-18 23:46:41 | Main | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:46:41 | Main | INFO     | info:78 | Starting Thinker AI Auxiliary Window initialization
+2025-06-18 23:46:41 | Main | INFO     | info:78 | Environment configured: development
+2025-06-18 23:46:41 | ThinkerCore | INFO     | _setup_logger:69 | Logger initialized for ThinkerCore
+2025-06-18 23:46:41 | ThinkerCore | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:46:41 | ThinkerCore | INFO     | info:78 | ThinkerCore initialized with session 0a3e0287
+2025-06-18 23:46:41 | TextProcessor | INFO     | _setup_logger:69 | Logger initialized for TextProcessor
+2025-06-18 23:46:41 | TextProcessor | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:46:41 | TextProcessor | INFO     | info:78 | TextProcessor initialized
+2025-06-18 23:46:41 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: text_processor
+2025-06-18 23:46:41 | CodeAnalyzer | INFO     | _setup_logger:69 | Logger initialized for CodeAnalyzer
+2025-06-18 23:46:41 | CodeAnalyzer | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:46:41 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer initialized
+2025-06-18 23:46:41 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: code_analyzer
+2025-06-18 23:46:41 | AssistantChat | INFO     | _setup_logger:69 | Logger initialized for AssistantChat
+2025-06-18 23:46:41 | AssistantChat | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:46:41 | QwenService | INFO     | _setup_logger:69 | Logger initialized for QwenService
+2025-06-18 23:46:41 | QwenService | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:46:41 | QwenService | INFO     | info:78 | QwenService initialized for qwen2.5-7b-instruct-1m at http://172.29.208.1:1234
+2025-06-18 23:46:46 | QwenService | WARNING  | warning:82 | ❌ Failed to connect to Qwen server: HTTPConnectionPool(host='172.29.208.1', port=1234): Max retries exceeded with url: /v1/models (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x1072497d0>, 'Connection to 172.29.208.1 timed out. (connect timeout=5)'))
+2025-06-18 23:46:46 | AssistantChat | INFO     | info:78 | AssistantChat initialized with Qwen2.5-7B-Instruct-1M
+2025-06-18 23:46:46 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: assistant_chat
+2025-06-18 23:46:46 | SpeechModule | INFO     | _setup_logger:69 | Logger initialized for SpeechModule
+2025-06-18 23:46:46 | SpeechModule | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:46:46 | SpeechService | INFO     | _setup_logger:69 | Logger initialized for SpeechService
+2025-06-18 23:46:46 | SpeechService | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:46:46 | SpeechService | INFO     | info:78 | SpeechService initialized with google engine
+2025-06-18 23:46:46 | SpeechService | INFO     | info:78 | 🎤 Initializing microphone system...
+2025-06-18 23:46:47 | SpeechService | INFO     | info:78 | 🔍 Found 5 audio devices:
+2025-06-18 23:46:47 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-18 23:46:47 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-18 23:46:47 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-18 23:46:47 | SpeechService | INFO     | info:78 |   [3] Cluely
+2025-06-18 23:46:47 | SpeechService | INFO     | info:78 |   [4] Microsoft Teams Audio
+2025-06-18 23:46:47 | SpeechService | INFO     | info:78 | 🎤 Using default microphone device
+2025-06-18 23:46:47 | SpeechService | INFO     | info:78 | 🔧 Quick ambient noise calibration...
+2025-06-18 23:46:48 | SpeechService | INFO     | info:78 | ✅ Energy threshold set to: 698.3919896262925
+2025-06-18 23:46:48 | SpeechService | INFO     | info:78 | ✅ Microphone initialized successfully
+2025-06-18 23:46:48 | SpeechModule | INFO     | info:78 | SpeechModule initialized successfully
+2025-06-18 23:46:48 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: speech_service
+2025-06-18 23:46:48 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: network_scanner
+2025-06-18 23:46:48 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: vulnerability_checker
+2025-06-18 23:46:48 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: security_logger
+2025-06-18 23:46:48 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-18 23:46:48 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:46:48 | ThinkerAI | DEBUG    | debug:74 | Background thread started for _monitor_performance_loop
+2025-06-18 23:46:48 | ThinkerCore | INFO     | info:78 | Core modules initialized successfully
+2025-06-18 23:46:48 | ThinkerAI | INFO     | info:78 | Performance | _initialize_core_modules | Duration: 6.9016s | Args: 1, Kwargs: 0
+2025-06-18 23:46:48 | ThinkerCore | INFO     | info:78 | Starting Thinker AI Core...
+2025-06-18 23:46:48 | ThinkerAI | DEBUG    | debug:74 | JSON data read from /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-18 23:46:48 | ThinkerCore | DEBUG    | debug:74 | Application state loaded
+2025-06-18 23:46:48 | ThinkerAI | DEBUG    | debug:74 | Delayed execution scheduled: _auto_save_loop in 300s
+2025-06-18 23:46:48 | ThinkerCore | INFO     | info:78 | Thinker AI Core started successfully in 0.00s
+2025-06-18 23:46:48 | Main | INFO     | info:78 | Core services initialized successfully
+2025-06-18 23:46:48 | MainWindow | INFO     | _setup_logger:69 | Logger initialized for MainWindow
+2025-06-18 23:46:48 | MainWindow | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:46:48 | MainWindow | INFO     | info:78 | MainWindow initialized
+2025-06-18 23:46:48 | Main | INFO     | info:78 | Main window created successfully
+2025-06-18 23:46:48 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-18 23:46:48 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:46:48 | ThinkerAI | INFO     | info:78 | Performance | initialize_application | Duration: 6.9040s | Args: 1, Kwargs: 0
+2025-06-18 23:46:48 | Main | INFO     | _setup_logger:69 | Logger initialized for Main
+2025-06-18 23:46:48 | Main | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:46:48 | Main | INFO     | info:78 | Application loop starting
+2025-06-18 23:46:49 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-18 23:46:49 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:46:49 | ThinkerAI | DEBUG    | debug:74 | Window centered: 1000x700 at (400, 234)
+2025-06-18 23:46:49 | MainWindow | DEBUG    | debug:74 | Modern CustomTkinter window created
+2025-06-18 23:46:49 | MainWindow | DEBUG    | debug:74 | Modern CustomTkinter styling configured
+2025-06-18 23:46:49 | MainWindow | DEBUG    | debug:74 | Minimalist menu bar created
+2025-06-18 23:46:49 | MainWindow | DEBUG    | debug:74 | Minimalist AI Chat interface created
+2025-06-18 23:46:49 | MainWindow | DEBUG    | debug:74 | Minimalist status bar created
+2025-06-18 23:46:49 | MainWindow | DEBUG    | debug:74 | Event handlers setup
+2025-06-18 23:46:49 | ThinkerCore | INFO     | info:78 | Starting Thinker AI Core...
+2025-06-18 23:46:49 | ThinkerAI | DEBUG    | debug:74 | JSON data read from /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-18 23:46:49 | ThinkerCore | DEBUG    | debug:74 | Application state loaded
+2025-06-18 23:46:49 | ThinkerAI | DEBUG    | debug:74 | Delayed execution scheduled: _auto_save_loop in 300s
+2025-06-18 23:46:49 | ThinkerCore | INFO     | info:78 | Thinker AI Core started successfully in 0.00s
+2025-06-18 23:46:49 | MainWindow | INFO     | info:78 | Main window initialized successfully
+2025-06-18 23:46:49 | ThinkerAI | INFO     | info:78 | Performance | initialize | Duration: 0.6467s | Args: 1, Kwargs: 0
+2025-06-18 23:46:49 | MainWindow | INFO     | info:78 | Starting main application loop
+2025-06-18 23:46:57 | ThinkerAI | INFO     | info:78 | User Action | 23:46:57 | Yes/No Dialog | Title: Confirmar Salida, Result: True
+2025-06-18 23:46:57 | MainWindow | INFO     | info:78 | User Action | 23:46:57 | Application close requested by user
+2025-06-18 23:46:57 | MainWindow | INFO     | info:78 | Shutting down application
+2025-06-18 23:46:57 | ThinkerCore | INFO     | info:78 | Stopping Thinker AI Core...
+2025-06-18 23:46:57 | ThinkerAI | DEBUG    | debug:74 | JSON data written to /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-18 23:46:57 | ThinkerCore | DEBUG    | debug:74 | Application state saved
+2025-06-18 23:46:57 | TextProcessor | INFO     | info:78 | TextProcessor shutdown
+2025-06-18 23:46:57 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: text_processor
+2025-06-18 23:46:57 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer shutdown
+2025-06-18 23:46:57 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: code_analyzer
+2025-06-18 23:46:57 | QwenService | DEBUG    | debug:74 | QwenService session closed
+2025-06-18 23:46:57 | AssistantChat | INFO     | info:78 | AssistantChat shutdown
+2025-06-18 23:46:57 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: assistant_chat
+2025-06-18 23:46:57 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-18 23:46:57 | SpeechService | INFO     | info:78 | SpeechService cleaned up
+2025-06-18 23:46:57 | SpeechModule | INFO     | info:78 | SpeechModule shutdown
+2025-06-18 23:46:57 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: speech_service
+2025-06-18 23:46:57 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: network_scanner
+2025-06-18 23:46:57 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: vulnerability_checker
+2025-06-18 23:46:57 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: security_logger
+2025-06-18 23:46:57 | ThinkerCore | INFO     | info:78 | Thinker AI Core stopped successfully
+2025-06-18 23:46:57 | MainWindow | INFO     | info:78 | Core services stopped successfully
+2025-06-18 23:46:57 | MainWindow | INFO     | info:78 | GUI mainloop quit successfully
+2025-06-18 23:46:57 | MainWindow | INFO     | info:78 | GUI window destroyed successfully
+2025-06-18 23:46:57 | MainWindow | INFO     | info:78 | Application shutdown completed successfully
+2025-06-18 23:46:57 | ThinkerCore | INFO     | info:78 | Stopping Thinker AI Core...
+2025-06-18 23:46:57 | ThinkerAI | DEBUG    | debug:74 | JSON data written to /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-18 23:46:57 | ThinkerCore | DEBUG    | debug:74 | Application state saved
+2025-06-18 23:46:57 | TextProcessor | INFO     | info:78 | TextProcessor shutdown
+2025-06-18 23:46:57 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: text_processor
+2025-06-18 23:46:57 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer shutdown
+2025-06-18 23:46:57 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: code_analyzer
+2025-06-18 23:46:57 | QwenService | DEBUG    | debug:74 | QwenService session closed
+2025-06-18 23:46:57 | AssistantChat | INFO     | info:78 | AssistantChat shutdown
+2025-06-18 23:46:57 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: assistant_chat
+2025-06-18 23:46:57 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-18 23:46:57 | SpeechService | INFO     | info:78 | SpeechService cleaned up
+2025-06-18 23:46:57 | SpeechModule | INFO     | info:78 | SpeechModule shutdown
+2025-06-18 23:46:57 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: speech_service
+2025-06-18 23:46:57 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: network_scanner
+2025-06-18 23:46:57 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: vulnerability_checker
+2025-06-18 23:46:57 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: security_logger
+2025-06-18 23:46:57 | ThinkerCore | INFO     | info:78 | Thinker AI Core stopped successfully
+2025-06-18 23:46:57 | Main | INFO     | info:78 | Application shutdown completed
+2025-06-18 23:49:32 | Main | INFO     | _setup_logger:69 | Logger initialized for Main
+2025-06-18 23:49:32 | Main | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:49:32 | Main | INFO     | info:78 | Starting Thinker AI Auxiliary Window initialization
+2025-06-18 23:49:32 | Main | INFO     | info:78 | Environment configured: development
+2025-06-18 23:49:32 | ThinkerCore | INFO     | _setup_logger:69 | Logger initialized for ThinkerCore
+2025-06-18 23:49:32 | ThinkerCore | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:49:32 | ThinkerCore | INFO     | info:78 | ThinkerCore initialized with session d92b38d0
+2025-06-18 23:49:32 | TextProcessor | INFO     | _setup_logger:69 | Logger initialized for TextProcessor
+2025-06-18 23:49:32 | TextProcessor | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:49:32 | TextProcessor | INFO     | info:78 | TextProcessor initialized
+2025-06-18 23:49:32 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: text_processor
+2025-06-18 23:49:32 | CodeAnalyzer | INFO     | _setup_logger:69 | Logger initialized for CodeAnalyzer
+2025-06-18 23:49:32 | CodeAnalyzer | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:49:32 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer initialized
+2025-06-18 23:49:32 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: code_analyzer
+2025-06-18 23:49:32 | AssistantChat | INFO     | _setup_logger:69 | Logger initialized for AssistantChat
+2025-06-18 23:49:32 | AssistantChat | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:49:32 | QwenService | INFO     | _setup_logger:69 | Logger initialized for QwenService
+2025-06-18 23:49:32 | QwenService | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:49:32 | QwenService | INFO     | info:78 | QwenService initialized for qwen2.5-7b-instruct-1m at http://192.168.1.45:1234
+2025-06-18 23:49:32 | QwenService | INFO     | info:78 | ✅ Successfully connected to Qwen server
+2025-06-18 23:49:32 | AssistantChat | INFO     | info:78 | AssistantChat initialized with Qwen2.5-7B-Instruct-1M
+2025-06-18 23:49:32 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: assistant_chat
+2025-06-18 23:49:32 | SpeechModule | INFO     | _setup_logger:69 | Logger initialized for SpeechModule
+2025-06-18 23:49:32 | SpeechModule | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:49:32 | SpeechService | INFO     | _setup_logger:69 | Logger initialized for SpeechService
+2025-06-18 23:49:32 | SpeechService | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:49:32 | SpeechService | INFO     | info:78 | SpeechService initialized with google engine
+2025-06-18 23:49:32 | SpeechService | INFO     | info:78 | 🎤 Initializing microphone system...
+2025-06-18 23:49:32 | SpeechService | INFO     | info:78 | 🔍 Found 5 audio devices:
+2025-06-18 23:49:32 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-18 23:49:32 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-18 23:49:32 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-18 23:49:32 | SpeechService | INFO     | info:78 |   [3] Cluely
+2025-06-18 23:49:32 | SpeechService | INFO     | info:78 |   [4] Microsoft Teams Audio
+2025-06-18 23:49:32 | SpeechService | INFO     | info:78 | 🎤 Using default microphone device
+2025-06-18 23:49:33 | SpeechService | INFO     | info:78 | 🔧 Quick ambient noise calibration...
+2025-06-18 23:49:33 | SpeechService | INFO     | info:78 | ✅ Energy threshold set to: 697.4326023287547
+2025-06-18 23:49:34 | SpeechService | INFO     | info:78 | ✅ Microphone initialized successfully
+2025-06-18 23:49:34 | SpeechModule | INFO     | info:78 | SpeechModule initialized successfully
+2025-06-18 23:49:34 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: speech_service
+2025-06-18 23:49:34 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: network_scanner
+2025-06-18 23:49:34 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: vulnerability_checker
+2025-06-18 23:49:34 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: security_logger
+2025-06-18 23:49:34 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-18 23:49:34 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:49:34 | ThinkerAI | DEBUG    | debug:74 | Background thread started for _monitor_performance_loop
+2025-06-18 23:49:34 | ThinkerCore | INFO     | info:78 | Core modules initialized successfully
+2025-06-18 23:49:34 | ThinkerAI | INFO     | info:78 | Performance | _initialize_core_modules | Duration: 1.3481s | Args: 1, Kwargs: 0
+2025-06-18 23:49:34 | ThinkerCore | INFO     | info:78 | Starting Thinker AI Core...
+2025-06-18 23:49:34 | ThinkerAI | DEBUG    | debug:74 | JSON data read from /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-18 23:49:34 | ThinkerCore | DEBUG    | debug:74 | Application state loaded
+2025-06-18 23:49:34 | ThinkerAI | DEBUG    | debug:74 | Delayed execution scheduled: _auto_save_loop in 300s
+2025-06-18 23:49:34 | ThinkerCore | INFO     | info:78 | Thinker AI Core started successfully in 0.00s
+2025-06-18 23:49:34 | Main | INFO     | info:78 | Core services initialized successfully
+2025-06-18 23:49:34 | MainWindow | INFO     | _setup_logger:69 | Logger initialized for MainWindow
+2025-06-18 23:49:34 | MainWindow | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:49:34 | MainWindow | INFO     | info:78 | MainWindow initialized
+2025-06-18 23:49:34 | Main | INFO     | info:78 | Main window created successfully
+2025-06-18 23:49:34 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-18 23:49:34 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:49:34 | ThinkerAI | INFO     | info:78 | Performance | initialize_application | Duration: 1.3520s | Args: 1, Kwargs: 0
+2025-06-18 23:49:34 | Main | INFO     | _setup_logger:69 | Logger initialized for Main
+2025-06-18 23:49:34 | Main | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:49:34 | Main | INFO     | info:78 | Application loop starting
+2025-06-18 23:49:34 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-18 23:49:34 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-18 23:49:34 | ThinkerAI | DEBUG    | debug:74 | Window centered: 1000x700 at (400, 234)
+2025-06-18 23:49:34 | MainWindow | DEBUG    | debug:74 | Modern CustomTkinter window created
+2025-06-18 23:49:34 | MainWindow | DEBUG    | debug:74 | Modern CustomTkinter styling configured
+2025-06-18 23:49:34 | MainWindow | DEBUG    | debug:74 | Minimalist menu bar created
+2025-06-18 23:49:34 | MainWindow | DEBUG    | debug:74 | Minimalist AI Chat interface created
+2025-06-18 23:49:34 | MainWindow | DEBUG    | debug:74 | Minimalist status bar created
+2025-06-18 23:49:34 | MainWindow | DEBUG    | debug:74 | Event handlers setup
+2025-06-18 23:49:34 | ThinkerCore | INFO     | info:78 | Starting Thinker AI Core...
+2025-06-18 23:49:34 | ThinkerAI | DEBUG    | debug:74 | JSON data read from /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-18 23:49:34 | ThinkerCore | DEBUG    | debug:74 | Application state loaded
+2025-06-18 23:49:34 | ThinkerAI | DEBUG    | debug:74 | Delayed execution scheduled: _auto_save_loop in 300s
+2025-06-18 23:49:34 | ThinkerCore | INFO     | info:78 | Thinker AI Core started successfully in 0.00s
+2025-06-18 23:49:34 | MainWindow | INFO     | info:78 | Main window initialized successfully
+2025-06-18 23:49:34 | ThinkerAI | INFO     | info:78 | Performance | initialize | Duration: 0.5852s | Args: 1, Kwargs: 0
+2025-06-18 23:49:34 | MainWindow | INFO     | info:78 | Starting main application loop
+2025-06-18 23:49:37 | ThinkerCore | INFO     | info:78 | Speech operation: get_status
+2025-06-18 23:49:37 | SpeechService | INFO     | info:78 | 🎤 Found 5 audio devices
+2025-06-18 23:49:37 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-18 23:49:37 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-18 23:49:37 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-18 23:49:37 | SpeechService | INFO     | info:78 |   ... and 2 more devices
+2025-06-18 23:49:37 | SpeechService | INFO     | info:78 | ✅ Microphones detected - assuming available
+2025-06-18 23:49:37 | ThinkerCore | INFO     | info:78 | Speech operation: record_once
+2025-06-18 23:49:37 | SpeechService | INFO     | info:78 | 🎙️ Starting single recording...
+2025-06-18 23:49:37 | SpeechService | INFO     | info:78 | 🎤 Listening... (timeout: 3.0s, phrase limit: 8.0s)
+2025-06-18 23:49:38 | SpeechService | DEBUG    | debug:74 | 🔧 Energy threshold: 185.0822371062108
+2025-06-18 23:49:40 | SpeechService | INFO     | info:78 | ✅ Audio captured successfully
+2025-06-18 23:49:40 | SpeechService | INFO     | info:78 | 🧠 Processing audio...
+2025-06-18 23:49:41 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 1.39s
+2025-06-18 23:49:41 | ThinkerCore | INFO     | info:78 | Speech operation: stop_listening
+2025-06-18 23:49:41 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-18 23:49:41 | MainWindow | INFO     | info:78 | User Action | 23:49:41 | Voice Message Sent | Text: hola cómo estás
+2025-06-18 23:49:41 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-18 23:49:41 | AssistantChat | INFO     | info:78 | Processing chat message: 15 characters (streaming)
+2025-06-18 23:49:41 | QwenService | DEBUG    | debug:74 | Sending request to Qwen (fast_mode=True): 15 chars, max_tokens=1500
+2025-06-18 23:49:41 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming...
+2025-06-18 23:49:43 | QwenService | INFO     | info:78 | ✅ Streaming completado
+2025-06-18 23:49:43 | QwenService | INFO     | info:78 | ✅ Qwen response received in 2.04s (streaming)
+2025-06-18 23:49:43 | SpeechService | INFO     | info:78 | ✅ Recognized: 'hola cómo estás'
+2025-06-18 23:49:43 | SpeechService | DEBUG    | debug:74 | 🏁 Recording session ended
+2025-06-18 23:49:45 | ThinkerCore | INFO     | info:78 | Speech operation: get_status
+2025-06-18 23:49:45 | SpeechService | INFO     | info:78 | 🎤 Found 5 audio devices
+2025-06-18 23:49:45 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-18 23:49:45 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-18 23:49:45 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-18 23:49:45 | SpeechService | INFO     | info:78 |   ... and 2 more devices
+2025-06-18 23:49:45 | SpeechService | INFO     | info:78 | ✅ Microphones detected - assuming available
+2025-06-18 23:49:45 | ThinkerCore | INFO     | info:78 | Speech operation: record_once
+2025-06-18 23:49:45 | SpeechService | INFO     | info:78 | 🎙️ Starting single recording...
+2025-06-18 23:49:45 | SpeechService | INFO     | info:78 | 🎤 Listening... (timeout: 3.0s, phrase limit: 8.0s)
+2025-06-18 23:49:46 | SpeechService | DEBUG    | debug:74 | 🔧 Energy threshold: 415.12459825099523
+2025-06-18 23:49:47 | SpeechService | INFO     | info:78 | ✅ Audio captured successfully
+2025-06-18 23:49:47 | SpeechService | INFO     | info:78 | 🧠 Processing audio...
+2025-06-18 23:49:48 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 0.79s
+2025-06-18 23:49:48 | ThinkerCore | INFO     | info:78 | Speech operation: stop_listening
+2025-06-18 23:49:48 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-18 23:49:48 | MainWindow | INFO     | info:78 | User Action | 23:49:48 | Voice Message Sent | Text: la capital de España
+2025-06-18 23:49:48 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-18 23:49:48 | AssistantChat | INFO     | info:78 | Processing chat message: 20 characters (streaming)
+2025-06-18 23:49:48 | QwenService | DEBUG    | debug:74 | Sending request to Qwen (fast_mode=True): 20 chars, max_tokens=1500
+2025-06-18 23:49:48 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming...
+2025-06-18 23:49:50 | QwenService | INFO     | info:78 | ✅ Streaming completado
+2025-06-18 23:49:50 | QwenService | INFO     | info:78 | ✅ Qwen response received in 1.63s (streaming)
+2025-06-18 23:49:50 | SpeechService | INFO     | info:78 | ✅ Recognized: 'la capital de España'
+2025-06-18 23:49:50 | SpeechService | DEBUG    | debug:74 | 🏁 Recording session ended
+2025-06-18 23:49:51 | ThinkerCore | INFO     | info:78 | Speech operation: get_status
+2025-06-18 23:49:51 | SpeechService | INFO     | info:78 | 🎤 Found 5 audio devices
+2025-06-18 23:49:51 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-18 23:49:51 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-18 23:49:51 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-18 23:49:51 | SpeechService | INFO     | info:78 |   ... and 2 more devices
+2025-06-18 23:49:51 | SpeechService | INFO     | info:78 | ✅ Microphones detected - assuming available
+2025-06-18 23:49:51 | ThinkerCore | INFO     | info:78 | Speech operation: record_once
+2025-06-18 23:49:51 | SpeechService | INFO     | info:78 | 🎙️ Starting single recording...
+2025-06-18 23:49:51 | SpeechService | INFO     | info:78 | 🎤 Listening... (timeout: 3.0s, phrase limit: 8.0s)
+2025-06-18 23:49:52 | SpeechService | DEBUG    | debug:74 | 🔧 Energy threshold: 509.232431142134
+2025-06-18 23:49:55 | SpeechService | INFO     | info:78 | ✅ Audio captured successfully
+2025-06-18 23:49:55 | SpeechService | INFO     | info:78 | 🧠 Processing audio...
+2025-06-18 23:49:55 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 0.62s
+2025-06-18 23:49:55 | ThinkerCore | INFO     | info:78 | Speech operation: stop_listening
+2025-06-18 23:49:55 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-18 23:49:55 | MainWindow | INFO     | info:78 | User Action | 23:49:55 | Voice Message Sent | Text: la capital de Cuba
+2025-06-18 23:49:55 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-18 23:49:55 | AssistantChat | INFO     | info:78 | Processing chat message: 18 characters (streaming)
+2025-06-18 23:49:55 | QwenService | DEBUG    | debug:74 | Sending request to Qwen (fast_mode=True): 18 chars, max_tokens=1500
+2025-06-18 23:49:55 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming...
+2025-06-18 23:49:56 | QwenService | INFO     | info:78 | ✅ Streaming completado
+2025-06-18 23:49:56 | QwenService | INFO     | info:78 | ✅ Qwen response received in 1.06s (streaming)
+2025-06-18 23:49:56 | SpeechService | INFO     | info:78 | ✅ Recognized: 'la capital de Cuba'
+2025-06-18 23:49:56 | SpeechService | DEBUG    | debug:74 | 🏁 Recording session ended
+2025-06-18 23:50:04 | ThinkerAI | INFO     | info:78 | User Action | 23:50:04 | Yes/No Dialog | Title: Confirmar Salida, Result: True
+2025-06-18 23:50:04 | MainWindow | INFO     | info:78 | User Action | 23:50:04 | Application close requested by user
+2025-06-18 23:50:04 | MainWindow | INFO     | info:78 | Shutting down application
+2025-06-18 23:50:04 | ThinkerCore | INFO     | info:78 | Stopping Thinker AI Core...
+2025-06-18 23:50:04 | ThinkerAI | DEBUG    | debug:74 | JSON data written to /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-18 23:50:04 | ThinkerCore | DEBUG    | debug:74 | Application state saved
+2025-06-18 23:50:04 | TextProcessor | INFO     | info:78 | TextProcessor shutdown
+2025-06-18 23:50:04 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: text_processor
+2025-06-18 23:50:04 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer shutdown
+2025-06-18 23:50:04 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: code_analyzer
+2025-06-18 23:50:04 | QwenService | DEBUG    | debug:74 | QwenService session closed
+2025-06-18 23:50:04 | AssistantChat | INFO     | info:78 | AssistantChat shutdown
+2025-06-18 23:50:04 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: assistant_chat
+2025-06-18 23:50:04 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-18 23:50:04 | SpeechService | INFO     | info:78 | SpeechService cleaned up
+2025-06-18 23:50:04 | SpeechModule | INFO     | info:78 | SpeechModule shutdown
+2025-06-18 23:50:04 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: speech_service
+2025-06-18 23:50:04 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: network_scanner
+2025-06-18 23:50:04 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: vulnerability_checker
+2025-06-18 23:50:04 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: security_logger
+2025-06-18 23:50:04 | ThinkerCore | INFO     | info:78 | Thinker AI Core stopped successfully
+2025-06-18 23:50:04 | MainWindow | INFO     | info:78 | Core services stopped successfully
+2025-06-18 23:50:04 | MainWindow | INFO     | info:78 | GUI mainloop quit successfully
+2025-06-18 23:50:04 | MainWindow | INFO     | info:78 | GUI window destroyed successfully
+2025-06-18 23:50:04 | MainWindow | INFO     | info:78 | Application shutdown completed successfully
+2025-06-18 23:50:04 | ThinkerCore | INFO     | info:78 | Stopping Thinker AI Core...
+2025-06-18 23:50:04 | ThinkerAI | DEBUG    | debug:74 | JSON data written to /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-18 23:50:04 | ThinkerCore | DEBUG    | debug:74 | Application state saved
+2025-06-18 23:50:04 | TextProcessor | INFO     | info:78 | TextProcessor shutdown
+2025-06-18 23:50:04 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: text_processor
+2025-06-18 23:50:04 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer shutdown
+2025-06-18 23:50:04 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: code_analyzer
+2025-06-18 23:50:04 | QwenService | DEBUG    | debug:74 | QwenService session closed
+2025-06-18 23:50:04 | AssistantChat | INFO     | info:78 | AssistantChat shutdown
+2025-06-18 23:50:04 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: assistant_chat
+2025-06-18 23:50:04 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-18 23:50:04 | SpeechService | INFO     | info:78 | SpeechService cleaned up
+2025-06-18 23:50:04 | SpeechModule | INFO     | info:78 | SpeechModule shutdown
+2025-06-18 23:50:04 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: speech_service
+2025-06-18 23:50:04 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: network_scanner
+2025-06-18 23:50:04 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: vulnerability_checker
+2025-06-18 23:50:04 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: security_logger
+2025-06-18 23:50:04 | ThinkerCore | INFO     | info:78 | Thinker AI Core stopped successfully
+2025-06-18 23:50:04 | Main | INFO     | info:78 | Application shutdown completed
+2025-06-19 00:00:17 | Main | INFO     | _setup_logger:69 | Logger initialized for Main
+2025-06-19 00:00:17 | Main | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:00:17 | Main | INFO     | info:78 | Starting Thinker AI Auxiliary Window initialization
+2025-06-19 00:00:17 | Main | INFO     | info:78 | Environment configured: development
+2025-06-19 00:00:17 | ThinkerCore | INFO     | _setup_logger:69 | Logger initialized for ThinkerCore
+2025-06-19 00:00:17 | ThinkerCore | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:00:17 | ThinkerCore | INFO     | info:78 | ThinkerCore initialized with session 15594de9
+2025-06-19 00:00:17 | TextProcessor | INFO     | _setup_logger:69 | Logger initialized for TextProcessor
+2025-06-19 00:00:17 | TextProcessor | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:00:17 | TextProcessor | INFO     | info:78 | TextProcessor initialized
+2025-06-19 00:00:17 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: text_processor
+2025-06-19 00:00:17 | CodeAnalyzer | INFO     | _setup_logger:69 | Logger initialized for CodeAnalyzer
+2025-06-19 00:00:17 | CodeAnalyzer | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:00:17 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer initialized
+2025-06-19 00:00:17 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: code_analyzer
+2025-06-19 00:00:17 | AssistantChat | INFO     | _setup_logger:69 | Logger initialized for AssistantChat
+2025-06-19 00:00:17 | AssistantChat | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:00:17 | QwenService | INFO     | _setup_logger:69 | Logger initialized for QwenService
+2025-06-19 00:00:17 | QwenService | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:00:17 | QwenService | INFO     | info:78 | QwenService initialized for qwen2.5-7b-instruct-1m at http://192.168.1.45:1234
+2025-06-19 00:00:17 | QwenService | INFO     | info:78 | ✅ Successfully connected to Qwen server
+2025-06-19 00:00:17 | AssistantChat | INFO     | info:78 | AssistantChat initialized with Qwen2.5-7B-Instruct-1M
+2025-06-19 00:00:17 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: assistant_chat
+2025-06-19 00:00:17 | SpeechModule | INFO     | _setup_logger:69 | Logger initialized for SpeechModule
+2025-06-19 00:00:17 | SpeechModule | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:00:17 | SpeechService | INFO     | _setup_logger:69 | Logger initialized for SpeechService
+2025-06-19 00:00:17 | SpeechService | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:00:17 | SpeechService | INFO     | info:78 | SpeechService initialized with google engine
+2025-06-19 00:00:17 | SpeechService | INFO     | info:78 | 🎤 Initializing microphone system...
+2025-06-19 00:00:17 | SpeechService | INFO     | info:78 | 🔍 Found 5 audio devices:
+2025-06-19 00:00:17 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-19 00:00:17 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-19 00:00:17 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-19 00:00:17 | SpeechService | INFO     | info:78 |   [3] Cluely
+2025-06-19 00:00:17 | SpeechService | INFO     | info:78 |   [4] Microsoft Teams Audio
+2025-06-19 00:00:17 | SpeechService | INFO     | info:78 | 🎤 Using default microphone device
+2025-06-19 00:00:19 | SpeechService | INFO     | info:78 | 🔧 Quick ambient noise calibration...
+2025-06-19 00:00:20 | SpeechService | INFO     | info:78 | ✅ Energy threshold set to: 753.277652137903
+2025-06-19 00:00:20 | SpeechService | INFO     | info:78 | ✅ Microphone initialized successfully
+2025-06-19 00:00:20 | SpeechModule | INFO     | info:78 | SpeechModule initialized successfully
+2025-06-19 00:00:20 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: speech_service
+2025-06-19 00:00:20 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: network_scanner
+2025-06-19 00:00:20 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: vulnerability_checker
+2025-06-19 00:00:20 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: security_logger
+2025-06-19 00:00:20 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-19 00:00:20 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:00:20 | ThinkerAI | DEBUG    | debug:74 | Background thread started for _monitor_performance_loop
+2025-06-19 00:00:20 | ThinkerCore | INFO     | info:78 | Core modules initialized successfully
+2025-06-19 00:00:20 | ThinkerAI | INFO     | info:78 | Performance | _initialize_core_modules | Duration: 3.0475s | Args: 1, Kwargs: 0
+2025-06-19 00:00:20 | ThinkerCore | INFO     | info:78 | Starting Thinker AI Core...
+2025-06-19 00:00:20 | ThinkerAI | DEBUG    | debug:74 | JSON data read from /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-19 00:00:20 | ThinkerCore | DEBUG    | debug:74 | Application state loaded
+2025-06-19 00:00:20 | ThinkerAI | DEBUG    | debug:74 | Delayed execution scheduled: _auto_save_loop in 300s
+2025-06-19 00:00:20 | ThinkerCore | INFO     | info:78 | Thinker AI Core started successfully in 0.00s
+2025-06-19 00:00:20 | Main | INFO     | info:78 | Core services initialized successfully
+2025-06-19 00:00:20 | MainWindow | INFO     | _setup_logger:69 | Logger initialized for MainWindow
+2025-06-19 00:00:20 | MainWindow | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:00:20 | MainWindow | INFO     | info:78 | MainWindow initialized
+2025-06-19 00:00:20 | Main | INFO     | info:78 | Main window created successfully
+2025-06-19 00:00:20 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-19 00:00:20 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:00:20 | ThinkerAI | INFO     | info:78 | Performance | initialize_application | Duration: 3.0505s | Args: 1, Kwargs: 0
+2025-06-19 00:00:20 | Main | INFO     | _setup_logger:69 | Logger initialized for Main
+2025-06-19 00:00:20 | Main | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:00:20 | Main | INFO     | info:78 | Application loop starting
+2025-06-19 00:00:20 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-19 00:00:20 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:00:20 | ThinkerAI | DEBUG    | debug:74 | Window centered: 1000x700 at (400, 234)
+2025-06-19 00:00:20 | MainWindow | DEBUG    | debug:74 | Modern CustomTkinter window created
+2025-06-19 00:00:20 | MainWindow | DEBUG    | debug:74 | Modern CustomTkinter styling configured
+2025-06-19 00:00:20 | MainWindow | DEBUG    | debug:74 | Minimalist menu bar created
+2025-06-19 00:00:20 | MainWindow | DEBUG    | debug:74 | Minimalist AI Chat interface created
+2025-06-19 00:00:20 | MainWindow | DEBUG    | debug:74 | Minimalist status bar created
+2025-06-19 00:00:20 | MainWindow | DEBUG    | debug:74 | Event handlers setup
+2025-06-19 00:00:20 | ThinkerCore | INFO     | info:78 | Starting Thinker AI Core...
+2025-06-19 00:00:20 | ThinkerAI | DEBUG    | debug:74 | JSON data read from /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-19 00:00:20 | ThinkerCore | DEBUG    | debug:74 | Application state loaded
+2025-06-19 00:00:20 | ThinkerAI | DEBUG    | debug:74 | Delayed execution scheduled: _auto_save_loop in 300s
+2025-06-19 00:00:20 | ThinkerCore | INFO     | info:78 | Thinker AI Core started successfully in 0.01s
+2025-06-19 00:00:20 | MainWindow | INFO     | info:78 | Main window initialized successfully
+2025-06-19 00:00:20 | ThinkerAI | INFO     | info:78 | Performance | initialize | Duration: 0.5403s | Args: 1, Kwargs: 0
+2025-06-19 00:00:20 | MainWindow | INFO     | info:78 | Starting main application loop
+2025-06-19 00:00:27 | ThinkerCore | INFO     | info:78 | Speech operation: get_status
+2025-06-19 00:00:27 | SpeechService | INFO     | info:78 | 🎤 Found 5 audio devices
+2025-06-19 00:00:27 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-19 00:00:27 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-19 00:00:27 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-19 00:00:27 | SpeechService | INFO     | info:78 |   ... and 2 more devices
+2025-06-19 00:00:27 | SpeechService | INFO     | info:78 | ✅ Microphones detected - assuming available
+2025-06-19 00:00:27 | ThinkerCore | INFO     | info:78 | Speech operation: record_once
+2025-06-19 00:00:27 | SpeechService | INFO     | info:78 | 🎙️ Starting single recording...
+2025-06-19 00:00:27 | SpeechService | INFO     | info:78 | 🎤 Listening... (timeout: 3.0s, phrase limit: 8.0s)
+2025-06-19 00:00:29 | SpeechService | DEBUG    | debug:74 | 🔧 Energy threshold: 210.27969684141772
+2025-06-19 00:00:30 | SpeechService | INFO     | info:78 | ✅ Audio captured successfully
+2025-06-19 00:00:30 | SpeechService | INFO     | info:78 | 🧠 Processing audio...
+2025-06-19 00:00:31 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 0.46s
+2025-06-19 00:00:31 | ThinkerCore | INFO     | info:78 | Speech operation: stop_listening
+2025-06-19 00:00:31 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-19 00:00:31 | MainWindow | INFO     | info:78 | User Action | 00:00:31 | Voice Message Sent | Text: hola cómo estás
+2025-06-19 00:00:31 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-19 00:00:31 | AssistantChat | INFO     | info:78 | Processing chat message: 15 characters (streaming)
+2025-06-19 00:00:31 | QwenService | DEBUG    | debug:74 | Sending request to Qwen (fast_mode=True): 15 chars, max_tokens=1500
+2025-06-19 00:00:31 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming...
+2025-06-19 00:00:32 | QwenService | INFO     | info:78 | ✅ Streaming completado
+2025-06-19 00:00:32 | QwenService | INFO     | info:78 | ✅ Qwen response received in 1.54s (streaming)
+2025-06-19 00:00:32 | SpeechService | INFO     | info:78 | ✅ Recognized: 'hola cómo estás'
+2025-06-19 00:00:32 | SpeechService | DEBUG    | debug:74 | 🏁 Recording session ended
+2025-06-19 00:00:35 | ThinkerCore | INFO     | info:78 | Speech operation: get_status
+2025-06-19 00:00:35 | SpeechService | INFO     | info:78 | 🎤 Found 5 audio devices
+2025-06-19 00:00:35 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-19 00:00:35 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-19 00:00:35 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-19 00:00:35 | SpeechService | INFO     | info:78 |   ... and 2 more devices
+2025-06-19 00:00:35 | SpeechService | INFO     | info:78 | ✅ Microphones detected - assuming available
+2025-06-19 00:00:35 | ThinkerCore | INFO     | info:78 | Speech operation: record_once
+2025-06-19 00:00:35 | SpeechService | INFO     | info:78 | 🎙️ Starting single recording...
+2025-06-19 00:00:35 | SpeechService | INFO     | info:78 | 🎤 Listening... (timeout: 3.0s, phrase limit: 8.0s)
+2025-06-19 00:00:36 | SpeechService | DEBUG    | debug:74 | 🔧 Energy threshold: 561.3021528101606
+2025-06-19 00:00:38 | SpeechService | INFO     | info:78 | ✅ Audio captured successfully
+2025-06-19 00:00:38 | SpeechService | INFO     | info:78 | 🧠 Processing audio...
+2025-06-19 00:00:39 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 0.72s
+2025-06-19 00:00:39 | ThinkerCore | INFO     | info:78 | Speech operation: stop_listening
+2025-06-19 00:00:39 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-19 00:00:39 | MainWindow | INFO     | info:78 | User Action | 00:00:39 | Voice Message Sent | Text: la capital de Estados Unidos
+2025-06-19 00:00:39 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-19 00:00:39 | AssistantChat | INFO     | info:78 | Processing chat message: 28 characters (streaming)
+2025-06-19 00:00:39 | QwenService | DEBUG    | debug:74 | Sending request to Qwen (fast_mode=True): 28 chars, max_tokens=1500
+2025-06-19 00:00:39 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming...
+2025-06-19 00:00:40 | QwenService | INFO     | info:78 | ✅ Streaming completado
+2025-06-19 00:00:40 | QwenService | INFO     | info:78 | ✅ Qwen response received in 1.27s (streaming)
+2025-06-19 00:00:40 | SpeechService | INFO     | info:78 | ✅ Recognized: 'la capital de Estados Unidos'
+2025-06-19 00:00:40 | SpeechService | DEBUG    | debug:74 | 🏁 Recording session ended
+2025-06-19 00:00:42 | ThinkerCore | INFO     | info:78 | Speech operation: get_status
+2025-06-19 00:00:42 | SpeechService | INFO     | info:78 | 🎤 Found 5 audio devices
+2025-06-19 00:00:42 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-19 00:00:42 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-19 00:00:42 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-19 00:00:42 | SpeechService | INFO     | info:78 |   ... and 2 more devices
+2025-06-19 00:00:42 | SpeechService | INFO     | info:78 | ✅ Microphones detected - assuming available
+2025-06-19 00:00:42 | ThinkerCore | INFO     | info:78 | Speech operation: record_once
+2025-06-19 00:00:42 | SpeechService | INFO     | info:78 | 🎙️ Starting single recording...
+2025-06-19 00:00:42 | SpeechService | INFO     | info:78 | 🎤 Listening... (timeout: 3.0s, phrase limit: 8.0s)
+2025-06-19 00:00:43 | SpeechService | DEBUG    | debug:74 | 🔧 Energy threshold: 567.320030520786
+2025-06-19 00:00:44 | SpeechService | INFO     | info:78 | ✅ Audio captured successfully
+2025-06-19 00:00:44 | SpeechService | INFO     | info:78 | 🧠 Processing audio...
+2025-06-19 00:00:45 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 0.58s
+2025-06-19 00:00:45 | ThinkerCore | INFO     | info:78 | Speech operation: stop_listening
+2025-06-19 00:00:45 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-19 00:00:45 | MainWindow | INFO     | info:78 | User Action | 00:00:45 | Voice Message Sent | Text: silicon
+2025-06-19 00:00:45 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-19 00:00:45 | AssistantChat | INFO     | info:78 | Processing chat message: 7 characters (streaming)
+2025-06-19 00:00:45 | QwenService | DEBUG    | debug:74 | Sending request to Qwen (fast_mode=True): 7 chars, max_tokens=1500
+2025-06-19 00:00:45 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming...
+2025-06-19 00:00:50 | QwenService | INFO     | info:78 | ✅ Streaming completado
+2025-06-19 00:00:50 | QwenService | INFO     | info:78 | ✅ Qwen response received in 4.93s (streaming)
+2025-06-19 00:00:50 | SpeechService | INFO     | info:78 | ✅ Recognized: 'silicon'
+2025-06-19 00:00:50 | SpeechService | DEBUG    | debug:74 | 🏁 Recording session ended
+2025-06-19 00:00:51 | ThinkerCore | INFO     | info:78 | Speech operation: get_status
+2025-06-19 00:00:51 | SpeechService | INFO     | info:78 | 🎤 Found 5 audio devices
+2025-06-19 00:00:51 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-19 00:00:51 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-19 00:00:51 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-19 00:00:51 | SpeechService | INFO     | info:78 |   ... and 2 more devices
+2025-06-19 00:00:51 | SpeechService | INFO     | info:78 | ✅ Microphones detected - assuming available
+2025-06-19 00:00:51 | ThinkerCore | INFO     | info:78 | Speech operation: record_once
+2025-06-19 00:00:51 | SpeechService | INFO     | info:78 | 🎙️ Starting single recording...
+2025-06-19 00:00:51 | SpeechService | INFO     | info:78 | 🎤 Listening... (timeout: 3.0s, phrase limit: 8.0s)
+2025-06-19 00:00:52 | SpeechService | DEBUG    | debug:74 | 🔧 Energy threshold: 445.0463711966819
+2025-06-19 00:00:55 | SpeechService | INFO     | info:78 | ✅ Audio captured successfully
+2025-06-19 00:00:55 | SpeechService | INFO     | info:78 | 🧠 Processing audio...
+2025-06-19 00:00:56 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 0.92s
+2025-06-19 00:00:56 | ThinkerCore | INFO     | info:78 | Speech operation: stop_listening
+2025-06-19 00:00:56 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-19 00:00:56 | MainWindow | INFO     | info:78 | User Action | 00:00:56 | Voice Message Sent | Text: dónde está ubicado silicon valle
+2025-06-19 00:00:56 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-19 00:00:56 | AssistantChat | INFO     | info:78 | Processing chat message: 32 characters (streaming)
+2025-06-19 00:00:56 | QwenService | DEBUG    | debug:74 | Sending request to Qwen (fast_mode=True): 32 chars, max_tokens=1500
+2025-06-19 00:00:56 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming...
+2025-06-19 00:01:05 | QwenService | INFO     | info:78 | ✅ Streaming completado
+2025-06-19 00:01:05 | QwenService | INFO     | info:78 | ✅ Qwen response received in 8.75s (streaming)
+2025-06-19 00:01:05 | SpeechService | INFO     | info:78 | ✅ Recognized: 'dónde está ubicado silicon valle'
+2025-06-19 00:01:05 | SpeechService | DEBUG    | debug:74 | 🏁 Recording session ended
+2025-06-19 00:01:09 | ThinkerAI | INFO     | info:78 | User Action | 00:01:09 | Yes/No Dialog | Title: Confirmar Salida, Result: True
+2025-06-19 00:01:09 | MainWindow | INFO     | info:78 | User Action | 00:01:09 | Application close requested by user
+2025-06-19 00:01:09 | MainWindow | INFO     | info:78 | Shutting down application
+2025-06-19 00:01:09 | ThinkerCore | INFO     | info:78 | Stopping Thinker AI Core...
+2025-06-19 00:01:09 | ThinkerAI | DEBUG    | debug:74 | JSON data written to /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-19 00:01:09 | ThinkerCore | DEBUG    | debug:74 | Application state saved
+2025-06-19 00:01:09 | TextProcessor | INFO     | info:78 | TextProcessor shutdown
+2025-06-19 00:01:09 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: text_processor
+2025-06-19 00:01:09 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer shutdown
+2025-06-19 00:01:09 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: code_analyzer
+2025-06-19 00:01:09 | QwenService | DEBUG    | debug:74 | QwenService session closed
+2025-06-19 00:01:09 | AssistantChat | INFO     | info:78 | AssistantChat shutdown
+2025-06-19 00:01:09 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: assistant_chat
+2025-06-19 00:01:09 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-19 00:01:09 | SpeechService | INFO     | info:78 | SpeechService cleaned up
+2025-06-19 00:01:09 | SpeechModule | INFO     | info:78 | SpeechModule shutdown
+2025-06-19 00:01:09 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: speech_service
+2025-06-19 00:01:09 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: network_scanner
+2025-06-19 00:01:09 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: vulnerability_checker
+2025-06-19 00:01:09 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: security_logger
+2025-06-19 00:01:09 | ThinkerCore | INFO     | info:78 | Thinker AI Core stopped successfully
+2025-06-19 00:01:09 | MainWindow | INFO     | info:78 | Core services stopped successfully
+2025-06-19 00:01:09 | MainWindow | INFO     | info:78 | GUI mainloop quit successfully
+2025-06-19 00:01:09 | MainWindow | INFO     | info:78 | GUI window destroyed successfully
+2025-06-19 00:01:09 | MainWindow | INFO     | info:78 | Application shutdown completed successfully
+2025-06-19 00:01:09 | ThinkerCore | INFO     | info:78 | Stopping Thinker AI Core...
+2025-06-19 00:01:09 | ThinkerAI | DEBUG    | debug:74 | JSON data written to /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-19 00:01:09 | ThinkerCore | DEBUG    | debug:74 | Application state saved
+2025-06-19 00:01:09 | TextProcessor | INFO     | info:78 | TextProcessor shutdown
+2025-06-19 00:01:09 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: text_processor
+2025-06-19 00:01:09 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer shutdown
+2025-06-19 00:01:09 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: code_analyzer
+2025-06-19 00:01:09 | QwenService | DEBUG    | debug:74 | QwenService session closed
+2025-06-19 00:01:09 | AssistantChat | INFO     | info:78 | AssistantChat shutdown
+2025-06-19 00:01:09 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: assistant_chat
+2025-06-19 00:01:09 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-19 00:01:09 | SpeechService | INFO     | info:78 | SpeechService cleaned up
+2025-06-19 00:01:09 | SpeechModule | INFO     | info:78 | SpeechModule shutdown
+2025-06-19 00:01:09 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: speech_service
+2025-06-19 00:01:09 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: network_scanner
+2025-06-19 00:01:09 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: vulnerability_checker
+2025-06-19 00:01:09 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: security_logger
+2025-06-19 00:01:09 | ThinkerCore | INFO     | info:78 | Thinker AI Core stopped successfully
+2025-06-19 00:01:09 | Main | INFO     | info:78 | Application shutdown completed
+2025-06-19 00:19:45 | Main | INFO     | _setup_logger:69 | Logger initialized for Main
+2025-06-19 00:19:45 | Main | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:19:45 | Main | INFO     | info:78 | Starting Thinker AI Auxiliary Window initialization
+2025-06-19 00:19:45 | Main | INFO     | info:78 | Environment configured: development
+2025-06-19 00:19:45 | ThinkerCore | INFO     | _setup_logger:69 | Logger initialized for ThinkerCore
+2025-06-19 00:19:45 | ThinkerCore | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:19:45 | ThinkerCore | INFO     | info:78 | ThinkerCore initialized with session 7e88c245
+2025-06-19 00:19:45 | TextProcessor | INFO     | _setup_logger:69 | Logger initialized for TextProcessor
+2025-06-19 00:19:45 | TextProcessor | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:19:45 | TextProcessor | INFO     | info:78 | TextProcessor initialized
+2025-06-19 00:19:45 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: text_processor
+2025-06-19 00:19:45 | CodeAnalyzer | INFO     | _setup_logger:69 | Logger initialized for CodeAnalyzer
+2025-06-19 00:19:45 | CodeAnalyzer | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:19:45 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer initialized
+2025-06-19 00:19:45 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: code_analyzer
+2025-06-19 00:19:45 | AssistantChat | INFO     | _setup_logger:69 | Logger initialized for AssistantChat
+2025-06-19 00:19:45 | AssistantChat | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:19:45 | QwenService | INFO     | _setup_logger:69 | Logger initialized for QwenService
+2025-06-19 00:19:45 | QwenService | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:19:45 | QwenService | INFO     | info:78 | QwenService initialized for qwen2.5-7b-instruct-1m at http://192.168.1.45:1234
+2025-06-19 00:19:45 | QwenService | INFO     | info:78 | ✅ Successfully connected to Qwen server
+2025-06-19 00:19:45 | AssistantChat | INFO     | info:78 | AssistantChat initialized with Qwen2.5-7B-Instruct-1M
+2025-06-19 00:19:45 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: assistant_chat
+2025-06-19 00:19:45 | SpeechModule | INFO     | _setup_logger:69 | Logger initialized for SpeechModule
+2025-06-19 00:19:45 | SpeechModule | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:19:45 | SpeechService | INFO     | _setup_logger:69 | Logger initialized for SpeechService
+2025-06-19 00:19:45 | SpeechService | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:19:45 | SpeechService | INFO     | info:78 | SpeechService initialized with google engine
+2025-06-19 00:19:45 | SpeechService | INFO     | info:78 | 🎤 Initializing microphone system...
+2025-06-19 00:19:45 | SpeechService | INFO     | info:78 | 🔍 Found 5 audio devices:
+2025-06-19 00:19:45 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-19 00:19:45 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-19 00:19:45 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-19 00:19:45 | SpeechService | INFO     | info:78 |   [3] Cluely
+2025-06-19 00:19:45 | SpeechService | INFO     | info:78 |   [4] Microsoft Teams Audio
+2025-06-19 00:19:45 | SpeechService | INFO     | info:78 | 🎤 Using default microphone device
+2025-06-19 00:19:45 | SpeechService | INFO     | info:78 | 🔊 Speech recognition configured with 3.0s silence detection
+2025-06-19 00:19:47 | SpeechService | INFO     | info:78 | 🔧 Quick ambient noise calibration...
+2025-06-19 00:19:48 | SpeechService | INFO     | info:78 | ✅ Energy threshold set to: 724.1868823487525
+2025-06-19 00:19:48 | SpeechService | INFO     | info:78 | ✅ Microphone initialized successfully
+2025-06-19 00:19:48 | SpeechModule | INFO     | info:78 | SpeechModule initialized successfully
+2025-06-19 00:19:48 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: speech_service
+2025-06-19 00:19:48 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: network_scanner
+2025-06-19 00:19:48 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: vulnerability_checker
+2025-06-19 00:19:48 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: security_logger
+2025-06-19 00:19:48 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-19 00:19:48 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:19:48 | ThinkerAI | DEBUG    | debug:74 | Background thread started for _monitor_performance_loop
+2025-06-19 00:19:48 | ThinkerCore | INFO     | info:78 | Core modules initialized successfully
+2025-06-19 00:19:48 | ThinkerAI | INFO     | info:78 | Performance | _initialize_core_modules | Duration: 3.4210s | Args: 1, Kwargs: 0
+2025-06-19 00:19:48 | ThinkerCore | INFO     | info:78 | Starting Thinker AI Core...
+2025-06-19 00:19:48 | ThinkerAI | DEBUG    | debug:74 | JSON data read from /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-19 00:19:48 | ThinkerCore | DEBUG    | debug:74 | Application state loaded
+2025-06-19 00:19:48 | ThinkerAI | DEBUG    | debug:74 | Delayed execution scheduled: _auto_save_loop in 300s
+2025-06-19 00:19:48 | ThinkerCore | INFO     | info:78 | Thinker AI Core started successfully in 0.00s
+2025-06-19 00:19:48 | Main | INFO     | info:78 | Core services initialized successfully
+2025-06-19 00:19:48 | MainWindow | INFO     | _setup_logger:69 | Logger initialized for MainWindow
+2025-06-19 00:19:48 | MainWindow | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:19:48 | MainWindow | INFO     | info:78 | MainWindow initialized
+2025-06-19 00:19:48 | Main | INFO     | info:78 | Main window created successfully
+2025-06-19 00:19:48 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-19 00:19:48 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:19:48 | ThinkerAI | INFO     | info:78 | Performance | initialize_application | Duration: 3.4265s | Args: 1, Kwargs: 0
+2025-06-19 00:19:48 | Main | INFO     | _setup_logger:69 | Logger initialized for Main
+2025-06-19 00:19:48 | Main | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:19:48 | Main | INFO     | info:78 | Application loop starting
+2025-06-19 00:19:49 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-19 00:19:49 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:19:49 | ThinkerAI | DEBUG    | debug:74 | Window centered: 1000x700 at (400, 234)
+2025-06-19 00:19:49 | MainWindow | DEBUG    | debug:74 | Modern CustomTkinter window created
+2025-06-19 00:19:49 | MainWindow | DEBUG    | debug:74 | Modern CustomTkinter styling configured
+2025-06-19 00:19:49 | MainWindow | DEBUG    | debug:74 | Minimalist menu bar created
+2025-06-19 00:19:49 | MainWindow | DEBUG    | debug:74 | Minimalist AI Chat interface created
+2025-06-19 00:19:49 | MainWindow | DEBUG    | debug:74 | Minimalist status bar created
+2025-06-19 00:19:49 | MainWindow | DEBUG    | debug:74 | Event handlers setup
+2025-06-19 00:19:49 | ThinkerCore | INFO     | info:78 | Starting Thinker AI Core...
+2025-06-19 00:19:49 | ThinkerAI | DEBUG    | debug:74 | JSON data read from /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-19 00:19:49 | ThinkerCore | DEBUG    | debug:74 | Application state loaded
+2025-06-19 00:19:49 | ThinkerAI | DEBUG    | debug:74 | Delayed execution scheduled: _auto_save_loop in 300s
+2025-06-19 00:19:49 | ThinkerCore | INFO     | info:78 | Thinker AI Core started successfully in 0.00s
+2025-06-19 00:19:49 | MainWindow | INFO     | info:78 | Main window initialized successfully
+2025-06-19 00:19:49 | ThinkerAI | INFO     | info:78 | Performance | initialize | Duration: 0.7265s | Args: 1, Kwargs: 0
+2025-06-19 00:19:49 | MainWindow | INFO     | info:78 | Starting main application loop
+2025-06-19 00:19:55 | ThinkerCore | INFO     | info:78 | Speech operation: get_status
+2025-06-19 00:19:55 | SpeechService | INFO     | info:78 | 🎤 Found 5 audio devices
+2025-06-19 00:19:55 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-19 00:19:55 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-19 00:19:55 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-19 00:19:55 | SpeechService | INFO     | info:78 |   ... and 2 more devices
+2025-06-19 00:19:55 | SpeechService | INFO     | info:78 | ✅ Microphones detected - assuming available
+2025-06-19 00:19:55 | ThinkerCore | INFO     | info:78 | Speech operation: record_once
+2025-06-19 00:19:55 | SpeechService | INFO     | info:78 | 🎙️ Starting single recording...
+2025-06-19 00:19:55 | SpeechService | INFO     | info:78 | 🎤 Listening... (timeout: 3.0s, phrase limit: 8.0s, silence detection: 3.0s)
+2025-06-19 00:19:56 | SpeechService | DEBUG    | debug:74 | 🔧 Energy threshold: 188.01958692155077
+2025-06-19 00:19:59 | SpeechService | INFO     | info:78 | ✅ Audio captured successfully
+2025-06-19 00:19:59 | SpeechService | INFO     | info:78 | 🧠 Processing audio...
+2025-06-19 00:20:00 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 0.72s
+2025-06-19 00:20:00 | ThinkerCore | INFO     | info:78 | Speech operation: stop_listening
+2025-06-19 00:20:00 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-19 00:20:00 | MainWindow | INFO     | info:78 | User Action | 00:20:00 | Voice Message Sent | Text: hola cómo estás
+2025-06-19 00:20:00 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-19 00:20:00 | AssistantChat | INFO     | info:78 | Processing chat message: 15 characters (streaming)
+2025-06-19 00:20:00 | QwenService | DEBUG    | debug:74 | Sending request to Qwen (fast_mode=True): 15 chars, max_tokens=1500
+2025-06-19 00:20:00 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming...
+2025-06-19 00:20:02 | QwenService | INFO     | info:78 | ✅ Streaming completado
+2025-06-19 00:20:02 | QwenService | INFO     | info:78 | ✅ Qwen response received in 1.58s (streaming)
+2025-06-19 00:20:02 | SpeechService | INFO     | info:78 | ✅ Recognized: 'hola cómo estás'
+2025-06-19 00:20:02 | SpeechService | DEBUG    | debug:74 | 🏁 Recording session ended
+2025-06-19 00:20:03 | ThinkerCore | INFO     | info:78 | Speech operation: get_status
+2025-06-19 00:20:03 | SpeechService | INFO     | info:78 | 🎤 Found 5 audio devices
+2025-06-19 00:20:03 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-19 00:20:03 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-19 00:20:03 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-19 00:20:03 | SpeechService | INFO     | info:78 |   ... and 2 more devices
+2025-06-19 00:20:03 | SpeechService | INFO     | info:78 | ✅ Microphones detected - assuming available
+2025-06-19 00:20:03 | ThinkerCore | INFO     | info:78 | Speech operation: record_once
+2025-06-19 00:20:03 | SpeechService | INFO     | info:78 | 🎙️ Starting single recording...
+2025-06-19 00:20:03 | SpeechService | INFO     | info:78 | 🎤 Listening... (timeout: 3.0s, phrase limit: 8.0s, silence detection: 3.0s)
+2025-06-19 00:20:04 | SpeechService | DEBUG    | debug:74 | 🔧 Energy threshold: 677.3536195840534
+2025-06-19 00:20:09 | SpeechService | INFO     | info:78 | ✅ Audio captured successfully
+2025-06-19 00:20:09 | SpeechService | INFO     | info:78 | 🧠 Processing audio...
+2025-06-19 00:20:09 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 0.54s
+2025-06-19 00:20:09 | ThinkerCore | INFO     | info:78 | Speech operation: stop_listening
+2025-06-19 00:20:09 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-19 00:20:09 | MainWindow | INFO     | info:78 | User Action | 00:20:09 | Voice Message Sent | Text: es la capital de Francia
+2025-06-19 00:20:09 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-19 00:20:09 | AssistantChat | INFO     | info:78 | Processing chat message: 24 characters (streaming)
+2025-06-19 00:20:09 | QwenService | DEBUG    | debug:74 | Sending request to Qwen (fast_mode=True): 24 chars, max_tokens=1500
+2025-06-19 00:20:09 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming...
+2025-06-19 00:20:12 | QwenService | INFO     | info:78 | ✅ Streaming completado
+2025-06-19 00:20:12 | QwenService | INFO     | info:78 | ✅ Qwen response received in 2.62s (streaming)
+2025-06-19 00:20:12 | SpeechService | INFO     | info:78 | ✅ Recognized: 'es la capital de Francia'
+2025-06-19 00:20:12 | SpeechService | DEBUG    | debug:74 | 🏁 Recording session ended
+2025-06-19 00:24:48 | ThinkerAI | DEBUG    | debug:74 | JSON data written to /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-19 00:24:48 | ThinkerCore | DEBUG    | debug:74 | Application state saved
+2025-06-19 00:24:49 | ThinkerAI | DEBUG    | debug:74 | JSON data written to /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-19 00:24:49 | ThinkerCore | DEBUG    | debug:74 | Application state saved
+2025-06-19 00:26:44 | Main | INFO     | _setup_logger:69 | Logger initialized for Main
+2025-06-19 00:26:44 | Main | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:26:44 | Main | INFO     | info:78 | Starting Thinker AI Auxiliary Window initialization
+2025-06-19 00:26:44 | Main | INFO     | info:78 | Environment configured: development
+2025-06-19 00:26:44 | ThinkerCore | INFO     | _setup_logger:69 | Logger initialized for ThinkerCore
+2025-06-19 00:26:44 | ThinkerCore | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:26:44 | ThinkerCore | INFO     | info:78 | ThinkerCore initialized with session 01d834a2
+2025-06-19 00:26:44 | TextProcessor | INFO     | _setup_logger:69 | Logger initialized for TextProcessor
+2025-06-19 00:26:44 | TextProcessor | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:26:44 | TextProcessor | INFO     | info:78 | TextProcessor initialized
+2025-06-19 00:26:44 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: text_processor
+2025-06-19 00:26:44 | CodeAnalyzer | INFO     | _setup_logger:69 | Logger initialized for CodeAnalyzer
+2025-06-19 00:26:44 | CodeAnalyzer | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:26:44 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer initialized
+2025-06-19 00:26:44 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: code_analyzer
+2025-06-19 00:26:44 | AssistantChat | INFO     | _setup_logger:69 | Logger initialized for AssistantChat
+2025-06-19 00:26:44 | AssistantChat | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:26:44 | QwenService | INFO     | _setup_logger:69 | Logger initialized for QwenService
+2025-06-19 00:26:44 | QwenService | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:26:44 | QwenService | INFO     | info:78 | QwenService initialized for qwen2.5-7b-instruct-1m at http://192.168.1.45:1234
+2025-06-19 00:26:44 | QwenService | INFO     | info:78 | ✅ Successfully connected to Qwen server
+2025-06-19 00:26:44 | AssistantChat | INFO     | info:78 | AssistantChat initialized with Qwen2.5-7B-Instruct-1M
+2025-06-19 00:26:44 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: assistant_chat
+2025-06-19 00:26:44 | SpeechModule | INFO     | _setup_logger:69 | Logger initialized for SpeechModule
+2025-06-19 00:26:44 | SpeechModule | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:26:44 | SpeechService | INFO     | _setup_logger:69 | Logger initialized for SpeechService
+2025-06-19 00:26:44 | SpeechService | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:26:44 | SpeechService | INFO     | info:78 | SpeechService initialized with google engine
+2025-06-19 00:26:44 | SpeechService | INFO     | info:78 | 🎤 Initializing microphone system...
+2025-06-19 00:26:44 | SpeechService | INFO     | info:78 | 🔍 Found 5 audio devices:
+2025-06-19 00:26:44 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-19 00:26:44 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-19 00:26:44 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-19 00:26:44 | SpeechService | INFO     | info:78 |   [3] Cluely
+2025-06-19 00:26:44 | SpeechService | INFO     | info:78 |   [4] Microsoft Teams Audio
+2025-06-19 00:26:44 | SpeechService | INFO     | info:78 | 🎤 Using default microphone device
+2025-06-19 00:26:44 | SpeechService | INFO     | info:78 | 🔊 Speech recognition configured with 3.0s silence detection
+2025-06-19 00:26:44 | SpeechService | INFO     | info:78 | 🔧 Quick ambient noise calibration...
+2025-06-19 00:26:45 | SpeechService | INFO     | info:78 | ✅ Energy threshold set to: 713.3141432632668
+2025-06-19 00:26:45 | SpeechService | INFO     | info:78 | ✅ Microphone initialized successfully
+2025-06-19 00:26:45 | SpeechModule | INFO     | info:78 | SpeechModule initialized successfully
+2025-06-19 00:26:45 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: speech_service
+2025-06-19 00:26:45 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: network_scanner
+2025-06-19 00:26:45 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: vulnerability_checker
+2025-06-19 00:26:45 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: security_logger
+2025-06-19 00:26:45 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-19 00:26:45 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:26:45 | ThinkerAI | DEBUG    | debug:74 | Background thread started for _monitor_performance_loop
+2025-06-19 00:26:45 | ThinkerCore | INFO     | info:78 | Core modules initialized successfully
+2025-06-19 00:26:45 | ThinkerAI | INFO     | info:78 | Performance | _initialize_core_modules | Duration: 1.3351s | Args: 1, Kwargs: 0
+2025-06-19 00:26:45 | ThinkerCore | INFO     | info:78 | Starting Thinker AI Core...
+2025-06-19 00:26:45 | ThinkerAI | DEBUG    | debug:74 | JSON data read from /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-19 00:26:45 | ThinkerCore | DEBUG    | debug:74 | Application state loaded
+2025-06-19 00:26:45 | ThinkerAI | DEBUG    | debug:74 | Delayed execution scheduled: _auto_save_loop in 300s
+2025-06-19 00:26:45 | ThinkerCore | INFO     | info:78 | Thinker AI Core started successfully in 0.00s
+2025-06-19 00:26:45 | Main | INFO     | info:78 | Core services initialized successfully
+2025-06-19 00:26:45 | MainWindow | INFO     | _setup_logger:69 | Logger initialized for MainWindow
+2025-06-19 00:26:45 | MainWindow | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:26:45 | MainWindow | INFO     | info:78 | MainWindow initialized
+2025-06-19 00:26:45 | Main | INFO     | info:78 | Main window created successfully
+2025-06-19 00:26:45 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-19 00:26:45 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:26:45 | ThinkerAI | INFO     | info:78 | Performance | initialize_application | Duration: 1.3367s | Args: 1, Kwargs: 0
+2025-06-19 00:26:45 | Main | INFO     | _setup_logger:69 | Logger initialized for Main
+2025-06-19 00:26:45 | Main | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:26:45 | Main | INFO     | info:78 | Application loop starting
+2025-06-19 00:26:45 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-19 00:26:45 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:26:45 | ThinkerAI | DEBUG    | debug:74 | Window centered: 1000x700 at (400, 234)
+2025-06-19 00:26:45 | MainWindow | DEBUG    | debug:74 | Modern CustomTkinter window created
+2025-06-19 00:26:45 | MainWindow | DEBUG    | debug:74 | Modern CustomTkinter styling configured
+2025-06-19 00:26:45 | MainWindow | DEBUG    | debug:74 | Minimalist menu bar created
+2025-06-19 00:26:46 | MainWindow | DEBUG    | debug:74 | Minimalist AI Chat interface created
+2025-06-19 00:26:46 | MainWindow | DEBUG    | debug:74 | Minimalist status bar created
+2025-06-19 00:26:46 | MainWindow | DEBUG    | debug:74 | Event handlers setup
+2025-06-19 00:26:46 | ThinkerCore | INFO     | info:78 | Starting Thinker AI Core...
+2025-06-19 00:26:46 | ThinkerAI | DEBUG    | debug:74 | JSON data read from /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-19 00:26:46 | ThinkerCore | DEBUG    | debug:74 | Application state loaded
+2025-06-19 00:26:46 | ThinkerAI | DEBUG    | debug:74 | Delayed execution scheduled: _auto_save_loop in 300s
+2025-06-19 00:26:46 | ThinkerCore | INFO     | info:78 | Thinker AI Core started successfully in 0.00s
+2025-06-19 00:26:46 | MainWindow | INFO     | info:78 | Main window initialized successfully
+2025-06-19 00:26:46 | ThinkerAI | INFO     | info:78 | Performance | initialize | Duration: 0.5602s | Args: 1, Kwargs: 0
+2025-06-19 00:26:46 | MainWindow | INFO     | info:78 | Starting main application loop
+2025-06-19 00:26:52 | ThinkerCore | INFO     | info:78 | Speech operation: get_status
+2025-06-19 00:26:52 | SpeechService | INFO     | info:78 | 🎤 Found 5 audio devices
+2025-06-19 00:26:52 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-19 00:26:52 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-19 00:26:52 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-19 00:26:52 | SpeechService | INFO     | info:78 |   ... and 2 more devices
+2025-06-19 00:26:52 | SpeechService | INFO     | info:78 | ✅ Microphones detected - assuming available
+2025-06-19 00:26:52 | ThinkerCore | INFO     | info:78 | Speech operation: start_listening
+2025-06-19 00:26:52 | SpeechService | INFO     | info:78 | 🎤 Started continuous speech recognition
+2025-06-19 00:26:52 | MainWindow | ERROR    | error:86 | Exception occurred: AttributeError: 'bool' object has no attribute 'get' | Context: Start voice recording
+Traceback (most recent call last):
+  File "/Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/src/gui/main_window.py", line 827, in _start_voice_recording
+    if result.get("status") == "error":
+       ^^^^^^^^^^
+AttributeError: 'bool' object has no attribute 'get'
+2025-06-19 00:26:52 | ThinkerCore | INFO     | info:78 | Speech operation: stop_listening
+2025-06-19 00:26:52 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-19 00:26:52 | SpeechService | DEBUG    | debug:74 | 👂 Listening for speech... (silence detection: 3.0s)
+2025-06-19 00:29:32 | Main | INFO     | _setup_logger:69 | Logger initialized for Main
+2025-06-19 00:29:32 | Main | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:29:32 | Main | INFO     | info:78 | Starting Thinker AI Auxiliary Window initialization
+2025-06-19 00:29:32 | Main | INFO     | info:78 | Environment configured: development
+2025-06-19 00:29:32 | ThinkerCore | INFO     | _setup_logger:69 | Logger initialized for ThinkerCore
+2025-06-19 00:29:32 | ThinkerCore | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:29:32 | ThinkerCore | INFO     | info:78 | ThinkerCore initialized with session 823dbf1f
+2025-06-19 00:29:32 | TextProcessor | INFO     | _setup_logger:69 | Logger initialized for TextProcessor
+2025-06-19 00:29:32 | TextProcessor | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:29:32 | TextProcessor | INFO     | info:78 | TextProcessor initialized
+2025-06-19 00:29:32 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: text_processor
+2025-06-19 00:29:32 | CodeAnalyzer | INFO     | _setup_logger:69 | Logger initialized for CodeAnalyzer
+2025-06-19 00:29:32 | CodeAnalyzer | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:29:32 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer initialized
+2025-06-19 00:29:32 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: code_analyzer
+2025-06-19 00:29:32 | AssistantChat | INFO     | _setup_logger:69 | Logger initialized for AssistantChat
+2025-06-19 00:29:32 | AssistantChat | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:29:32 | QwenService | INFO     | _setup_logger:69 | Logger initialized for QwenService
+2025-06-19 00:29:32 | QwenService | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:29:32 | QwenService | INFO     | info:78 | QwenService initialized for qwen2.5-7b-instruct-1m at http://192.168.1.45:1234
+2025-06-19 00:29:32 | QwenService | INFO     | info:78 | ✅ Successfully connected to Qwen server
+2025-06-19 00:29:32 | AssistantChat | INFO     | info:78 | AssistantChat initialized with Qwen2.5-7B-Instruct-1M
+2025-06-19 00:29:32 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: assistant_chat
+2025-06-19 00:29:32 | SpeechModule | INFO     | _setup_logger:69 | Logger initialized for SpeechModule
+2025-06-19 00:29:32 | SpeechModule | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:29:32 | SpeechService | INFO     | _setup_logger:69 | Logger initialized for SpeechService
+2025-06-19 00:29:32 | SpeechService | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:29:32 | SpeechService | INFO     | info:78 | SpeechService initialized with google engine
+2025-06-19 00:29:32 | SpeechService | INFO     | info:78 | 🎤 Initializing microphone system...
+2025-06-19 00:29:32 | SpeechService | INFO     | info:78 | 🔍 Found 5 audio devices:
+2025-06-19 00:29:32 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-19 00:29:32 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-19 00:29:32 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-19 00:29:32 | SpeechService | INFO     | info:78 |   [3] Cluely
+2025-06-19 00:29:32 | SpeechService | INFO     | info:78 |   [4] Microsoft Teams Audio
+2025-06-19 00:29:32 | SpeechService | INFO     | info:78 | 🎤 Using default microphone device
+2025-06-19 00:29:32 | SpeechService | INFO     | info:78 | 🔊 Speech recognition configured with 3.0s silence detection
+2025-06-19 00:29:32 | SpeechService | INFO     | info:78 | 🔧 Quick ambient noise calibration...
+2025-06-19 00:29:33 | SpeechService | INFO     | info:78 | ✅ Energy threshold set to: 699.230862837644
+2025-06-19 00:29:33 | SpeechService | INFO     | info:78 | ✅ Microphone initialized successfully
+2025-06-19 00:29:33 | SpeechModule | INFO     | info:78 | SpeechModule initialized successfully
+2025-06-19 00:29:33 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: speech_service
+2025-06-19 00:29:33 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: network_scanner
+2025-06-19 00:29:33 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: vulnerability_checker
+2025-06-19 00:29:33 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: security_logger
+2025-06-19 00:29:33 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-19 00:29:33 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:29:33 | ThinkerAI | DEBUG    | debug:74 | Background thread started for _monitor_performance_loop
+2025-06-19 00:29:33 | ThinkerCore | INFO     | info:78 | Core modules initialized successfully
+2025-06-19 00:29:33 | ThinkerAI | INFO     | info:78 | Performance | _initialize_core_modules | Duration: 1.3004s | Args: 1, Kwargs: 0
+2025-06-19 00:29:33 | ThinkerCore | INFO     | info:78 | Starting Thinker AI Core...
+2025-06-19 00:29:33 | ThinkerAI | DEBUG    | debug:74 | JSON data read from /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-19 00:29:33 | ThinkerCore | DEBUG    | debug:74 | Application state loaded
+2025-06-19 00:29:33 | ThinkerAI | DEBUG    | debug:74 | Delayed execution scheduled: _auto_save_loop in 300s
+2025-06-19 00:29:33 | ThinkerCore | INFO     | info:78 | Thinker AI Core started successfully in 0.00s
+2025-06-19 00:29:33 | Main | INFO     | info:78 | Core services initialized successfully
+2025-06-19 00:29:33 | MainWindow | INFO     | _setup_logger:69 | Logger initialized for MainWindow
+2025-06-19 00:29:33 | MainWindow | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:29:33 | MainWindow | INFO     | info:78 | MainWindow initialized
+2025-06-19 00:29:33 | Main | INFO     | info:78 | Main window created successfully
+2025-06-19 00:29:33 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-19 00:29:33 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:29:33 | ThinkerAI | INFO     | info:78 | Performance | initialize_application | Duration: 1.3036s | Args: 1, Kwargs: 0
+2025-06-19 00:29:33 | Main | INFO     | _setup_logger:69 | Logger initialized for Main
+2025-06-19 00:29:33 | Main | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:29:33 | Main | INFO     | info:78 | Application loop starting
+2025-06-19 00:29:33 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-19 00:29:33 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/logs/thinker_aux.log
+2025-06-19 00:29:33 | ThinkerAI | DEBUG    | debug:74 | Window centered: 1000x700 at (400, 234)
+2025-06-19 00:29:33 | MainWindow | DEBUG    | debug:74 | Modern CustomTkinter window created
+2025-06-19 00:29:33 | MainWindow | DEBUG    | debug:74 | Modern CustomTkinter styling configured
+2025-06-19 00:29:33 | MainWindow | DEBUG    | debug:74 | Minimalist menu bar created
+2025-06-19 00:29:33 | MainWindow | DEBUG    | debug:74 | Minimalist AI Chat interface created
+2025-06-19 00:29:33 | MainWindow | DEBUG    | debug:74 | Minimalist status bar created
+2025-06-19 00:29:33 | MainWindow | DEBUG    | debug:74 | Event handlers setup
+2025-06-19 00:29:33 | ThinkerCore | INFO     | info:78 | Starting Thinker AI Core...
+2025-06-19 00:29:33 | ThinkerAI | DEBUG    | debug:74 | JSON data read from /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-19 00:29:33 | ThinkerCore | DEBUG    | debug:74 | Application state loaded
+2025-06-19 00:29:33 | ThinkerAI | DEBUG    | debug:74 | Delayed execution scheduled: _auto_save_loop in 300s
+2025-06-19 00:29:33 | ThinkerCore | INFO     | info:78 | Thinker AI Core started successfully in 0.00s
+2025-06-19 00:29:33 | MainWindow | INFO     | info:78 | Main window initialized successfully
+2025-06-19 00:29:33 | ThinkerAI | INFO     | info:78 | Performance | initialize | Duration: 0.3097s | Args: 1, Kwargs: 0
+2025-06-19 00:29:33 | MainWindow | INFO     | info:78 | Starting main application loop
+2025-06-19 00:29:40 | ThinkerCore | INFO     | info:78 | Speech operation: get_status
+2025-06-19 00:29:40 | SpeechService | INFO     | info:78 | 🎤 Found 5 audio devices
+2025-06-19 00:29:40 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-19 00:29:40 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-19 00:29:40 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-19 00:29:40 | SpeechService | INFO     | info:78 |   ... and 2 more devices
+2025-06-19 00:29:40 | SpeechService | INFO     | info:78 | ✅ Microphones detected - assuming available
+2025-06-19 00:29:40 | ThinkerCore | INFO     | info:78 | Speech operation: start_listening
+2025-06-19 00:29:40 | SpeechService | INFO     | info:78 | 🎤 Started continuous speech recognition
+2025-06-19 00:29:40 | SpeechService | DEBUG    | debug:74 | 👂 Listening for speech... (silence detection: 3.0s)
+2025-06-19 00:29:50 | SpeechService | DEBUG    | debug:74 | 👂 Listening for speech... (silence detection: 3.0s)
+2025-06-19 00:29:51 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 1.69s
+2025-06-19 00:29:51 | MainWindow | INFO     | info:78 | User Action | 00:29:51 | Voice Message Sent | Text: hola cómo estás
+2025-06-19 00:29:51 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-19 00:29:51 | AssistantChat | INFO     | info:78 | Processing chat message: 15 characters (streaming)
+2025-06-19 00:29:51 | QwenService | DEBUG    | debug:74 | Sending request to Qwen (fast_mode=True): 15 chars, max_tokens=1500
+2025-06-19 00:29:51 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming...
+2025-06-19 00:29:53 | QwenService | INFO     | info:78 | ✅ Streaming completado
+2025-06-19 00:29:53 | QwenService | INFO     | info:78 | ✅ Qwen response received in 1.74s (streaming)
+2025-06-19 00:29:53 | SpeechService | INFO     | info:78 | ✅ Continuous recognition: 'hola cómo estás...'
+2025-06-19 00:29:58 | SpeechService | DEBUG    | debug:74 | 👂 Listening for speech... (silence detection: 3.0s)
+2025-06-19 00:29:59 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 1.09s
+2025-06-19 00:29:59 | MainWindow | INFO     | info:78 | User Action | 00:29:59 | Voice Message Sent | Text: hola cómo estás cuál es la capital de
+2025-06-19 00:29:59 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-19 00:29:59 | AssistantChat | INFO     | info:78 | Processing chat message: 37 characters (streaming)
+2025-06-19 00:29:59 | QwenService | DEBUG    | debug:74 | Sending request to Qwen (fast_mode=True): 37 chars, max_tokens=1500
+2025-06-19 00:29:59 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming...
+2025-06-19 00:30:02 | QwenService | INFO     | info:78 | ✅ Streaming completado
+2025-06-19 00:30:02 | QwenService | INFO     | info:78 | ✅ Qwen response received in 2.13s (streaming)
+2025-06-19 00:30:02 | SpeechService | INFO     | info:78 | ✅ Continuous recognition: 'hola cómo estás cuál es la capital de...'
+2025-06-19 00:30:08 | SpeechService | DEBUG    | debug:74 | 👂 Listening for speech... (silence detection: 3.0s)
+2025-06-19 00:30:09 | SpeechService | DEBUG    | debug:74 | Could not understand audio
+2025-06-19 00:30:17 | SpeechService | DEBUG    | debug:74 | 👂 Listening for speech... (silence detection: 3.0s)
+2025-06-19 00:30:17 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 0.97s
+2025-06-19 00:30:17 | MainWindow | INFO     | info:78 | User Action | 00:30:17 | Voice Message Sent | Text: cuál es la capital de Francia
+2025-06-19 00:30:17 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-19 00:30:17 | AssistantChat | INFO     | info:78 | Processing chat message: 29 characters (streaming)
+2025-06-19 00:30:17 | QwenService | DEBUG    | debug:74 | Sending request to Qwen (fast_mode=True): 29 chars, max_tokens=1500
+2025-06-19 00:30:17 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming...
+2025-06-19 00:30:18 | QwenService | INFO     | info:78 | ✅ Streaming completado
+2025-06-19 00:30:18 | QwenService | INFO     | info:78 | ✅ Qwen response received in 0.82s (streaming)
+2025-06-19 00:30:18 | SpeechService | INFO     | info:78 | ✅ Continuous recognition: 'cuál es la capital de Francia...'
+2025-06-19 00:30:25 | SpeechService | DEBUG    | debug:74 | 👂 Listening for speech... (silence detection: 3.0s)
+2025-06-19 00:30:26 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 0.82s
+2025-06-19 00:30:26 | MainWindow | INFO     | info:78 | User Action | 00:30:26 | Voice Message Sent | Text: cuál es la capital de Rusia
+2025-06-19 00:30:26 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-19 00:30:26 | AssistantChat | INFO     | info:78 | Processing chat message: 27 characters (streaming)
+2025-06-19 00:30:26 | QwenService | DEBUG    | debug:74 | Sending request to Qwen (fast_mode=True): 27 chars, max_tokens=1500
+2025-06-19 00:30:26 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming...
+2025-06-19 00:30:27 | QwenService | INFO     | info:78 | ✅ Streaming completado
+2025-06-19 00:30:27 | QwenService | INFO     | info:78 | ✅ Qwen response received in 0.85s (streaming)
+2025-06-19 00:30:27 | SpeechService | INFO     | info:78 | ✅ Continuous recognition: 'cuál es la capital de Rusia...'
+2025-06-19 00:30:34 | SpeechService | DEBUG    | debug:74 | 👂 Listening for speech... (silence detection: 3.0s)
+2025-06-19 00:30:34 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 0.92s
+2025-06-19 00:30:35 | MainWindow | INFO     | info:78 | User Action | 00:30:35 | Voice Message Sent | Text: y cuál es la capital de España
+2025-06-19 00:30:35 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-19 00:30:35 | AssistantChat | INFO     | info:78 | Processing chat message: 30 characters (streaming)
+2025-06-19 00:30:35 | QwenService | DEBUG    | debug:74 | Sending request to Qwen (fast_mode=True): 30 chars, max_tokens=1500
+2025-06-19 00:30:35 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming...
+2025-06-19 00:30:36 | QwenService | INFO     | info:78 | ✅ Streaming completado
+2025-06-19 00:30:36 | QwenService | INFO     | info:78 | ✅ Qwen response received in 1.61s (streaming)
+2025-06-19 00:30:36 | SpeechService | INFO     | info:78 | ✅ Continuous recognition: 'y cuál es la capital de España...'
+2025-06-19 00:30:39 | ThinkerCore | INFO     | info:78 | Speech operation: get_status
+2025-06-19 00:30:39 | SpeechService | INFO     | info:78 | 🎤 Found 5 audio devices
+2025-06-19 00:30:39 | SpeechService | INFO     | info:78 |   [0] Adrian Infantes iPhone Microphone
+2025-06-19 00:30:39 | SpeechService | INFO     | info:78 |   [1] MacBook Pro Microphone
+2025-06-19 00:30:39 | SpeechService | INFO     | info:78 |   [2] MacBook Pro Speakers
+2025-06-19 00:30:39 | SpeechService | INFO     | info:78 |   ... and 2 more devices
+2025-06-19 00:30:39 | SpeechService | INFO     | info:78 | ✅ Microphones detected - assuming available
+2025-06-19 00:30:39 | ThinkerCore | INFO     | info:78 | Speech operation: stop_listening
+2025-06-19 00:30:39 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-19 00:30:43 | SpeechService | DEBUG    | debug:74 | Could not understand audio
+2025-06-19 00:30:44 | ThinkerAI | INFO     | info:78 | User Action | 00:30:44 | Yes/No Dialog | Title: Confirmar Salida, Result: True
+2025-06-19 00:30:44 | MainWindow | INFO     | info:78 | User Action | 00:30:44 | Application close requested by user
+2025-06-19 00:30:44 | MainWindow | INFO     | info:78 | Shutting down application
+2025-06-19 00:30:44 | ThinkerCore | INFO     | info:78 | Stopping Thinker AI Core...
+2025-06-19 00:30:44 | ThinkerAI | DEBUG    | debug:74 | JSON data written to /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-19 00:30:44 | ThinkerCore | DEBUG    | debug:74 | Application state saved
+2025-06-19 00:30:44 | TextProcessor | INFO     | info:78 | TextProcessor shutdown
+2025-06-19 00:30:44 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: text_processor
+2025-06-19 00:30:44 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer shutdown
+2025-06-19 00:30:44 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: code_analyzer
+2025-06-19 00:30:44 | QwenService | DEBUG    | debug:74 | QwenService session closed
+2025-06-19 00:30:44 | AssistantChat | INFO     | info:78 | AssistantChat shutdown
+2025-06-19 00:30:44 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: assistant_chat
+2025-06-19 00:30:44 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-19 00:30:44 | SpeechService | INFO     | info:78 | SpeechService cleaned up
+2025-06-19 00:30:44 | SpeechModule | INFO     | info:78 | SpeechModule shutdown
+2025-06-19 00:30:44 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: speech_service
+2025-06-19 00:30:44 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: network_scanner
+2025-06-19 00:30:44 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: vulnerability_checker
+2025-06-19 00:30:44 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: security_logger
+2025-06-19 00:30:44 | ThinkerCore | INFO     | info:78 | Thinker AI Core stopped successfully
+2025-06-19 00:30:44 | MainWindow | INFO     | info:78 | Core services stopped successfully
+2025-06-19 00:30:44 | MainWindow | INFO     | info:78 | GUI mainloop quit successfully
+2025-06-19 00:30:44 | MainWindow | INFO     | info:78 | GUI window destroyed successfully
+2025-06-19 00:30:44 | MainWindow | INFO     | info:78 | Application shutdown completed successfully
+2025-06-19 00:30:44 | ThinkerCore | INFO     | info:78 | Stopping Thinker AI Core...
+2025-06-19 00:30:44 | ThinkerAI | DEBUG    | debug:74 | JSON data written to /Users/adrianinfantes/Desktop/AIR/Projects/AI-Projects/Thinker-AI/data/app_state.json
+2025-06-19 00:30:44 | ThinkerCore | DEBUG    | debug:74 | Application state saved
+2025-06-19 00:30:44 | TextProcessor | INFO     | info:78 | TextProcessor shutdown
+2025-06-19 00:30:44 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: text_processor
+2025-06-19 00:30:44 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer shutdown
+2025-06-19 00:30:44 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: code_analyzer
+2025-06-19 00:30:44 | QwenService | DEBUG    | debug:74 | QwenService session closed
+2025-06-19 00:30:44 | AssistantChat | INFO     | info:78 | AssistantChat shutdown
+2025-06-19 00:30:44 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: assistant_chat
+2025-06-19 00:30:44 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-19 00:30:44 | SpeechService | INFO     | info:78 | SpeechService cleaned up
+2025-06-19 00:30:44 | SpeechModule | INFO     | info:78 | SpeechModule shutdown
+2025-06-19 00:30:44 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: speech_service
+2025-06-19 00:30:44 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: network_scanner
+2025-06-19 00:30:44 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: vulnerability_checker
+2025-06-19 00:30:44 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: security_logger
+2025-06-19 00:30:44 | ThinkerCore | INFO     | info:78 | Thinker AI Core stopped successfully
+2025-06-19 00:30:44 | Main | INFO     | info:78 | Application shutdown completed

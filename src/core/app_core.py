@@ -456,7 +456,7 @@ class AssistantChat:
         if not QWEN_AVAILABLE:
             return {
                 "status": "error", 
-                "result": "❌ Servicio Qwen2.5-7B no disponible. Verifica que el servidor esté ejecutándose en http://172.29.208.1:1234"
+                "result": "❌ Servicio Qwen2.5-7B no disponible. Verifica que el servidor esté ejecutándose en http://192.168.1.45:1234"
             }
         
         message = parameters.get("message", "")

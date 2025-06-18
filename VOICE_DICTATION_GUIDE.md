@@ -8,6 +8,7 @@ El **Sistema de Dictado de Voz** permite convertir voz a texto utilizando múlti
 - 🎙️ **Dictado instantáneo** con un clic
 - 🔄 **Múltiples motores** de reconocimiento (Google, Whisper, Azure)
 - 🌐 **Soporte en español** nativo
+- 🔁 **Modo conversación continua** para diálogos fluidos
 - 🎯 **Integración perfecta** con el chat existente
 - 📊 **Indicadores visuales** de estado
 - 🧪 **Sistema de pruebas** integrado
@@ -55,7 +56,7 @@ Edita `src/config/config.py`:
 SPEECH_ENGINE = "google"          # "google", "whisper", "azure"
 SPEECH_LANGUAGE = "es-ES"         # Español de España
 SPEECH_ENERGY_THRESHOLD = 300     # Sensibilidad del micrófono
-SPEECH_PAUSE_THRESHOLD = 0.8      # Pausa para finalizar frase (segundos)
+SPEECH_PAUSE_THRESHOLD = 3.0      # Segundos de silencio para enviar respuesta automáticamente
 ```
 
 ---
@@ -67,16 +68,36 @@ SPEECH_PAUSE_THRESHOLD = 0.8      # Pausa para finalizar frase (segundos)
 1. **Abrir Thinker AI** y ir al chat principal
 2. **Hacer clic en el botón 🎤** (botón rojo al lado del envío)
 3. **Hablar claramente** cuando aparezca "🔴 Grabando..."
-4. **El texto aparecerá** automáticamente en el campo de entrada
-5. **Editar si es necesario** y presionar Enter para enviar
+4. **Permanecer en silencio durante 3 segundos** para finalizar automáticamente
+5. **El texto se enviará automáticamente** al asistente de IA
+6. **Continuar hablando** para mantener la conversación fluida
+7. **Hacer clic en ⏹️** (botón verde) para finalizar el modo conversación
+
+> **¡Nuevo!** El sistema ahora funciona en modo conversación continua. Habla, espera la respuesta, y sigue hablando sin necesidad de hacer clic en el botón de micrófono cada vez.
 
 ### **🔄 Estados del Botón de Voz**
 
 | **Estado** | **Icono** | **Color** | **Descripción** |
 |------------|-----------|-----------|-----------------|
 | Listo | 🎤 | Rojo | Preparado para grabar |
-| Grabando | ⏹️ | Verde | Escuchando tu voz |
+| Conversación Continua | ⏹️ | Verde | Modo conversación activo |
+| Escuchando | 🔴 | Rojo | Detectando voz activamente |
 | Procesando | 🎤 | Azul | Reconociendo el texto |
+
+### **🔁 Modo Conversación Continua**
+
+El nuevo modo de conversación continua permite mantener un diálogo fluido con el asistente:
+
+1. **Activación**: Haz clic en el botón 🎤 para iniciar el modo conversación
+2. **Indicador**: El botón cambia a ⏹️ (verde) indicando que el modo está activo
+3. **Uso**: 
+   - Habla cuando quieras hacer una pregunta
+   - Espera 3 segundos en silencio para que se envíe automáticamente
+   - El asistente responderá a tu pregunta
+   - Continúa hablando para hacer la siguiente pregunta
+4. **Desactivación**: Haz clic en el botón ⏹️ para finalizar el modo conversación
+
+> **Ventaja**: No necesitas hacer clic en el botón de micrófono cada vez que quieras hablar, permitiendo una conversación más natural y fluida.
 
 ### **⚙️ Menú de Sistema - Opciones de Voz**
 
@@ -179,7 +200,7 @@ SPEECH_ENERGY_THRESHOLD = 1000
 ```python
 SPEECH_TIMEOUT = 5.0              # Tiempo máximo esperando voz
 SPEECH_PHRASE_TIME_LIMIT = 10.0   # Tiempo máximo de frase completa
-SPEECH_PAUSE_THRESHOLD = 0.8      # Pausa para finalizar (segundos)
+SPEECH_PAUSE_THRESHOLD = 3.0      # Segundos de silencio para enviar respuesta automáticamente
 ```
 
 ---
@@ -188,6 +209,7 @@ SPEECH_PAUSE_THRESHOLD = 0.8      # Pausa para finalizar (segundos)
 
 ### **📝 Flujo de Trabajo Típico**
 
+#### **Modo Estándar (Dictado Único):**
 1. **Usuario:** Hacer clic en 🎤
 2. **Sistema:** Iniciar grabación automáticamente
 3. **Usuario:** Hablar mensaje ("Explícame qué es Python")
@@ -196,6 +218,17 @@ SPEECH_PAUSE_THRESHOLD = 0.8      # Pausa para finalizar (segundos)
 6. **Usuario:** Presionar Enter para enviar a IA
 7. **IA:** Procesar y responder como siempre
 
+#### **Modo Conversación Continua (Nuevo):**
+1. **Usuario:** Hacer clic en 🎤 (cambia a ⏹️)
+2. **Sistema:** Activar modo conversación continua
+3. **Usuario:** Hablar mensaje ("Explícame qué es Python")
+4. **Sistema:** Detectar silencio de 3 segundos y enviar automáticamente
+5. **IA:** Procesar y responder
+6. **Usuario:** Hablar siguiente pregunta sin hacer clic ("¿Y para qué sirve?")
+7. **Sistema:** Detectar silencio y enviar automáticamente
+8. **IA:** Procesar y responder
+9. **Usuario:** Hacer clic en ⏹️ para finalizar cuando termine la conversación
+
 ### **🎯 Consejos para Mejor Reconocimiento**
 
 #### **📢 Técnica de Habla:**
@@ -203,6 +236,7 @@ SPEECH_PAUSE_THRESHOLD = 0.8      # Pausa para finalizar (segundos)
 - **Evitar muletillas** ("eh", "umm", "este")
 - **Pausar entre frases** para mejor reconocimiento
 - **Usar puntuación verbal** ("punto", "coma", "signo de pregunta")
+- **Permanecer en silencio 3 segundos** al terminar para envío automático
 
 #### **🎧 Configuración de Audio:**
 - **Usar micrófono dedicado** mejor que el integrado
@@ -274,7 +308,14 @@ SPEECH_PHRASE_TIME_LIMIT = 5.0 # Frases más cortas
 #### **🎯 Mayor Precisión:**
 ```python
 SPEECH_ENERGY_THRESHOLD = 500  # Aumentar umbral
-SPEECH_PAUSE_THRESHOLD = 1.2   # Pausas más largas
+SPEECH_PAUSE_THRESHOLD = 4.0   # Silencio más largo para detección automática
+```
+
+#### **⚡ Detección de Silencio:**
+```python
+SPEECH_PAUSE_THRESHOLD = 2.0   # Detección más rápida (2 segundos)
+SPEECH_PAUSE_THRESHOLD = 3.0   # Valor predeterminado (3 segundos)
+SPEECH_PAUSE_THRESHOLD = 4.0   # Detección más lenta (4 segundos)
 ```
 
 ---
@@ -283,9 +324,9 @@ SPEECH_PAUSE_THRESHOLD = 1.2   # Pausas más largas
 
 ### **🚀 Funcionalidades Planificadas**
 
-#### **📚 Versión 1.1**
+#### **📚 Versión 1.1** ✅
 - **Comandos de voz** directos ("enviar mensaje", "limpiar chat")
-- **Grabación continua** sin necesidad de clicks
+- ✅ **Grabación continua** sin necesidad de clicks (¡Implementado!)
 - **Múltiples idiomas** simultáneos
 
 #### **🤖 Versión 1.2**
