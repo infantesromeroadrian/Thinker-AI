@@ -1,5 +1,5 @@
 {
-  "startup_time": "2025-06-19T09:22:51.853931",
+  "startup_time": "2025-06-19T16:08:11.706920",
   "current_user": null,
   "active_modules": [
     "ai.text_processor",
@@ -10,7 +10,7 @@
     "security.security_logger"
   ],
   "performance_metrics": {
-    "startup_time": 0.0,
+    "startup_time": 0.0020046234130859375,
     "memory_usage": 0,
     "cpu_usage": 0,
     "active_threads": 0,

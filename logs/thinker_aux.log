@@ -6673,3 +6673,344 @@ AttributeError: 'QwenService' object has no attribute 'base_timeout'
 2025-06-19 09:24:32 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: security_logger
 2025-06-19 09:24:32 | ThinkerCore | INFO     | info:78 | Thinker AI Core stopped successfully
 2025-06-19 09:24:32 | Main | INFO     | info:78 | Application shutdown completed
+2025-06-19 16:08:11 | Main | INFO     | _setup_logger:69 | Logger initialized for Main
+2025-06-19 16:08:11 | Main | DEBUG    | _setup_logger:70 | Log file: C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\logs\thinker_aux.log
+2025-06-19 16:08:11 | Main | INFO     | info:78 | Starting Thinker AI Auxiliary Window initialization
+2025-06-19 16:08:11 | Main | INFO     | info:78 | Environment configured: development
+2025-06-19 16:08:11 | ThinkerCore | INFO     | _setup_logger:69 | Logger initialized for ThinkerCore
+2025-06-19 16:08:11 | ThinkerCore | DEBUG    | _setup_logger:70 | Log file: C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\logs\thinker_aux.log
+2025-06-19 16:08:11 | ThinkerCore | INFO     | info:78 | ThinkerCore initialized with session 291c32dc
+2025-06-19 16:08:11 | TextProcessor | INFO     | _setup_logger:69 | Logger initialized for TextProcessor
+2025-06-19 16:08:11 | TextProcessor | DEBUG    | _setup_logger:70 | Log file: C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\logs\thinker_aux.log
+2025-06-19 16:08:11 | TextProcessor | INFO     | info:78 | TextProcessor initialized
+2025-06-19 16:08:11 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: text_processor
+2025-06-19 16:08:11 | CodeAnalyzer | INFO     | _setup_logger:69 | Logger initialized for CodeAnalyzer
+2025-06-19 16:08:11 | CodeAnalyzer | DEBUG    | _setup_logger:70 | Log file: C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\logs\thinker_aux.log
+2025-06-19 16:08:11 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer initialized
+2025-06-19 16:08:11 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: code_analyzer
+2025-06-19 16:08:11 | AssistantChat | INFO     | _setup_logger:69 | Logger initialized for AssistantChat
+2025-06-19 16:08:11 | AssistantChat | DEBUG    | _setup_logger:70 | Log file: C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\logs\thinker_aux.log
+2025-06-19 16:08:11 | QwenService | INFO     | _setup_logger:69 | Logger initialized for QwenService
+2025-06-19 16:08:11 | QwenService | DEBUG    | _setup_logger:70 | Log file: C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\logs\thinker_aux.log
+2025-06-19 16:08:11 | QwenService | INFO     | info:78 | QwenService initialized for qwen2.5-7b-instruct-1m at http://localhost:1234
+2025-06-19 16:08:13 | QwenService | INFO     | info:78 | ✅ Successfully connected to Qwen server
+2025-06-19 16:08:13 | AssistantChat | INFO     | info:78 | 🆕 Nueva conversación iniciada: 22343616
+2025-06-19 16:08:13 | AssistantChat | INFO     | info:78 | AssistantChat initialized with qwen2.5-7b-instruct-1m
+2025-06-19 16:08:13 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: assistant_chat
+2025-06-19 16:08:13 | SpeechModule | INFO     | _setup_logger:69 | Logger initialized for SpeechModule
+2025-06-19 16:08:13 | SpeechModule | DEBUG    | _setup_logger:70 | Log file: C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\logs\thinker_aux.log
+2025-06-19 16:08:13 | SpeechService | INFO     | _setup_logger:69 | Logger initialized for SpeechService
+2025-06-19 16:08:13 | SpeechService | DEBUG    | _setup_logger:70 | Log file: C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\logs\thinker_aux.log
+2025-06-19 16:08:13 | SpeechService | INFO     | info:78 | SpeechService initialized with google engine
+2025-06-19 16:08:13 | SpeechService | INFO     | info:78 | 🎤 Initializing microphone system...
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 | 🔍 Found 50 audio devices:
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [0] Asignador de sonido Microsoft - Input
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [1] Microphone (Logitech Webcam C92
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [2] Microphone Array (IntelÂ® Smart 
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [3] Echo Cancelling Speakerphone (L
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [4] MicrÃ³fono (NVIDIA Broadcast)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [5] Asignador de sonido Microsoft - Output
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [6] Echo Cancelling Speakerphone (L
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [7] Altavoces (2- Realtek(R) Audio)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [8] Speakers (NVIDIA Broadcast)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [9] Altavoces (ZGO Dock)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [10] Controlador primario de captura de sonido
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [11] Microphone (Logitech Webcam C925e)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [12] Microphone Array (IntelÂ® Smart Sound Technology for Digital Microphones)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [13] Echo Cancelling Speakerphone (Lenovo Go Wired Speakerphone)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [14] MicrÃ³fono (NVIDIA Broadcast)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [15] Controlador primario de sonido
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [16] Echo Cancelling Speakerphone (Lenovo Go Wired Speakerphone)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [17] Altavoces (2- Realtek(R) Audio)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [18] Speakers (NVIDIA Broadcast)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [19] Altavoces (ZGO Dock)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [20] Echo Cancelling Speakerphone (Lenovo Go Wired Speakerphone)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [21] Altavoces (2- Realtek(R) Audio)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [22] Speakers (NVIDIA Broadcast)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [23] Altavoces (ZGO Dock)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [24] Microphone Array (IntelÂ® Smart Sound Technology for Digital Microphones)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [25] Microphone (Logitech Webcam C925e)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [26] Echo Cancelling Speakerphone (Lenovo Go Wired Speakerphone)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [27] MicrÃ³fono (NVIDIA Broadcast)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [28] Output (RTX-Audio Point)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [29] Microphone (RTX-Audio Point)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [30] Headphones ()
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [31] Headphones 1 (Realtek HD Audio 2nd output with SST)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [32] Headphones 2 (Realtek HD Audio 2nd output with SST)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [33] PC Speaker (Realtek HD Audio 2nd output with SST)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [34] Microphone (Realtek HD Audio Mic input)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [35] Stereo Mix (Realtek HD Audio Stereo input)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [36] Speakers 1 (Realtek HD Audio output with SST)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [37] Speakers 2 (Realtek HD Audio output with SST)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [38] PC Speaker (Realtek HD Audio output with SST)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [39] Speakers 3 (Realtek HD Audio output with SST)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [40] Microphone (ZGO Dock)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [41] Speakers (ZGO Dock)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [42] Input ()
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [43] Microphone Array 1 ()
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [44] Microphone Array 2 ()
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [45] Microphone Array 3 ()
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [46] Headphones ()
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [47] Microphone (Logitech Webcam C925e)
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [48] Echo Cancelling Speakerphone ()
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 |   [49] Echo Cancelling Speakerphone ()
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 | 🎤 Using default microphone device
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 | 🔊 Speech recognition configured with 3.0s silence detection
+2025-06-19 16:08:14 | SpeechService | INFO     | info:78 | 🔧 Quick ambient noise calibration...
+2025-06-19 16:08:15 | SpeechService | INFO     | info:78 | ✅ Energy threshold set to: 759.0345034846016
+2025-06-19 16:08:15 | SpeechService | INFO     | info:78 | ✅ Microphone initialized successfully
+2025-06-19 16:08:15 | SpeechModule | INFO     | info:78 | SpeechModule initialized successfully
+2025-06-19 16:08:15 | ThinkerCore | DEBUG    | debug:74 | AI module initialized: speech_service
+2025-06-19 16:08:15 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: network_scanner
+2025-06-19 16:08:15 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: vulnerability_checker
+2025-06-19 16:08:15 | ThinkerCore | DEBUG    | debug:74 | Security module initialized: security_logger
+2025-06-19 16:08:15 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-19 16:08:15 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\logs\thinker_aux.log
+2025-06-19 16:08:15 | ThinkerAI | DEBUG    | debug:74 | Background thread started for _monitor_performance_loop
+2025-06-19 16:08:15 | ThinkerCore | INFO     | info:78 | Core modules initialized successfully
+2025-06-19 16:08:15 | ThinkerAI | INFO     | info:78 | Performance | _initialize_core_modules | Duration: 3.9085s | Args: 1, Kwargs: 0
+2025-06-19 16:08:15 | ThinkerCore | INFO     | info:78 | Starting Thinker AI Core...
+2025-06-19 16:08:15 | ThinkerAI | DEBUG    | debug:74 | JSON data read from C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\data\app_state.json
+2025-06-19 16:08:15 | ThinkerCore | DEBUG    | debug:74 | Application state loaded
+2025-06-19 16:08:15 | ThinkerAI | DEBUG    | debug:74 | Delayed execution scheduled: _auto_save_loop in 300s
+2025-06-19 16:08:15 | ThinkerCore | INFO     | info:78 | Thinker AI Core started successfully in 0.00s
+2025-06-19 16:08:15 | Main | INFO     | info:78 | Core services initialized successfully
+2025-06-19 16:08:15 | MainWindow | INFO     | _setup_logger:69 | Logger initialized for MainWindow
+2025-06-19 16:08:15 | MainWindow | DEBUG    | _setup_logger:70 | Log file: C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\logs\thinker_aux.log
+2025-06-19 16:08:15 | MainWindow | INFO     | info:78 | MainWindow initialized
+2025-06-19 16:08:15 | Main | INFO     | info:78 | Main window created successfully
+2025-06-19 16:08:15 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-19 16:08:15 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\logs\thinker_aux.log
+2025-06-19 16:08:15 | ThinkerAI | INFO     | info:78 | Performance | initialize_application | Duration: 3.9190s | Args: 1, Kwargs: 0
+2025-06-19 16:08:15 | Main | INFO     | _setup_logger:69 | Logger initialized for Main
+2025-06-19 16:08:15 | Main | DEBUG    | _setup_logger:70 | Log file: C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\logs\thinker_aux.log
+2025-06-19 16:08:15 | Main | INFO     | info:78 | Application loop starting
+2025-06-19 16:08:16 | ThinkerAI | INFO     | _setup_logger:69 | Logger initialized for ThinkerAI
+2025-06-19 16:08:16 | ThinkerAI | DEBUG    | _setup_logger:70 | Log file: C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\logs\thinker_aux.log
+2025-06-19 16:08:16 | ThinkerAI | DEBUG    | debug:74 | Window centered: 1000x700 at (353, 183)
+2025-06-19 16:08:16 | MainWindow | DEBUG    | debug:74 | Modern CustomTkinter window created
+2025-06-19 16:08:16 | MainWindow | DEBUG    | debug:74 | Modern CustomTkinter styling configured
+2025-06-19 16:08:16 | MainWindow | DEBUG    | debug:74 | Minimalist menu bar created
+2025-06-19 16:08:16 | MainWindow | DEBUG    | debug:74 | Minimalist AI Chat interface created
+2025-06-19 16:08:16 | MainWindow | DEBUG    | debug:74 | Minimalist status bar created
+2025-06-19 16:08:16 | MainWindow | DEBUG    | debug:74 | Event handlers setup
+2025-06-19 16:08:16 | ThinkerCore | INFO     | info:78 | Starting Thinker AI Core...
+2025-06-19 16:08:16 | ThinkerAI | DEBUG    | debug:74 | JSON data read from C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\data\app_state.json
+2025-06-19 16:08:16 | ThinkerCore | DEBUG    | debug:74 | Application state loaded
+2025-06-19 16:08:16 | ThinkerAI | DEBUG    | debug:74 | Delayed execution scheduled: _auto_save_loop in 300s
+2025-06-19 16:08:16 | ThinkerCore | INFO     | info:78 | Thinker AI Core started successfully in 0.00s
+2025-06-19 16:08:16 | MainWindow | INFO     | info:78 | Main window initialized successfully
+2025-06-19 16:08:16 | ThinkerAI | INFO     | info:78 | Performance | initialize | Duration: 1.1148s | Args: 1, Kwargs: 0
+2025-06-19 16:08:16 | MainWindow | INFO     | info:78 | Starting main application loop
+2025-06-19 16:08:25 | ThinkerCore | INFO     | info:78 | Speech operation: get_status
+2025-06-19 16:08:26 | SpeechService | INFO     | info:78 | 🎤 Found 50 audio devices
+2025-06-19 16:08:26 | SpeechService | INFO     | info:78 |   [0] Asignador de sonido Microsoft - Input
+2025-06-19 16:08:26 | SpeechService | INFO     | info:78 |   [1] Microphone (Logitech Webcam C92
+2025-06-19 16:08:26 | SpeechService | INFO     | info:78 |   [2] Microphone Array (IntelÂ® Smart 
+2025-06-19 16:08:26 | SpeechService | INFO     | info:78 |   ... and 47 more devices
+2025-06-19 16:08:26 | SpeechService | INFO     | info:78 | ✅ Microphones detected - assuming available
+2025-06-19 16:08:26 | ThinkerCore | INFO     | info:78 | Speech operation: start_listening
+2025-06-19 16:08:26 | SpeechService | INFO     | info:78 | 🎤 Started continuous speech recognition
+2025-06-19 16:08:26 | SpeechService | DEBUG    | debug:74 | 👂 Listening for speech... (silence detection: 3.0s)
+2025-06-19 16:08:31 | SpeechService | DEBUG    | debug:74 | 👂 Listening for speech... (silence detection: 3.0s)
+2025-06-19 16:08:32 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 0.53s
+2025-06-19 16:08:32 | MainWindow | INFO     | info:78 | User Action | 16:08:32 | Voice Message Sent | Text: hola cómo estás
+2025-06-19 16:08:32 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-19 16:08:32 | AssistantChat | INFO     | info:78 | 🆕 Nueva conversación iniciada: ef6796f9
+2025-06-19 16:08:32 | AssistantChat | INFO     | info:78 | Processing chat message: 15 characters (streaming)
+2025-06-19 16:08:32 | AssistantChat | DEBUG    | debug:74 | 💬 Historial actualizado: 1 mensajes
+2025-06-19 16:08:32 | AssistantChat | DEBUG    | debug:74 | 🧠 Enviando 3 mensajes a Qwen (incluyendo contexto)
+2025-06-19 16:08:32 | AssistantChat | DEBUG    | debug:74 | 🔄 Intentando chat_with_messages (con contexto)
+2025-06-19 16:08:32 | QwenService | DEBUG    | debug:74 | 🧠 Processing conversation with 3 messages
+2025-06-19 16:08:32 | QwenService | DEBUG    | debug:74 | 💭 Conversation context: 3 msgs, ~92 tokens
+2025-06-19 16:08:32 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming con contexto...
+2025-06-19 16:08:35 | SpeechService | DEBUG    | debug:74 | 👂 Listening for speech... (silence detection: 3.0s)
+2025-06-19 16:08:35 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: '¡' (length: 1)
+2025-06-19 16:08:35 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'Hola' (length: 4)
+2025-06-19 16:08:35 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: '!' (length: 1)
+2025-06-19 16:08:35 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' Est' (length: 4)
+2025-06-19 16:08:35 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'oy' (length: 2)
+2025-06-19 16:08:35 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' bien' (length: 5)
+2025-06-19 16:08:35 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ',' (length: 1)
+2025-06-19 16:08:35 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' gracias' (length: 8)
+2025-06-19 16:08:35 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' por' (length: 4)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' preg' (length: 5)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'unt' (length: 3)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'ar' (length: 2)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: '.' (length: 1)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' ¿' (length: 2)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'Y' (length: 1)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' tú' (length: 3)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: '?' (length: 1)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' ¿' (length: 2)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'En' (length: 2)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' qué' (length: 4)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' te' (length: 3)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' puedo' (length: 6)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' ayud' (length: 5)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'ar' (length: 2)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' hoy' (length: 4)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: '?' (length: 1)
+2025-06-19 16:08:36 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' 😊' (length: 2)
+2025-06-19 16:08:36 | QwenService | INFO     | info:78 | ✅ Streaming completado
+2025-06-19 16:08:36 | QwenService | INFO     | info:78 | ✅ Qwen response received in 4.07s (streaming)
+2025-06-19 16:08:36 | AssistantChat | DEBUG    | debug:74 | ✅ chat_with_messages exitoso: success
+2025-06-19 16:08:36 | AssistantChat | DEBUG    | debug:74 | 💬 Historial actualizado: 2 mensajes
+2025-06-19 16:08:36 | SpeechService | INFO     | info:78 | ✅ Continuous recognition: 'hola cómo estás...'
+2025-06-19 16:08:38 | SpeechService | DEBUG    | debug:74 | 👂 Listening for speech... (silence detection: 3.0s)
+2025-06-19 16:08:42 | SpeechService | DEBUG    | debug:74 | 👂 Listening for speech... (silence detection: 3.0s)
+2025-06-19 16:08:43 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 0.77s
+2025-06-19 16:08:43 | MainWindow | INFO     | info:78 | User Action | 16:08:43 | Voice Message Sent | Text: es la capital de Francia
+2025-06-19 16:08:43 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-19 16:08:43 | AssistantChat | INFO     | info:78 | Processing chat message: 24 characters (streaming)
+2025-06-19 16:08:43 | AssistantChat | DEBUG    | debug:74 | 💬 Historial actualizado: 3 mensajes
+2025-06-19 16:08:43 | AssistantChat | DEBUG    | debug:74 | 🧠 Enviando 5 mensajes a Qwen (incluyendo contexto)
+2025-06-19 16:08:43 | AssistantChat | DEBUG    | debug:74 | 🔄 Intentando chat_with_messages (con contexto)
+2025-06-19 16:08:43 | QwenService | DEBUG    | debug:74 | 🧠 Processing conversation with 5 messages
+2025-06-19 16:08:43 | QwenService | DEBUG    | debug:74 | 💭 Conversation context: 5 msgs, ~120 tokens
+2025-06-19 16:08:43 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming con contexto...
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'La' (length: 2)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' capital' (length: 8)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' de' (length: 3)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' Franc' (length: 6)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'ia' (length: 2)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' es' (length: 3)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' Par' (length: 4)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'ís' (length: 2)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: '.' (length: 1)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' Si' (length: 3)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' tienes' (length: 7)
+2025-06-19 16:08:45 | SpeechService | DEBUG    | debug:74 | 👂 Listening for speech... (silence detection: 3.0s)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' alguna' (length: 7)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' otra' (length: 5)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' pregunta' (length: 9)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' o' (length: 2)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' neces' (length: 6)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'itas' (length: 4)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' más' (length: 4)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' información' (length: 12)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ',' (length: 1)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' ¡' (length: 2)
+2025-06-19 16:08:45 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'no' (length: 2)
+2025-06-19 16:08:46 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' dudes' (length: 6)
+2025-06-19 16:08:46 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' en' (length: 3)
+2025-06-19 16:08:46 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' dec' (length: 4)
+2025-06-19 16:08:46 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'í' (length: 1)
+2025-06-19 16:08:46 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'rm' (length: 2)
+2025-06-19 16:08:46 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'elo' (length: 3)
+2025-06-19 16:08:46 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: '!' (length: 1)
+2025-06-19 16:08:46 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' 😊' (length: 2)
+2025-06-19 16:08:46 | QwenService | INFO     | info:78 | ✅ Streaming completado
+2025-06-19 16:08:46 | QwenService | INFO     | info:78 | ✅ Qwen response received in 3.05s (streaming)
+2025-06-19 16:08:46 | AssistantChat | DEBUG    | debug:74 | ✅ chat_with_messages exitoso: success
+2025-06-19 16:08:46 | AssistantChat | DEBUG    | debug:74 | 💬 Historial actualizado: 4 mensajes
+2025-06-19 16:08:46 | SpeechService | INFO     | info:78 | ✅ Continuous recognition: 'es la capital de Francia...'
+2025-06-19 16:08:51 | SpeechService | DEBUG    | debug:74 | 👂 Listening for speech... (silence detection: 3.0s)
+2025-06-19 16:08:52 | SpeechService | INFO     | info:78 | 🧠 Speech recognized in 0.58s
+2025-06-19 16:08:52 | MainWindow | INFO     | info:78 | User Action | 16:08:52 | Voice Message Sent | Text: y la de Alemania
+2025-06-19 16:08:52 | ThinkerCore | INFO     | info:78 | AI Operation | chat | 
+2025-06-19 16:08:52 | AssistantChat | INFO     | info:78 | Processing chat message: 16 characters (streaming)
+2025-06-19 16:08:52 | AssistantChat | DEBUG    | debug:74 | 💬 Historial actualizado: 5 mensajes
+2025-06-19 16:08:52 | AssistantChat | DEBUG    | debug:74 | 🧠 Enviando 7 mensajes a Qwen (incluyendo contexto)
+2025-06-19 16:08:52 | AssistantChat | DEBUG    | debug:74 | 🔄 Intentando chat_with_messages (con contexto)
+2025-06-19 16:08:52 | QwenService | DEBUG    | debug:74 | 🧠 Processing conversation with 7 messages
+2025-06-19 16:08:52 | QwenService | DEBUG    | debug:74 | 💭 Conversation context: 7 msgs, ~152 tokens
+2025-06-19 16:08:52 | QwenService | INFO     | info:78 | 🌊 Iniciando respuesta en streaming con contexto...
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'La' (length: 2)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' capital' (length: 8)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' de' (length: 3)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' Ale' (length: 4)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'mania' (length: 5)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' es' (length: 3)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' Ber' (length: 4)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'l' (length: 1)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'ín' (length: 2)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: '.
+
+' (length: 3)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'Si' (length: 2)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' tienes' (length: 7)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' más' (length: 4)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' preg' (length: 5)
+2025-06-19 16:08:54 | SpeechService | DEBUG    | debug:74 | 👂 Listening for speech... (silence detection: 3.0s)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'untas' (length: 5)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' o' (length: 2)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' neces' (length: 6)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'itas' (length: 4)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' información' (length: 12)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' sobre' (length: 6)
+2025-06-19 16:08:54 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' otros' (length: 6)
+2025-06-19 16:08:55 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' temas' (length: 6)
+2025-06-19 16:08:55 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ',' (length: 1)
+2025-06-19 16:08:55 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' ¡' (length: 2)
+2025-06-19 16:08:55 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'est' (length: 3)
+2025-06-19 16:08:55 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'oy' (length: 2)
+2025-06-19 16:08:55 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' aquí' (length: 5)
+2025-06-19 16:08:55 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' para' (length: 5)
+2025-06-19 16:08:55 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' ayud' (length: 5)
+2025-06-19 16:08:55 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: 'arte' (length: 4)
+2025-06-19 16:08:55 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: '!' (length: 1)
+2025-06-19 16:08:55 | MainWindow | DEBUG    | debug:74 | 🌊 Stream chunk received: ' 😊' (length: 2)
+2025-06-19 16:08:55 | QwenService | INFO     | info:78 | ✅ Streaming completado
+2025-06-19 16:08:55 | QwenService | INFO     | info:78 | ✅ Qwen response received in 3.13s (streaming)
+2025-06-19 16:08:55 | AssistantChat | DEBUG    | debug:74 | ✅ chat_with_messages exitoso: success
+2025-06-19 16:08:55 | AssistantChat | DEBUG    | debug:74 | 💬 Historial actualizado: 6 mensajes
+2025-06-19 16:08:55 | SpeechService | INFO     | info:78 | ✅ Continuous recognition: 'y la de Alemania...'
+2025-06-19 16:08:58 | SpeechService | DEBUG    | debug:74 | 👂 Listening for speech... (silence detection: 3.0s)
+2025-06-19 16:08:58 | ThinkerCore | INFO     | info:78 | Speech operation: get_status
+2025-06-19 16:08:58 | SpeechService | INFO     | info:78 | 🎤 Found 50 audio devices
+2025-06-19 16:08:58 | SpeechService | INFO     | info:78 |   [0] Asignador de sonido Microsoft - Input
+2025-06-19 16:08:58 | SpeechService | INFO     | info:78 |   [1] Microphone (Logitech Webcam C92
+2025-06-19 16:08:58 | SpeechService | INFO     | info:78 |   [2] Microphone Array (IntelÂ® Smart 
+2025-06-19 16:08:58 | SpeechService | INFO     | info:78 |   ... and 47 more devices
+2025-06-19 16:08:58 | SpeechService | INFO     | info:78 | ✅ Microphones detected - assuming available
+2025-06-19 16:08:58 | ThinkerCore | INFO     | info:78 | Speech operation: stop_listening
+2025-06-19 16:08:58 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-19 16:09:01 | ThinkerAI | INFO     | info:78 | User Action | 16:09:01 | Yes/No Dialog | Title: Confirmar Salida, Result: True
+2025-06-19 16:09:01 | MainWindow | INFO     | info:78 | User Action | 16:09:01 | Application close requested by user
+2025-06-19 16:09:01 | MainWindow | INFO     | info:78 | Shutting down application
+2025-06-19 16:09:01 | ThinkerCore | INFO     | info:78 | Stopping Thinker AI Core...
+2025-06-19 16:09:01 | ThinkerAI | DEBUG    | debug:74 | JSON data written to C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\data\app_state.json
+2025-06-19 16:09:01 | ThinkerCore | DEBUG    | debug:74 | Application state saved
+2025-06-19 16:09:01 | TextProcessor | INFO     | info:78 | TextProcessor shutdown
+2025-06-19 16:09:01 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: text_processor
+2025-06-19 16:09:01 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer shutdown
+2025-06-19 16:09:01 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: code_analyzer
+2025-06-19 16:09:01 | ThinkerAI | DEBUG    | debug:74 | JSON data written to C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\data\conversation_ef6796f9.json
+2025-06-19 16:09:01 | AssistantChat | DEBUG    | debug:74 | 💾 Conversación guardada: C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\data\conversation_ef6796f9.json
+2025-06-19 16:09:01 | QwenService | DEBUG    | debug:74 | QwenService session closed
+2025-06-19 16:09:01 | AssistantChat | INFO     | info:78 | AssistantChat shutdown
+2025-06-19 16:09:01 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: assistant_chat
+2025-06-19 16:09:01 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-19 16:09:01 | SpeechService | INFO     | info:78 | SpeechService cleaned up
+2025-06-19 16:09:01 | SpeechModule | INFO     | info:78 | SpeechModule shutdown
+2025-06-19 16:09:01 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: speech_service
+2025-06-19 16:09:01 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: network_scanner
+2025-06-19 16:09:01 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: vulnerability_checker
+2025-06-19 16:09:01 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: security_logger
+2025-06-19 16:09:01 | ThinkerCore | INFO     | info:78 | Thinker AI Core stopped successfully
+2025-06-19 16:09:01 | MainWindow | INFO     | info:78 | Core services stopped successfully
+2025-06-19 16:09:01 | MainWindow | INFO     | info:78 | GUI mainloop quit successfully
+2025-06-19 16:09:01 | MainWindow | INFO     | info:78 | GUI window destroyed successfully
+2025-06-19 16:09:01 | MainWindow | INFO     | info:78 | Application shutdown completed successfully
+2025-06-19 16:09:01 | ThinkerCore | INFO     | info:78 | Stopping Thinker AI Core...
+2025-06-19 16:09:01 | ThinkerAI | DEBUG    | debug:74 | JSON data written to C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\data\app_state.json
+2025-06-19 16:09:01 | ThinkerCore | DEBUG    | debug:74 | Application state saved
+2025-06-19 16:09:01 | TextProcessor | INFO     | info:78 | TextProcessor shutdown
+2025-06-19 16:09:01 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: text_processor
+2025-06-19 16:09:01 | CodeAnalyzer | INFO     | info:78 | CodeAnalyzer shutdown
+2025-06-19 16:09:01 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: code_analyzer
+2025-06-19 16:09:01 | ThinkerAI | DEBUG    | debug:74 | JSON data written to C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\data\conversation_ef6796f9.json
+2025-06-19 16:09:01 | AssistantChat | DEBUG    | debug:74 | 💾 Conversación guardada: C:\Users\infan\OneDrive\Desktop\AIR\Projects\AI-Projects\Thinker-AI-Aux\data\conversation_ef6796f9.json
+2025-06-19 16:09:01 | QwenService | DEBUG    | debug:74 | QwenService session closed
+2025-06-19 16:09:01 | AssistantChat | INFO     | info:78 | AssistantChat shutdown
+2025-06-19 16:09:01 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: assistant_chat
+2025-06-19 16:09:01 | SpeechService | INFO     | info:78 | ⏹️ Stopped speech recognition
+2025-06-19 16:09:01 | SpeechService | INFO     | info:78 | SpeechService cleaned up
+2025-06-19 16:09:01 | SpeechModule | INFO     | info:78 | SpeechModule shutdown
+2025-06-19 16:09:01 | ThinkerCore | DEBUG    | debug:74 | AI module stopped: speech_service
+2025-06-19 16:09:01 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: network_scanner
+2025-06-19 16:09:01 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: vulnerability_checker
+2025-06-19 16:09:01 | ThinkerCore | DEBUG    | debug:74 | Security module stopped: security_logger
+2025-06-19 16:09:01 | ThinkerCore | INFO     | info:78 | Thinker AI Core stopped successfully
+2025-06-19 16:09:01 | Main | INFO     | info:78 | Application shutdown completed

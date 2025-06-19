@@ -1,0 +1,80 @@
+{
+  "conversation_id": "ef6796f9",
+  "start_time": "2025-06-19T16:08:32.259048",
+  "end_time": "2025-06-19T16:09:01.340844",
+  "history": [
+    {
+      "role": "user",
+      "content": "hola cómo estás",
+      "timestamp": "2025-06-19T16:08:32.260048",
+      "conversation_id": "ef6796f9",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "¡Hola! Estoy bien, gracias por preguntar. ¿Y tú? ¿En qué te puedo ayudar hoy? 😊",
+      "timestamp": "2025-06-19T16:08:36.335137",
+      "conversation_id": "ef6796f9",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    },
+    {
+      "role": "user",
+      "content": "es la capital de Francia",
+      "timestamp": "2025-06-19T16:08:43.090023",
+      "conversation_id": "ef6796f9",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "La capital de Francia es París. Si tienes alguna otra pregunta o necesitas más información, ¡no dudes en decírmelo! 😊",
+      "timestamp": "2025-06-19T16:08:46.142197",
+      "conversation_id": "ef6796f9",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    },
+    {
+      "role": "user",
+      "content": "y la de Alemania",
+      "timestamp": "2025-06-19T16:08:52.053274",
+      "conversation_id": "ef6796f9",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "La capital de Alemania es Berlín.\n\nSi tienes más preguntas o necesitas información sobre otros temas, ¡estoy aquí para ayudarte! 😊",
+      "timestamp": "2025-06-19T16:08:55.183257",
+      "conversation_id": "ef6796f9",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    }
+  ],
+  "summary": {
+    "conversation_id": "ef6796f9",
+    "start_time": "2025-06-19T16:08:32.259048",
+    "message_count": 6,
+    "user_messages": 3,
+    "assistant_messages": 3,
+    "total_tokens_used": 0,
+    "duration_minutes": 0.48469660000000003,
+    "last_message_time": "2025-06-19T16:08:55.183257"
+  }
+}
