@@ -474,6 +474,141 @@ class ThinkerCore:
                 "result": f"Speech operation failed: {str(e)}"
             }
     
+    def execute_tts_operation(self, operation: str, parameters: Dict[str, Any] = None) -> Any:
+        """Execute Text-to-Speech operations"""
+        try:
+            parameters = parameters or {}
+            self.logger.info(f"TTS operation: {operation}")
+            
+            # Check if TTS is available
+            if not TTS_AVAILABLE:
+                return {
+                    "status": "error",
+                    "result": "TTS not available. Install pyttsx3 package."
+                }
+            
+            # Get AssistantChat instance for TTS operations
+            if "assistant_chat" not in self.ai_modules:
+                return {
+                    "status": "error",
+                    "result": "Assistant chat not available for TTS operations."
+                }
+            
+            assistant_chat = self.ai_modules["assistant_chat"]
+            
+            if operation == "speak_text":
+                text = parameters.get("text", "")
+                interrupt = parameters.get("interrupt", False)
+                
+                if not text:
+                    return {"status": "error", "result": "No text provided to speak"}
+                
+                success = assistant_chat.speak_response(text, interrupt_current=interrupt)
+                return {
+                    "status": "success" if success else "error",
+                    "result": "Speaking text..." if success else "Failed to start TTS"
+                }
+                
+            elif operation == "stop_speech":
+                success = assistant_chat.stop_speech()
+                return {
+                    "status": "success" if success else "error",
+                    "result": "Speech stopped" if success else "Failed to stop speech"
+                }
+                
+            elif operation == "test_tts":
+                tts_service = get_tts_service()
+                if not tts_service:
+                    return {"status": "error", "result": "TTS service not available"}
+                
+                return tts_service.test_speech()
+                
+            elif operation == "get_voices":
+                voices = assistant_chat.get_available_voices()
+                return {
+                    "status": "success",
+                    "voices": voices,
+                    "result": f"Found {len(voices)} available voices"
+                }
+                
+            elif operation == "set_voice":
+                voice_id = parameters.get("voice_id")
+                if voice_id is None:
+                    return {"status": "error", "result": "No voice_id provided"}
+                
+                success = assistant_chat.set_voice_settings(voice_id=voice_id)
+                return {
+                    "status": "success" if success else "error",
+                    "result": f"Voice changed to ID {voice_id}" if success else "Failed to change voice"
+                }
+                
+            elif operation == "set_rate":
+                rate = parameters.get("rate")
+                if rate is None:
+                    return {"status": "error", "result": "No rate provided"}
+                
+                success = assistant_chat.set_voice_settings(rate=rate)
+                return {
+                    "status": "success" if success else "error",
+                    "result": f"Speech rate set to {rate} WPM" if success else "Failed to set speech rate"
+                }
+                
+            elif operation == "set_volume":
+                volume = parameters.get("volume")
+                if volume is None:
+                    return {"status": "error", "result": "No volume provided"}
+                
+                success = assistant_chat.set_voice_settings(volume=volume)
+                return {
+                    "status": "success" if success else "error",
+                    "result": f"Volume set to {volume}" if success else "Failed to set volume"
+                }
+                
+            elif operation == "get_tts_diagnostics":
+                tts_service = get_tts_service()
+                if not tts_service:
+                    return {"status": "error", "result": "TTS service not available"}
+                
+                diagnostics = tts_service.get_diagnostics()
+                return {
+                    "status": "success",
+                    "diagnostics": diagnostics,
+                    "result": "TTS diagnostics retrieved"
+                }
+                
+            elif operation == "toggle_auto_speak":
+                # Toggle auto-speak setting using local state
+                assistant_chat = self.ai_modules["assistant_chat"]
+                old_state = assistant_chat.auto_speak_enabled
+                new_state = not assistant_chat.auto_speak_enabled
+                assistant_chat.auto_speak_enabled = new_state
+                
+                self.logger.info(f"🔊 TTS Auto-speak toggled: {old_state} → {new_state}")
+                
+                return {
+                    "status": "success",
+                    "result": f"Auto-speak {'enabled' if new_state else 'disabled'}",
+                    "auto_speak_enabled": new_state
+                }
+                
+            elif operation == "get_auto_speak_status":
+                assistant_chat = self.ai_modules["assistant_chat"]
+                return {
+                    "status": "success",
+                    "auto_speak_enabled": assistant_chat.auto_speak_enabled,
+                    "result": f"Auto-speak is {'enabled' if assistant_chat.auto_speak_enabled else 'disabled'}"
+                }
+                
+            else:
+                raise ValueError(f"Unknown TTS operation: {operation}")
+                
+        except Exception as e:
+            self.logger.log_exception(e, f"TTS operation: {operation}")
+            return {
+                "status": "error",
+                "result": f"TTS operation failed: {str(e)}"
+            }
+    
     def execute_conversation_operation(self, operation: str, parameters: Dict[str, Any] = None) -> Any:
         """Execute conversation management operations"""
         try:
@@ -525,13 +660,50 @@ class ThinkerCore:
                 "result": f"Conversation operation failed: {str(e)}"
             }
 
+    def get_auto_speak_enabled(self) -> bool:
+        """Get current auto-speak state"""
+        return self.auto_speak_enabled
+    
+    def set_auto_speak_enabled(self, enabled: bool):
+        """Set auto-speak state"""
+        self.auto_speak_enabled = enabled
+        self.logger.info(f"🔊 Auto-speak state set to: {enabled}")
+
+    def get_available_voices(self) -> list:
+        """Get list of available TTS voices"""
+        if not self.tts_service:
+            return []
+        
+        try:
+            return self.tts_service.get_available_voices()
+        except Exception as e:
+            self.logger.error(f"Error getting available voices: {e}")
+            return []
+
 
 # Import Qwen service
 try:
-    from src.services.qwen_service import get_qwen_service
+    from src.services import QwenService, get_qwen_service
     QWEN_AVAILABLE = True
 except ImportError:
     QWEN_AVAILABLE = False
+    get_qwen_service = None
+
+# Optional speech service for voice dictation
+try:
+    from src.services import SpeechService, get_speech_service
+    SPEECH_AVAILABLE = True
+except ImportError:
+    SPEECH_AVAILABLE = False
+    get_speech_service = None
+
+# Optional TTS service for voice synthesis
+try:
+    from src.services import TTSService, get_tts_service
+    TTS_AVAILABLE = True
+except ImportError:
+    TTS_AVAILABLE = False
+    get_tts_service = None
 
 
 # Real AI modules implementation
@@ -586,12 +758,16 @@ class AssistantChat:
         self.conversation_start_time = None
         self.total_tokens_used = 0
         self.conversation_id = None
+        
+        # TTS state - local to this instance
+        self.auto_speak_enabled = False  # Local auto-speak state
     
     def initialize(self): 
         self.logger = get_logger("AssistantChat")
         
         # Always initialize qwen_service, even if offline
         self.qwen_service = None
+        self.tts_service = None
         
         if QWEN_AVAILABLE:
             try:
@@ -603,6 +779,35 @@ class AssistantChat:
                 self.qwen_service = None
         else:
             self.logger.error("AssistantChat failed to initialize - Qwen service unavailable")
+        
+        # Initialize TTS service if available
+        if TTS_AVAILABLE:
+            try:
+                self.tts_service = get_tts_service()
+                if self.tts_service:
+                    self.logger.info("🔊 TTS service initialized for voice responses")
+                    
+                    # Verification tests
+                    self.logger.info(f"🔍 TTS Verification - Available: {self.tts_service.is_speech_available()}")
+                    self.logger.info(f"🔍 TTS Verification - Engine: {self.tts_service.engine is not None}")
+                    
+                    if hasattr(self.tts_service, 'get_available_voices'):
+                        voices = self.tts_service.get_available_voices()
+                        self.logger.info(f"🔍 TTS Verification - Voices count: {len(voices)}")
+                        if voices:
+                            self.logger.info(f"🔍 TTS Verification - Current voice: {voices[0] if voices else 'None'}")
+                    
+                    # Test configuration access
+                    config = get_config()
+                    self.logger.info(f"🔍 TTS Verification - Config TTS_ENABLED: {config.TTS_ENABLED}")
+                    self.logger.info(f"🔍 TTS Verification - Config TTS_AUTO_SPEAK: {config.TTS_AUTO_SPEAK}")
+                else:
+                    self.logger.warning("⚠️ TTS service not available")
+            except Exception as e:
+                self.logger.error(f"Failed to initialize TTS service: {str(e)}")
+                import traceback
+                self.logger.error(f"TTS init traceback: {traceback.format_exc()}")
+                self.tts_service = None
     
     def shutdown(self): 
         """Shutdown and save conversation"""
@@ -611,6 +816,8 @@ class AssistantChat:
                 self._save_conversation_to_state()
             if hasattr(self, 'qwen_service') and self.qwen_service:
                 self.qwen_service.close()
+            if hasattr(self, 'tts_service') and self.tts_service:
+                self.tts_service.close()
         except Exception as e:
             self.logger.error(f"Error during shutdown: {e}")
         finally:
@@ -728,6 +935,97 @@ class AssistantChat:
         except Exception as e:
             self.logger.error(f"Error guardando conversación: {e}")
     
+    def speak_response(self, text: str, interrupt_current: bool = False) -> bool:
+        """
+        Speak AI response using TTS
+        
+        Args:
+            text: Text to speak
+            interrupt_current: Whether to interrupt current speech
+        
+        Returns:
+            True if TTS started successfully
+        """
+        self.logger.debug(f"🔍 speak_response called with {len(text)} chars, interrupt: {interrupt_current}")
+        
+        if not self.tts_service:
+            self.logger.debug("🔍 speak_response: No TTS service")
+            return False
+            
+        if not self.tts_service.is_speech_available():
+            self.logger.debug("🔍 speak_response: TTS not available")
+            return False
+        
+        config = get_config()
+        if not config.TTS_ENABLED:
+            self.logger.debug("🔍 speak_response: TTS disabled in config")
+            return False
+        
+        try:
+            self.logger.info(f"🗣️ Calling TTS speak_text with: '{text[:100]}{'...' if len(text) > 100 else ''}'")
+            result = self.tts_service.speak_text(text, interrupt=interrupt_current)
+            self.logger.info(f"🗣️ TTS speak_text returned: {result}")
+            return result
+        except Exception as e:
+            self.logger.error(f"Error speaking response: {e}")
+            import traceback
+            self.logger.error(f"speak_response traceback: {traceback.format_exc()}")
+            return False
+    
+    def speak_streaming_chunk(self, chunk: str) -> bool:
+        """
+        Add streaming text chunk to TTS queue - DISABLED to prevent delay issues
+        
+        Args:
+            chunk: Text chunk from streaming response
+        
+        Returns:
+            False - Streaming TTS disabled to prevent sync issues
+        """
+        # DISABLED: Streaming TTS causes delay/sync issues with pyttsx3
+        # The TTS will speak the complete response after streaming finishes
+        return False
+    
+    def stop_speech(self) -> bool:
+        """Stop current TTS speech"""
+        if not self.tts_service:
+            return False
+        
+        try:
+            return self.tts_service.stop_speech()
+        except Exception as e:
+            self.logger.error(f"Error stopping speech: {e}")
+            return False
+    
+    def set_voice_settings(self, voice_id: int = None, rate: int = None, volume: float = None) -> bool:
+        """
+        Update TTS voice settings
+        
+        Args:
+            voice_id: Voice index to use
+            rate: Speech rate (words per minute)
+            volume: Volume level (0.0-1.0)
+        
+        Returns:
+            True if settings updated successfully
+        """
+        if not self.tts_service:
+            return False
+        
+        try:
+            success = True
+            if voice_id is not None:
+                success &= self.tts_service.set_voice(voice_id)
+            if rate is not None:
+                success &= self.tts_service.set_speech_rate(rate)
+            if volume is not None:
+                success &= self.tts_service.set_volume(volume)
+            
+            return success
+        except Exception as e:
+            self.logger.error(f"Error updating voice settings: {e}")
+            return False
+    
     def chat(self, parameters):
         if not QWEN_AVAILABLE or self.qwen_service is None:
             return {
@@ -816,6 +1114,9 @@ class AssistantChat:
                     
                     # Actualizar contador de tokens
                     self.total_tokens_used += result.get("tokens_used", 0)
+                    
+                    # NOTE: TTS auto-speak is now handled in GUI after streaming completes
+                    # This prevents duplicate TTS calls and synchronization issues
                     
                     # Agregar información de contexto al resultado
                     result["conversation_context"] = {

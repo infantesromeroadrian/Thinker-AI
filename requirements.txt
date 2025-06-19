@@ -19,9 +19,10 @@ numpy>=1.24.0
 # Modern GUI Framework
 customtkinter>=5.2.0
 
-# Speech Recognition
+# Speech Recognition and Text-to-Speech
 SpeechRecognition>=3.10.0
 pyaudio>=0.2.11
+pyttsx3>=2.90  # Text-to-Speech engine
 
 # Optional: Advanced AI/ML capabilities (if needed in future)
 # openai>=1.0.0

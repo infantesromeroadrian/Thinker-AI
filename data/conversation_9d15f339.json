@@ -1,0 +1,80 @@
+{
+  "conversation_id": "9d15f339",
+  "start_time": "2025-06-19T17:24:07.442306",
+  "end_time": "2025-06-19T17:24:47.203296",
+  "history": [
+    {
+      "role": "user",
+      "content": "hola cómo estás",
+      "timestamp": "2025-06-19T17:24:07.442306",
+      "conversation_id": "9d15f339",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "¡Hola! Estoy bien, gracias por preguntar. ¿En qué puedo ayudarte hoy? 😊",
+      "timestamp": "2025-06-19T17:24:10.312517",
+      "conversation_id": "9d15f339",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    },
+    {
+      "role": "user",
+      "content": "una capital de Francia",
+      "timestamp": "2025-06-19T17:24:17.739906",
+      "conversation_id": "9d15f339",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "La capital de Francia es París. 🇫🇷 ¿Te gustaría saber más sobre París o France en general?",
+      "timestamp": "2025-06-19T17:24:20.851040",
+      "conversation_id": "9d15f339",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    },
+    {
+      "role": "user",
+      "content": "cuál es la capital de Argentina",
+      "timestamp": "2025-06-19T17:24:29.473469",
+      "conversation_id": "9d15f339",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "La capital de Argentina es Buenos Aires. 🇦🇷 Si necesitas información adicional sobre Buenos Aires o cualquier otra cosa, ¡estoy aquí para ayudarte! 😊",
+      "timestamp": "2025-06-19T17:24:32.718498",
+      "conversation_id": "9d15f339",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    }
+  ],
+  "summary": {
+    "conversation_id": "9d15f339",
+    "start_time": "2025-06-19T17:24:07.442306",
+    "message_count": 6,
+    "user_messages": 3,
+    "assistant_messages": 3,
+    "total_tokens_used": 0,
+    "duration_minutes": 0.6626831666666667,
+    "last_message_time": "2025-06-19T17:24:32.718498"
+  }
+}

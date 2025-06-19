@@ -1,6 +1,7 @@
-"""Services module for Thinker AI Auxiliary Window"""
+"""Services module - AI and Speech capabilities"""
 
-from .qwen_service import QwenService
+# Core services are always available
+from .qwen_service import QwenService, get_qwen_service
 
 # Optional speech service - only import if dependencies are available
 try:
@@ -9,4 +10,13 @@ try:
     __all__ = ['QwenService', 'SpeechService', 'get_speech_service']
 except ImportError:
     SPEECH_AVAILABLE = False
-    __all__ = ['QwenService'] 
+    __all__ = ['QwenService', 'get_qwen_service']
+
+# Optional TTS service - only import if dependencies are available
+try:
+    from .tts_service import TTSService, get_tts_service
+    TTS_AVAILABLE = True
+    if 'TTSService' not in __all__:
+        __all__.extend(['TTSService', 'get_tts_service'])
+except ImportError:
+    TTS_AVAILABLE = False 

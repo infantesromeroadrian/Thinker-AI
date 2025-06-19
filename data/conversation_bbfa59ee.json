@@ -1,0 +1,101 @@
+{
+  "conversation_id": "bbfa59ee",
+  "start_time": "2025-06-19T17:48:33.381150",
+  "end_time": "2025-06-19T17:49:21.422280",
+  "history": [
+    {
+      "role": "user",
+      "content": "hola cómo estás",
+      "timestamp": "2025-06-19T17:48:33.381150",
+      "conversation_id": "bbfa59ee",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "¡Hola! Estoy bien, gracias por preguntar. ¿Y tú? ¿En qué te puedo ayudar hoy?",
+      "timestamp": "2025-06-19T17:48:36.298398",
+      "conversation_id": "bbfa59ee",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    },
+    {
+      "role": "user",
+      "content": "cuál es la capital de",
+      "timestamp": "2025-06-19T17:48:46.841787",
+      "conversation_id": "bbfa59ee",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "Parece que tu pregunta no está completa. ¿Podrías indicarme cuál es el país o región para el cual deseas saber la capital?\n\nPor ejemplo:\n- \"Cuál es la capital de México?\"\n- \"¿Cuál es la capital de Japón?\" \n\nEstoy aquí para ayudarte. 😊",
+      "timestamp": "2025-06-19T17:48:50.906547",
+      "conversation_id": "bbfa59ee",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    },
+    {
+      "role": "user",
+      "content": "cuál es la capital de",
+      "timestamp": "2025-06-19T17:48:57.569081",
+      "conversation_id": "bbfa59ee",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "Entiendo que probablemente quieras saber sobre una capital, pero tu pregunta no está completa. ¿Podrías indicarme cuál es el país o región cuya capital te interesa saber?\n\nPor ejemplo:\n- \"Cuál es la capital de España?\"\n- \"¿Cuál es la capital de Australia?\"\n\nEstoy aquí para ayudarte con cualquier tipo de información que necesites. 😊",
+      "timestamp": "2025-06-19T17:49:01.897890",
+      "conversation_id": "bbfa59ee",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    },
+    {
+      "role": "user",
+      "content": "cuál es la capital de Francia",
+      "timestamp": "2025-06-19T17:49:11.709433",
+      "conversation_id": "bbfa59ee",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "¡Claro! La capital de Francia es París.\n\nSi tienes alguna otra pregunta o necesitas más información sobre Francia o cualquier otro tema, no dudes en decírmelo. 😊",
+      "timestamp": "2025-06-19T17:49:15.196929",
+      "conversation_id": "bbfa59ee",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    }
+  ],
+  "summary": {
+    "conversation_id": "bbfa59ee",
+    "start_time": "2025-06-19T17:48:33.381150",
+    "message_count": 8,
+    "user_messages": 4,
+    "assistant_messages": 4,
+    "total_tokens_used": 0,
+    "duration_minutes": 0.8006855,
+    "last_message_time": "2025-06-19T17:49:15.196929"
+  }
+}

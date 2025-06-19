@@ -1,0 +1,122 @@
+{
+  "conversation_id": "4bfafdd6",
+  "start_time": "2025-06-19T17:19:16.883742",
+  "end_time": "2025-06-19T17:20:25.142770",
+  "history": [
+    {
+      "role": "user",
+      "content": "hola cómo estás",
+      "timestamp": "2025-06-19T17:19:16.883742",
+      "conversation_id": "4bfafdd6",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "¡Hola! Estoy bien, gracias por preguntar. ¿Y tú? ¿En qué puedo ayudarte hoy? 😊",
+      "timestamp": "2025-06-19T17:19:19.924703",
+      "conversation_id": "4bfafdd6",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    },
+    {
+      "role": "user",
+      "content": "cuál es la capital de Francia",
+      "timestamp": "2025-06-19T17:19:29.509106",
+      "conversation_id": "4bfafdd6",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "La capital de Francia es París. ¡Si tienes alguna otra pregunta, no dudes en decírmelo!",
+      "timestamp": "2025-06-19T17:19:32.435109",
+      "conversation_id": "4bfafdd6",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    },
+    {
+      "role": "user",
+      "content": "y la de Alemania",
+      "timestamp": "2025-06-19T17:19:40.239703",
+      "conversation_id": "4bfafdd6",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "La capital de Alemania es Berlín.\n\nSi necesitas más información o ayuda con algo, ¡estoy aquí para ayudarte! 😊",
+      "timestamp": "2025-06-19T17:19:43.380266",
+      "conversation_id": "4bfafdd6",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    },
+    {
+      "role": "user",
+      "content": "y la de Brasil",
+      "timestamp": "2025-06-19T17:19:52.841282",
+      "conversation_id": "4bfafdd6",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "La capital de Brasil es **Brasilia**. \n\nSi tienes alguna otra pregunta, no dudes en decírmela. ¡Estoy aquí para ayudarte! 😊",
+      "timestamp": "2025-06-19T17:19:56.169766",
+      "conversation_id": "4bfafdd6",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    },
+    {
+      "role": "user",
+      "content": "y la de Hungría",
+      "timestamp": "2025-06-19T17:20:09.548278",
+      "conversation_id": "4bfafdd6",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "La capital de Hungría es **Budapest**.\n\n¿Necesitas ayuda con algo más? ¡ Estoy aquí para ayudarte! 😊",
+      "timestamp": "2025-06-19T17:20:12.670599",
+      "conversation_id": "4bfafdd6",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    }
+  ],
+  "summary": {
+    "conversation_id": "4bfafdd6",
+    "start_time": "2025-06-19T17:19:16.883742",
+    "message_count": 10,
+    "user_messages": 5,
+    "assistant_messages": 5,
+    "total_tokens_used": 0,
+    "duration_minutes": 1.1376504666666667,
+    "last_message_time": "2025-06-19T17:20:12.670599"
+  }
+}

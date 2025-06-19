@@ -1,0 +1,59 @@
+{
+  "conversation_id": "6255ed4b",
+  "start_time": "2025-06-19T17:54:00.738371",
+  "end_time": "2025-06-19T17:54:36.457266",
+  "history": [
+    {
+      "role": "user",
+      "content": "hola cómo estás",
+      "timestamp": "2025-06-19T17:54:00.739371",
+      "conversation_id": "6255ed4b",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "¡Estoy bien, gracias por preguntar! ¿Y tú? Estoy listo para ayudarte con cualquier pregunta o tarea que tengas. 😊 ¿En qué puedo asistirte hoy?",
+      "timestamp": "2025-06-19T17:54:04.231320",
+      "conversation_id": "6255ed4b",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    },
+    {
+      "role": "user",
+      "content": "cuál es la capital de Francia",
+      "timestamp": "2025-06-19T17:54:20.008694",
+      "conversation_id": "6255ed4b",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "La capital de Francia es París (Paris en francés). ¡Es una ciudad mundialmente famosa por su arte, historia y cultura! ¿Te gustaría saber más sobre ella o algún otro tema?",
+      "timestamp": "2025-06-19T17:54:23.401684",
+      "conversation_id": "6255ed4b",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    }
+  ],
+  "summary": {
+    "conversation_id": "6255ed4b",
+    "start_time": "2025-06-19T17:54:00.738371",
+    "message_count": 4,
+    "user_messages": 2,
+    "assistant_messages": 2,
+    "total_tokens_used": 0,
+    "duration_minutes": 0.5953149166666667,
+    "last_message_time": "2025-06-19T17:54:23.401684"
+  }
+}

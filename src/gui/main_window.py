@@ -186,6 +186,10 @@ class ThinkerMainWindow:
         system_menu.add_command(label="🧪 Test", command=self._test_qwen_connection)
         system_menu.add_command(label="🎤 Test Voz", command=self._test_speech_recognition)
         system_menu.add_command(label="🔧 Diagnóstico Voz", command=self._advanced_microphone_diagnosis)
+        system_menu.add_separator()
+        system_menu.add_command(label="🔊 Test TTS", command=self._test_tts)
+        system_menu.add_command(label="🎭 Config Voz", command=self._show_tts_settings)
+        system_menu.add_command(label="⏹️ Parar Voz", command=self._stop_tts)
 
         # Minimal Help Menu
         help_menu = tk.Menu(
@@ -346,6 +350,36 @@ class ThinkerMainWindow:
             border_width=0
         )
         self.widgets["voice_button"].pack(side=tk.RIGHT, padx=(0, 5), pady=(5, 15))
+        
+        # TTS control button
+        self.widgets["tts_button"] = ctk.CTkButton(
+            input_container,
+            text="🔊",
+            command=self._toggle_tts,
+            corner_radius=20,
+            width=40,
+            height=40,
+            font=ctk.CTkFont(size=16, weight="bold"),
+            fg_color="#00D4FF",  # Blue for TTS
+            hover_color="#33DDFF",
+            border_width=0
+        )
+        self.widgets["tts_button"].pack(side=tk.RIGHT, padx=(0, 5), pady=(5, 15))
+
+        # TTS Test button (temporary for debugging)
+        self.widgets["tts_test_button"] = ctk.CTkButton(
+            input_container,
+            text="🧪",
+            command=self._test_tts_direct,
+            corner_radius=20,
+            width=40,
+            height=40,
+            font=ctk.CTkFont(size=16, weight="bold"),
+            fg_color="#FF6B6B",  # Red for test
+            hover_color="#FF8E8E",
+            border_width=0
+        )
+        self.widgets["tts_test_button"].pack(side=tk.RIGHT, padx=(0, 5), pady=(5, 15))
 
         # Send button - Minimal floating circle
         self.widgets["send_button"] = ctk.CTkButton(
@@ -371,7 +405,7 @@ class ThinkerMainWindow:
         # self.widgets["chat_input"].bind("<KeyPress>", self._on_key_press)
 
         # Welcome message - Minimalist with voice info
-        welcome_msg = "🚀 Listo para conversar con streaming en tiempo real\n🎤 Usa el botón rojo para dictado de voz (Menu ⚙️ > 🔧 Diagnóstico Voz si hay problemas)"
+        welcome_msg = "🚀 Listo para conversar con streaming en tiempo real\n🎤 Botón rojo grande: Dictado de voz\n🔊 Botón azul: Activar/desactivar síntesis de voz\n🧪 Botón rojo pequeño: Test directo de TTS (F12)\n(Menu ⚙️ para configuración avanzada)"
         self._add_chat_message("💭", welcome_msg)
 
         # FORZAR focus en el campo de texto
@@ -518,6 +552,9 @@ class ThinkerMainWindow:
         self.root.bind("<F5>", lambda e: self._show_system_status())
         self.root.bind("<Control-l>", lambda e: self._clear_chat())
         self.root.bind("<Control-n>", lambda e: self._new_conversation())  # Nueva conversación
+        self.root.bind("<Control-t>", lambda e: self._toggle_tts())  # Toggle TTS
+        self.root.bind("<Escape>", lambda e: self._stop_tts())  # Stop TTS
+        self.root.bind("<F12>", lambda e: self._test_tts_direct())  # Direct TTS test
 
         self.logger.debug("Event handlers setup")
 
@@ -737,13 +774,55 @@ class ThinkerMainWindow:
         chat_display.insert(tk.END, chunk)
         chat_display.configure(state="disabled")
         chat_display.see(tk.END)
+        
+        # Add chunk to TTS streaming if enabled - DISABLED due to sync issues
+        # TTS will speak the complete response after streaming finishes
+        # try:
+        #     if hasattr(self.core, 'ai_modules') and 'assistant_chat' in self.core.ai_modules:
+        #         assistant_chat = self.core.ai_modules['assistant_chat']
+        #         if hasattr(assistant_chat, 'speak_streaming_chunk'):
+        #             assistant_chat.speak_streaming_chunk(chunk)
+        # except Exception as e:
+        #     # Don't let TTS errors interrupt the chat streaming
+        #     self.logger.debug(f"TTS streaming error: {e}")
+
+    def _test_tts_direct(self) -> None:
+        """Test TTS directly and immediately"""
+        self.logger.info("🧪 DIRECT TTS TEST STARTED")
+        try:
+            # Test 1: Direct TTS service call
+            if hasattr(self.core, 'ai_modules') and 'assistant_chat' in self.core.ai_modules:
+                assistant_chat = self.core.ai_modules['assistant_chat']
+                self.logger.info(f"🔍 Assistant chat found: {assistant_chat}")
+                
+                if hasattr(assistant_chat, 'tts_service') and assistant_chat.tts_service:
+                    self.logger.info(f"🔍 TTS service found: {assistant_chat.tts_service}")
+                    success = assistant_chat.tts_service.speak_text("Test directo de voz desde botón rojo", interrupt=True)
+                    self.logger.info(f"🔍 Direct TTS call result: {success}")
+                    self._add_chat_message("🧪 Test Directo", f"TTS directo ejecutado. Resultado: {success}")
+                else:
+                    self.logger.error("🔍 No TTS service found")
+                    self._add_chat_message("❌ Test Directo", "No se encontró TTS service")
+            else:
+                self.logger.error("🔍 No assistant chat found")
+                self._add_chat_message("❌ Test Directo", "No se encontró assistant chat")
+                
+        except Exception as e:
+            self.logger.error(f"Direct TTS test error: {e}")
+            import traceback
+            self.logger.error(f"Direct TTS test traceback: {traceback.format_exc()}")
+            self._add_chat_message("❌ Test Directo", f"Error: {str(e)}")
 
     def _finalize_streaming_message(self) -> None:
         """Finalize the streaming message"""
+        self.logger.debug(f"🔍 _finalize_streaming_message called, is_streaming: {self.is_streaming}")
+        
         if not self.is_streaming:
+            self.logger.debug("🔍 Not streaming, returning early")
             return
 
         self.is_streaming = False
+        self.logger.debug(f"🔍 Streaming message length: {len(self.current_streaming_message) if self.current_streaming_message else 0}")
 
         # Only add completion indicator if we actually received content
         if self.current_streaming_message and self.current_streaming_message.strip():
@@ -753,6 +832,36 @@ class ThinkerMainWindow:
             chat_display.insert(tk.END, " ✅\n\n")  # Checkmark to indicate completion
             chat_display.configure(state="disabled")
             chat_display.see(tk.END)
+            
+            # Speak the complete response if TTS auto-speak is enabled
+            self.logger.debug("🔍 Checking TTS conditions after streaming completion")
+            try:
+                if (hasattr(self.core, 'ai_modules') and 
+                    'assistant_chat' in self.core.ai_modules):
+                    
+                    assistant_chat = self.core.ai_modules['assistant_chat']
+                    
+                    if (assistant_chat.auto_speak_enabled and 
+                        hasattr(assistant_chat, 'tts_service') and 
+                        assistant_chat.tts_service and
+                        assistant_chat.tts_service.is_speech_available() and
+                        self.current_streaming_message.strip()):
+                        
+                        # Speak the complete streaming message (this is the only TTS call)
+                        self.logger.info(f"🗣️ Speaking complete AI response: {len(self.current_streaming_message)} chars")
+                        success = assistant_chat.speak_response(self.current_streaming_message, interrupt_current=True)
+                        self.logger.debug(f"🗣️ TTS result: {success}")
+                    else:
+                        self.logger.debug(f"🔇 TTS skipped - Auto-speak: {assistant_chat.auto_speak_enabled}, "
+                                        f"TTS available: {hasattr(assistant_chat, 'tts_service') and assistant_chat.tts_service is not None}, "
+                                        f"Message length: {len(self.current_streaming_message)}")
+                else:
+                    self.logger.debug("🔇 TTS skipped - Assistant chat not available")
+            except Exception as e:
+                # Don't let TTS errors interrupt the chat
+                self.logger.error(f"Error in TTS auto-speak: {e}")
+                import traceback
+                self.logger.debug(f"TTS Error traceback: {traceback.format_exc()}")
         else:
             # If no content was received, show error message instead
             chat_display = self.widgets["chat_display"]
@@ -1065,6 +1174,238 @@ class ThinkerMainWindow:
         # Run diagnosis in background
         ThreadingHelpers.run_in_background(run_diagnosis)
 
+    # TTS Methods
+    def _test_tts(self) -> None:
+        """Test Text-to-Speech functionality"""
+        self._add_chat_message("🧪 Sistema", "Iniciando test de síntesis de voz...")
+        
+        # Test directo inmediato
+        try:
+            result = self.core.execute_tts_operation("speak_text", {
+                "text": "Hola, este es un test directo de síntesis de voz de Thinker AI",
+                "interrupt": True
+            })
+            
+            if result.get("status") == "success":
+                self._add_chat_message("🗣️ Test Directo", "Test de TTS ejecutado. ¿Escuchaste la voz?")
+            else:
+                self._add_chat_message("❌ Test Directo", f"Error en test directo: {result.get('result')}")
+        except Exception as e:
+            self._add_chat_message("❌ Test Directo", f"Excepción en test directo: {str(e)}")
+        
+        def run_test():
+            try:
+                result = self.core.execute_tts_operation("test_tts", {})
+                
+                if result.get("status") == "success":
+                    voice_info = result.get("voice_info", {})
+                    self.root.after(0, lambda: self._add_chat_message(
+                        "✅ Test TTS Exitoso",
+                        f"Velocidad: {voice_info.get('rate', 'Unknown')} WPM\n"
+                        f"Volumen: {voice_info.get('volume', 'Unknown')}\n"
+                        f"Voz ID: {voice_info.get('voice_id', 'Unknown')}\n"
+                        f"Mensaje: {result.get('message', 'Test completado')}"
+                    ))
+                else:
+                    error = result.get("message", "Error desconocido")
+                    self.root.after(0, lambda: self._add_chat_message(
+                        "❌ Test TTS Fallido",
+                        f"Error: {error}"
+                    ))
+                    
+            except Exception as e:
+                self.root.after(0, lambda: self._add_chat_message(
+                    "❌ Test TTS Fallido",
+                    f"Error durante el test: {str(e)}"
+                ))
+        
+        ThreadingHelpers.run_in_background(run_test)
+    
+    def _show_tts_settings(self) -> None:
+        """Show TTS configuration dialog"""
+        try:
+            # Get available voices
+            result = self.core.execute_tts_operation("get_voices", {})
+            if result.get("status") != "success":
+                UIHelpers.show_error_dialog(self.root, "Error TTS", 
+                                           "No se pudo acceder a las configuraciones de TTS")
+                return
+            
+            voices = result.get("voices", [])
+            
+            # Create settings window
+            settings_window = tk.Toplevel(self.root)
+            settings_window.title("🔊 Configuración de Síntesis de Voz")
+            settings_window.geometry("400x300")
+            settings_window.configure(bg=self.config.BACKGROUND_COLOR)
+            settings_window.transient(self.root)
+            settings_window.grab_set()
+            
+            # Voice selection
+            voice_frame = customtkinter.CTkFrame(settings_window)
+            voice_frame.pack(fill="x", padx=10, pady=5)
+            
+            voice_label = customtkinter.CTkLabel(voice_frame, text="🎭 Seleccionar Voz:")
+            voice_label.pack(anchor="w", padx=5, pady=2)
+            
+            voice_var = tk.StringVar()
+            voice_options = [f"{v['id']}: {v['name']}" for v in voices]
+            if voice_options:
+                voice_combo = customtkinter.CTkComboBox(voice_frame, values=voice_options, variable=voice_var)
+                voice_combo.pack(fill="x", padx=5, pady=2)
+                voice_combo.set(voice_options[0])  # Default selection
+            
+            # Rate slider
+            rate_frame = customtkinter.CTkFrame(settings_window)
+            rate_frame.pack(fill="x", padx=10, pady=5)
+            
+            rate_label = customtkinter.CTkLabel(rate_frame, text="⚡ Velocidad (WPM):")
+            rate_label.pack(anchor="w", padx=5, pady=2)
+            
+            rate_slider = customtkinter.CTkSlider(rate_frame, from_=50, to=400, number_of_steps=35)
+            rate_slider.set(200)  # Default value
+            rate_slider.pack(fill="x", padx=5, pady=2)
+            
+            rate_value_label = customtkinter.CTkLabel(rate_frame, text="200 WPM")
+            rate_value_label.pack(padx=5, pady=2)
+            
+            def update_rate_label(value):
+                rate_value_label.configure(text=f"{int(value)} WPM")
+            
+            rate_slider.configure(command=update_rate_label)
+            
+            # Volume slider
+            volume_frame = customtkinter.CTkFrame(settings_window)
+            volume_frame.pack(fill="x", padx=10, pady=5)
+            
+            volume_label = customtkinter.CTkLabel(volume_frame, text="🔊 Volumen:")
+            volume_label.pack(anchor="w", padx=5, pady=2)
+            
+            volume_slider = customtkinter.CTkSlider(volume_frame, from_=0.0, to=1.0, number_of_steps=10)
+            volume_slider.set(0.9)  # Default value
+            volume_slider.pack(fill="x", padx=5, pady=2)
+            
+            volume_value_label = customtkinter.CTkLabel(volume_frame, text="90%")
+            volume_value_label.pack(padx=5, pady=2)
+            
+            def update_volume_label(value):
+                volume_value_label.configure(text=f"{int(value * 100)}%")
+            
+            volume_slider.configure(command=update_volume_label)
+            
+            # Auto-speak toggle
+            auto_speak_frame = customtkinter.CTkFrame(settings_window)
+            auto_speak_frame.pack(fill="x", padx=10, pady=5)
+            
+            auto_speak_var = tk.BooleanVar()
+            auto_speak_checkbox = customtkinter.CTkCheckBox(
+                auto_speak_frame, 
+                text="🗣️ Hablar respuestas automáticamente",
+                variable=auto_speak_var
+            )
+            auto_speak_checkbox.pack(padx=5, pady=5)
+            
+            # Buttons
+            button_frame = customtkinter.CTkFrame(settings_window)
+            button_frame.pack(fill="x", padx=10, pady=10)
+            
+            def apply_settings():
+                try:
+                    # Apply voice setting
+                    if voice_options:
+                        selected_voice = voice_var.get()
+                        voice_id = int(selected_voice.split(":")[0])
+                        self.core.execute_tts_operation("set_voice", {"voice_id": voice_id})
+                    
+                    # Apply rate setting
+                    rate = int(rate_slider.get())
+                    self.core.execute_tts_operation("set_rate", {"rate": rate})
+                    
+                    # Apply volume setting
+                    volume = volume_slider.get()
+                    self.core.execute_tts_operation("set_volume", {"volume": volume})
+                    
+                    # Apply auto-speak setting
+                    if auto_speak_var.get():
+                        self.core.execute_tts_operation("toggle_auto_speak", {})
+                    
+                    settings_window.destroy()
+                    self._add_chat_message("✅ TTS", "Configuración de voz actualizada exitosamente")
+                    
+                except Exception as e:
+                    UIHelpers.show_error_dialog(settings_window, "Error", f"Error aplicando configuración: {str(e)}")
+            
+            def test_voice():
+                # Test current settings
+                test_text = "Hola, esta es una prueba de la configuración de voz actual."
+                self.core.execute_tts_operation("speak_text", {"text": test_text, "interrupt": True})
+            
+            apply_button = customtkinter.CTkButton(button_frame, text="✅ Aplicar", command=apply_settings)
+            apply_button.pack(side="left", padx=5, pady=5)
+            
+            test_button = customtkinter.CTkButton(button_frame, text="🧪 Probar", command=test_voice)
+            test_button.pack(side="left", padx=5, pady=5)
+            
+            cancel_button = customtkinter.CTkButton(button_frame, text="❌ Cancelar", 
+                                                   command=settings_window.destroy)
+            cancel_button.pack(side="right", padx=5, pady=5)
+            
+        except Exception as e:
+            UIHelpers.show_error_dialog(self.root, "Error", f"Error abriendo configuración TTS: {str(e)}")
+    
+    def _stop_tts(self) -> None:
+        """Stop current TTS speech"""
+        try:
+            result = self.core.execute_tts_operation("stop_speech", {})
+            if result.get("status") == "success":
+                self._add_chat_message("⏹️ TTS", "Síntesis de voz detenida")
+            else:
+                self._add_chat_message("❌ TTS", f"Error deteniendo voz: {result.get('result', 'Error desconocido')}")
+        except Exception as e:
+            self._add_chat_message("❌ TTS", f"Error: {str(e)}")
+    
+    def _toggle_tts(self) -> None:
+        """Toggle TTS auto-speak functionality"""
+        self.logger.info("🔊 Toggle TTS called")
+        try:
+            result = self.core.execute_tts_operation("toggle_auto_speak", {})
+            self.logger.info(f"🔊 Toggle result: {result}")
+            
+            if result.get("status") == "success":
+                enabled = result.get("auto_speak_enabled", False)
+                self.logger.info(f"🔊 TTS auto-speak is now: {enabled}")
+                
+                # Update button appearance
+                if enabled:
+                    self.widgets["tts_button"].configure(
+                        fg_color="#00FF88",  # Green when enabled
+                        text="🗣️"
+                    )
+                    self._add_chat_message("🔊 TTS", "Auto-habla ACTIVADO: Las respuestas del AI se hablarán automáticamente")
+                else:
+                    self.widgets["tts_button"].configure(
+                        fg_color="#00D4FF",  # Blue when disabled
+                        text="🔊"
+                    )
+                    self._add_chat_message("🔇 TTS", "Auto-habla DESACTIVADO: Solo texto sin voz")
+                    
+                # Verification check
+                if hasattr(self.core, 'ai_modules') and 'assistant_chat' in self.core.ai_modules:
+                    assistant_chat = self.core.ai_modules['assistant_chat']
+                    self.logger.info(f"🔍 Config verification - auto_speak_enabled (local): {assistant_chat.auto_speak_enabled}")
+                else:
+                    from src.config.config import get_config
+                    config = get_config()
+                    self.logger.info(f"🔍 Config verification - TTS_AUTO_SPEAK (fallback): {config.TTS_AUTO_SPEAK}")
+                    
+            else:
+                self._add_chat_message("❌ TTS", f"Error cambiando configuración: {result.get('result', 'Error desconocido')}")
+                
+        except Exception as e:
+            self.logger.error(f"Toggle TTS error: {e}")
+            import traceback
+            self.logger.error(f"Toggle TTS traceback: {traceback.format_exc()}")
+            self._add_chat_message("❌ TTS", f"Error: {str(e)}")
 
     # Menu action methods
     def _export_chat(self):
@@ -1109,6 +1450,11 @@ Chat:
 • Ctrl + Enter: Nueva línea
 • Ctrl + L: Limpiar chat
 • Ctrl + N: Nueva conversación
+
+Síntesis de Voz:
+• Ctrl + T: Activar/Desactivar auto-habla
+• Escape: Parar voz inmediatamente
+• F12: Test directo de TTS
 
 General:
 • Ctrl + Q: Salir

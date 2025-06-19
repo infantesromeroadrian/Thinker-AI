@@ -1,0 +1,59 @@
+{
+  "conversation_id": "729a343b",
+  "start_time": "2025-06-19T17:40:45.762081",
+  "end_time": "2025-06-19T17:41:41.430202",
+  "history": [
+    {
+      "role": "user",
+      "content": "hola cómo estás",
+      "timestamp": "2025-06-19T17:40:45.763586",
+      "conversation_id": "729a343b",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "¡Hola! Estoy bien, gracias por preguntar. ¿Y tú? ¿En qué puedo ayudarte hoy? 😊",
+      "timestamp": "2025-06-19T17:40:48.702053",
+      "conversation_id": "729a343b",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    },
+    {
+      "role": "user",
+      "content": "dónde es festivo en Corpus Christi",
+      "timestamp": "2025-06-19T17:41:04.012217",
+      "conversation_id": "729a343b",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "El Día del Sagrado Corazón de Jesús (también conocido como Corpus Christi) se celebra el primer domingo después de la Octava del Sagrado Corazón, que cae un mes después de Pentecostés. \n\nEn 2023, por ejemplo, el festival fue celebrado el **jueves 19 de julio**.\n\n### Festividad en Corpus Christi:\n- **Fecha variable**: Cada año se celebra en un día diferente.\n- **Actividades**: Normalmente incluye procesiones, misas especiales y otras actividades religiosas y culturales que varían según las costumbres locales.\n  \nSi buscas información sobre el próximo Día del Sagrado Corazón para años futuros o específicos, te recomendaría revisar la página de la diócesis local o tu iglesia más cercana, ya que pueden tener eventos y detalles específicos programados.\n\n¿Te gustaría algo más específico?",
+      "timestamp": "2025-06-19T17:41:11.585282",
+      "conversation_id": "729a343b",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    }
+  ],
+  "summary": {
+    "conversation_id": "729a343b",
+    "start_time": "2025-06-19T17:40:45.762081",
+    "message_count": 4,
+    "user_messages": 2,
+    "assistant_messages": 2,
+    "total_tokens_used": 0,
+    "duration_minutes": 0.9278020166666666,
+    "last_message_time": "2025-06-19T17:41:11.585282"
+  }
+}

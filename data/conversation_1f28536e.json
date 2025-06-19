@@ -1,0 +1,80 @@
+{
+  "conversation_id": "1f28536e",
+  "start_time": "2025-06-19T17:35:15.201941",
+  "end_time": "2025-06-19T17:36:23.393455",
+  "history": [
+    {
+      "role": "user",
+      "content": "hola cómo estás",
+      "timestamp": "2025-06-19T17:35:15.202942",
+      "conversation_id": "1f28536e",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "¡Hola! Estoy bien, gracias por preguntar. ¿Y tú? ¿En qué te puedo ayudar hoy? 😊",
+      "timestamp": "2025-06-19T17:35:18.201886",
+      "conversation_id": "1f28536e",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    },
+    {
+      "role": "user",
+      "content": "cuántos días tiene",
+      "timestamp": "2025-06-19T17:35:29.707952",
+      "conversation_id": "1f28536e",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "Parece que tu pregunta está un poco repetitiva. Si quisieras saber cuántos días tienen las semanas, meses o algún otro período de tiempo específico, por favor indícalo claramente y estaré encantado de ayudarte.\n\nSi solo deseas una respuesta general:  \nUn día tiene 24 horas, es decir, 168 minutos o 10.080 segundos en una semana completa (sin considerar días con horarios desviados como el día austríaco). \n\n¿Te refieres a algo más específico?",
+      "timestamp": "2025-06-19T17:35:35.125935",
+      "conversation_id": "1f28536e",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    },
+    {
+      "role": "user",
+      "content": "cuál es la capital de Francia",
+      "timestamp": "2025-06-19T17:36:06.419145",
+      "conversation_id": "1f28536e",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "La capital de Francia es París. 😊",
+      "timestamp": "2025-06-19T17:36:09.097454",
+      "conversation_id": "1f28536e",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    }
+  ],
+  "summary": {
+    "conversation_id": "1f28536e",
+    "start_time": "2025-06-19T17:35:15.201941",
+    "message_count": 6,
+    "user_messages": 3,
+    "assistant_messages": 3,
+    "total_tokens_used": 0,
+    "duration_minutes": 1.1365252333333333,
+    "last_message_time": "2025-06-19T17:36:09.097454"
+  }
+}

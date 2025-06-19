@@ -88,6 +88,14 @@ Eres rápido, eficiente y puedes manejar conversaciones largas gracias a tu cont
     SPEECH_TIMEOUT = 3.0  # Shorter timeout (was 5.0)
     SPEECH_PHRASE_TIME_LIMIT = 8.0  # Shorter phrase limit (was 10.0)
 
+    # Text-to-Speech Configuration
+    TTS_ENABLED = True
+    TTS_VOICE_ID = 0  # Default voice index (0 = first available)
+    TTS_SPEECH_RATE = 200  # Words per minute (50-400)
+    TTS_SPEECH_VOLUME = 0.9  # Volume level (0.0-1.0)
+    TTS_AUTO_SPEAK = False  # Automatically speak AI responses
+    TTS_STREAMING_ENABLED = False  # Disable streaming TTS due to sync issues
+
     # Azure Speech (if using Azure engine)
     AZURE_SPEECH_KEY = ""  # Set in environment or override
     AZURE_SPEECH_REGION = "westus2"  # Default region
