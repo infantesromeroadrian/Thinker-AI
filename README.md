@@ -60,7 +60,7 @@ Thinker-AI-Aux/
 │   │   └── main_window.py # Modern chat interface
 │   ├── services/        # External service integrations
 │   │   ├── __init__.py
-│   │   └── qwen_service.py # Qwen3-32B API service
+│   │   └── qwen_service.py # Qwen2.5-7B-Instruct-1M API service
 │   └── utils/           # Utility functions
 │       ├── __init__.py
 │       ├── logger.py    # Professional logging
@@ -135,7 +135,7 @@ QWEN_MAX_RETRIES = 3
 - **Python 3.8+** (recommended: Python 3.10+)
 - **CustomTkinter support** (included in requirements)
 - **Windows, macOS, or Linux**
-- **Local AI Server** running Qwen3-32B model
+- **Local AI Server** running Qwen2.5-7B-Instruct-1M model
 
 ### Installation
 

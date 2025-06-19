@@ -189,6 +189,89 @@ def initialize_application(production_mode: bool = False) -> ThinkerMainWindow:
         raise InitializationError(f"Application initialization failed: {e}") from e
 
 
+def run_diagnostics():
+    """Run comprehensive system diagnostics"""
+    print("🔍 THINKER AI - DIAGNÓSTICO COMPLETO DEL SISTEMA")
+    print("=" * 60)
+    
+    try:
+        # Initialize core
+        core = get_core()
+        
+        # Run diagnostics
+        diagnostics = core.run_comprehensive_diagnostics()
+        
+        # Display results
+        print(f"\n📊 RESULTADOS DEL DIAGNÓSTICO")
+        print(f"Timestamp: {diagnostics['timestamp']}")
+        
+        # Configuration validation
+        config_validation = diagnostics.get('configuration_validation', {})
+        print(f"\n🔧 VALIDACIÓN DE CONFIGURACIÓN:")
+        print(f"  Válida: {'✅' if config_validation.get('valid', False) else '❌'}")
+        
+        if config_validation.get('issues'):
+            print(f"  Problemas:")
+            for issue in config_validation['issues']:
+                print(f"    - {issue}")
+        
+        if config_validation.get('suggestions'):
+            print(f"  Sugerencias:")
+            for suggestion in config_validation['suggestions']:
+                print(f"    - {suggestion}")
+        
+        # Connectivity tests
+        connectivity = diagnostics.get('connectivity_tests', {})
+        print(f"\n🌐 PRUEBAS DE CONECTIVIDAD:")
+        
+        for service_name, status in connectivity.items():
+            service_status = status.get('status', 'unknown')
+            print(f"  {service_name}: {service_status}")
+            
+            if 'diagnostics' in status:
+                diag = status['diagnostics']
+                print(f"    DNS: {diag.get('dns_resolution', 'unknown')}")
+                print(f"    TCP: {diag.get('tcp_connection', 'unknown')}")
+                print(f"    HTTP: {diag.get('http_response', 'unknown')}")
+                print(f"    API: {diag.get('api_compatibility', 'unknown')}")
+        
+        # Module health
+        module_health = diagnostics.get('module_health', {})
+        print(f"\n🔧 SALUD DE MÓDULOS:")
+        
+        for module_name, health in module_health.items():
+            status = health.get('status', 'unknown')
+            print(f"  {module_name}: {status}")
+            
+            if 'error' in health:
+                print(f"    Error: {health['error']}")
+        
+        # Recommendations
+        recommendations = diagnostics.get('recommendations', [])
+        print(f"\n💡 RECOMENDACIONES:")
+        
+        for rec in recommendations:
+            print(f"  {rec}")
+        
+        # Network alternatives
+        config = get_config()
+        alternatives = config.get_network_alternatives()
+        
+        if alternatives:
+            print(f"\n🔄 ALTERNATIVAS DE RED DISPONIBLES:")
+            for i, alt in enumerate(alternatives[:5], 1):
+                print(f"  {i}. {alt}")
+        
+        print(f"\n{'=' * 60}")
+        print(f"🏁 Diagnóstico completado.")
+        
+    except Exception as e:
+        print(f"❌ Error durante el diagnóstico: {str(e)}")
+        return 1
+    
+    return 0
+
+
 def main() -> int:
     """
     Main application entry point with comprehensive error handling.
@@ -208,6 +291,8 @@ Examples:
     python -m src.main                    # Run in development mode
     python -m src.main --production       # Run in production mode
     python -m src.main --version          # Show version information
+    python -m src.main --diagnose         # Run system diagnostics
+    python -m src.main --config-test      # Test configuration and exit
 
 For more information, visit the project documentation.
         """
@@ -237,6 +322,18 @@ For more information, visit the project documentation.
         help='Enable debug logging'
     )
     
+    parser.add_argument(
+        '--diagnose', 
+        action='store_true',
+        help='Run system diagnostics instead of starting GUI'
+    )
+    
+    parser.add_argument(
+        '--config-test', 
+        action='store_true',
+        help='Test configuration and exit'
+    )
+    
     args = parser.parse_args()
     
     try:
@@ -253,6 +350,28 @@ For more information, visit the project documentation.
         
         # Print system information
         print_system_info()
+        
+        if args.diagnose:
+            return run_diagnostics()
+        
+        if args.config_test:
+            print("🧪 TESTING CONFIGURATION...")
+            try:
+                config = get_config()
+                validation = config.validate_qwen_configuration()
+                
+                if validation['valid']:
+                    print("✅ Configuration is valid")
+                else:
+                    print("❌ Configuration has issues:")
+                    for issue in validation['issues']:
+                        print(f"  - {issue}")
+                
+                return 0 if validation['valid'] else 1
+                
+            except Exception as e:
+                print(f"❌ Configuration test failed: {str(e)}")
+                return 1
         
         # Initialize application
         print("🚀 Initializing Thinker AI Auxiliary Window...")

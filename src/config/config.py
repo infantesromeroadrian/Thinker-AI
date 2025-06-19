@@ -5,7 +5,7 @@ This module centralizes all configuration settings for the tkinter application
 
 import os
 from pathlib import Path
-from typing import Dict, Any, Tuple, Union
+from typing import Dict, Any, Tuple, Union, List
 
 
 class AppConfig:
@@ -66,7 +66,7 @@ class AppConfig:
     ETHICAL_HACKING_MODULE = True
 
     # Qwen2.5-7B-Instruct-1M Model Configuration
-    QWEN_BASE_URL = "http://192.168.1.45:1234"
+    QWEN_BASE_URL = "http://localhost:1234"
     QWEN_MODEL_NAME = "qwen2.5-7b-instruct-1m"
     QWEN_TIMEOUT = 30  # Faster 7B model - normal timeout
     QWEN_MAX_RETRIES = 3  # Can afford more retries with faster model
@@ -142,6 +142,85 @@ Eres rápido, eficiente y puedes manejar conversaciones largas gracias a tu cont
             "button": cls.BUTTON_COLOR,
             "hover": cls.HOVER_COLOR
         }
+
+    @classmethod
+    def validate_qwen_configuration(cls) -> Dict[str, Any]:
+        """
+        Validate Qwen configuration and provide diagnostics.
+        
+        Returns:
+            Dictionary with validation results and suggestions
+        """
+        validation = {
+            "valid": True,
+            "issues": [],
+            "suggestions": []
+        }
+        
+        # Check URL format
+        if not cls.QWEN_BASE_URL.startswith(('http://', 'https://')):
+            validation["valid"] = False
+            validation["issues"].append("QWEN_BASE_URL must start with http:// or https://")
+        
+        # Check if URL contains port
+        if ':' not in cls.QWEN_BASE_URL.split('://')[-1]:
+            validation["suggestions"].append("Consider specifying port explicitly (e.g., :1234)")
+        
+        # Check timeout values
+        if cls.QWEN_TIMEOUT < 10:
+            validation["suggestions"].append("QWEN_TIMEOUT might be too low for reliable connections")
+        
+        # Check model name format
+        if not cls.QWEN_MODEL_NAME:
+            validation["valid"] = False
+            validation["issues"].append("QWEN_MODEL_NAME cannot be empty")
+        
+        return validation
+    
+    @classmethod
+    def get_network_alternatives(cls) -> List[str]:
+        """
+        Get alternative network configurations for common scenarios.
+        
+        Returns:
+            List of alternative base URLs to try
+        """
+        # Extract current host/port
+        current_url = cls.QWEN_BASE_URL
+        
+        alternatives = []
+        
+        # Common local alternatives
+        alternatives.extend([
+            "http://localhost:1234",
+            "http://127.0.0.1:1234",
+            "http://0.0.0.0:1234"
+        ])
+        
+        # If current is not localhost, add local variants
+        if "localhost" not in current_url and "127.0.0.1" not in current_url:
+            # Extract port from current URL
+            try:
+                port = current_url.split(':')[-1]
+                alternatives.extend([
+                    f"http://localhost:{port}",
+                    f"http://127.0.0.1:{port}"
+                ])
+            except:
+                pass
+        
+        # Common network ranges
+        if "192.168." in current_url:
+            base_network = '.'.join(current_url.split('.')[:3])
+            port = current_url.split(':')[-1] if ':' in current_url else "1234"
+            
+            # Try common IPs in the same subnet
+            for last_octet in [1, 10, 100, 45, 50]:
+                alt_url = f"http://{base_network}.{last_octet}:{port}"
+                if alt_url != current_url:
+                    alternatives.append(alt_url)
+        
+        return alternatives
 
 
 class FeatureFlags:

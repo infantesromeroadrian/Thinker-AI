@@ -1,0 +1,37 @@
+{
+  "conversation_id": "da0c1f6a",
+  "start_time": "2025-06-19T09:17:51.524493",
+  "end_time": "2025-06-19T09:18:08.803017",
+  "history": [
+    {
+      "role": "user",
+      "content": "cuál es la capital de",
+      "timestamp": "2025-06-19T09:17:51.524493",
+      "conversation_id": "da0c1f6a",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "user",
+      "content": "es la capital de",
+      "timestamp": "2025-06-19T09:18:04.299889",
+      "conversation_id": "da0c1f6a",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    }
+  ],
+  "summary": {
+    "conversation_id": "da0c1f6a",
+    "start_time": "2025-06-19T09:17:51.524493",
+    "message_count": 2,
+    "user_messages": 2,
+    "assistant_messages": 0,
+    "total_tokens_used": 0,
+    "duration_minutes": 0.2879754,
+    "last_message_time": "2025-06-19T09:18:04.299889"
+  }
+}

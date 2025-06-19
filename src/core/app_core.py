@@ -1,18 +1,21 @@
 """
-Core application module for Thinker AI Auxiliary Window
-Contains the main application logic and business rules
+Thinker AI - Core Application Module
+
+This module provides the core functionality for the Thinker AI application,
+including AI services, security tools, and system orchestration.
 """
 
-import sys
 import time
 import threading
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Callable
 from pathlib import Path
+import uuid
 
 from src.config.config import get_config, FeatureFlags
 from src.utils.logger import get_logger
 from src.utils.helpers import Performance, FileManager, ThreadingHelpers
+from src.exceptions import *
 
 
 class ThinkerCore:
@@ -48,7 +51,6 @@ class ThinkerCore:
     
     def _generate_session_id(self) -> str:
         """Generate unique session identifier"""
-        import uuid
         return str(uuid.uuid4())[:8]
     
     @Performance.time_function
@@ -282,6 +284,93 @@ class ThinkerCore:
             }
         }
     
+    def run_comprehensive_diagnostics(self) -> Dict[str, Any]:
+        """Run comprehensive system diagnostics"""
+        diagnostics = {
+            "timestamp": datetime.now().isoformat(),
+            "system_status": self.get_system_status(),
+            "configuration_validation": {},
+            "connectivity_tests": {},
+            "module_health": {},
+            "recommendations": []
+        }
+        
+        try:
+            # Configuration validation
+            config_validation = get_config().validate_qwen_configuration()
+            diagnostics["configuration_validation"] = config_validation
+            
+            if not config_validation["valid"]:
+                diagnostics["recommendations"].extend([
+                    f"🔧 Configuración: {issue}" for issue in config_validation["issues"]
+                ])
+            
+            # Connectivity tests
+            if "assistant_chat" in self.ai_modules:
+                try:
+                    assistant_chat = self.ai_modules["assistant_chat"]
+                    
+                    if hasattr(assistant_chat, 'qwen_service') and assistant_chat.qwen_service is not None:
+                        qwen_service = assistant_chat.qwen_service
+                        connectivity = qwen_service.get_connection_status()
+                        diagnostics["connectivity_tests"]["qwen"] = connectivity
+                        
+                        if connectivity["status"] != "online":
+                            diagnostics["recommendations"].append("🌐 Conectividad: Servidor Qwen no disponible")
+                            
+                            # Suggest alternatives
+                            alternatives = get_config().get_network_alternatives()
+                            if alternatives:
+                                diagnostics["recommendations"].append(f"💡 Probar URLs alternativas: {alternatives[:3]}")
+                    else:
+                        diagnostics["connectivity_tests"]["qwen"] = {
+                            "status": "unavailable", 
+                            "error": "QwenService not initialized"
+                        }
+                        diagnostics["recommendations"].append("🔧 Servicio Qwen no está inicializado - verifique dependencias")
+                            
+                except Exception as e:
+                    diagnostics["connectivity_tests"]["qwen"] = {"error": str(e)}
+                    diagnostics["recommendations"].append(f"❌ Error de conectividad: {str(e)}")
+            
+            # Module health checks
+            for module_name, module in self.ai_modules.items():
+                try:
+                    # Check if module has required attributes
+                    health = {
+                        "status": "healthy",
+                        "has_logger": hasattr(module, 'logger'),
+                        "initialized": True
+                    }
+                    
+                    # Specific checks for assistant_chat
+                    if module_name == "assistant_chat":
+                        health["has_qwen_service"] = hasattr(module, 'qwen_service') and module.qwen_service is not None
+                        if hasattr(module, 'qwen_service') and module.qwen_service is not None:
+                            health["qwen_online"] = module.qwen_service.is_online
+                        else:
+                            health["qwen_online"] = False
+                            health["qwen_service_status"] = "not_initialized"
+                    
+                    diagnostics["module_health"][module_name] = health
+                    
+                except Exception as e:
+                    diagnostics["module_health"][module_name] = {
+                        "status": "unhealthy",
+                        "error": str(e)
+                    }
+                    diagnostics["recommendations"].append(f"🔧 Módulo {module_name}: {str(e)}")
+            
+            # Generate summary recommendations
+            if not diagnostics["recommendations"]:
+                diagnostics["recommendations"].append("✅ Sistema funcionando correctamente")
+            
+        except Exception as e:
+            diagnostics["error"] = str(e)
+            diagnostics["recommendations"].append(f"❌ Error en diagnóstico: {str(e)}")
+        
+        return diagnostics
+    
     def execute_ai_operation(self, operation: str, parameters: Dict[str, Any]) -> Any:
         """Execute AI operation with specified parameters"""
         try:
@@ -384,6 +473,57 @@ class ThinkerCore:
                 "status": "error",
                 "result": f"Speech operation failed: {str(e)}"
             }
+    
+    def execute_conversation_operation(self, operation: str, parameters: Dict[str, Any] = None) -> Any:
+        """Execute conversation management operations"""
+        try:
+            parameters = parameters or {}
+            
+            # Check if assistant chat is available
+            if "assistant_chat" not in self.ai_modules:
+                return {
+                    "status": "error",
+                    "result": "Assistant chat not available."
+                }
+            
+            assistant_chat = self.ai_modules["assistant_chat"]
+            
+            if operation == "clear_conversation":
+                assistant_chat.clear_conversation()
+                return {
+                    "status": "success",
+                    "result": "🧹 Conversación limpiada. Nueva conversación iniciada."
+                }
+            elif operation == "get_conversation_summary":
+                summary = assistant_chat.get_conversation_summary()
+                return {
+                    "status": "success",
+                    "result": summary
+                }
+            elif operation == "get_conversation_history":
+                return {
+                    "status": "success",
+                    "result": {
+                        "history": assistant_chat.conversation_history,
+                        "conversation_id": assistant_chat.conversation_id,
+                        "message_count": len(assistant_chat.conversation_history)
+                    }
+                }
+            elif operation == "save_conversation":
+                assistant_chat._save_conversation_to_state()
+                return {
+                    "status": "success",
+                    "result": "💾 Conversación guardada exitosamente."
+                }
+            else:
+                raise ValueError(f"Unknown conversation operation: {operation}")
+                
+        except Exception as e:
+            self.logger.log_exception(e, f"Conversation operation: {operation}")
+            return {
+                "status": "error",
+                "result": f"Conversation operation failed: {str(e)}"
+            }
 
 
 # Import Qwen service
@@ -438,25 +578,162 @@ class CodeAnalyzer:
 
 
 class AssistantChat:
-    """AI assistant chat module using Qwen2.5-7B-Instruct-1M"""
+    """AI assistant chat module using Qwen2.5-7B-Instruct-1M with conversation memory"""
+    def __init__(self):
+        """Initialize with conversation memory"""
+        self.conversation_history = []  # Lista de mensajes para mantener contexto
+        self.max_history_length = 20  # Máximo de mensajes a recordar
+        self.conversation_start_time = None
+        self.total_tokens_used = 0
+        self.conversation_id = None
+    
     def initialize(self): 
         self.logger = get_logger("AssistantChat")
+        
+        # Always initialize qwen_service, even if offline
+        self.qwen_service = None
+        
         if QWEN_AVAILABLE:
-            self.qwen_service = get_qwen_service()
-            self.logger.info("AssistantChat initialized with Qwen2.5-7B-Instruct-1M")
+            try:
+                self.qwen_service = get_qwen_service()
+                self._start_new_conversation()
+                self.logger.info(f"AssistantChat initialized with {self.qwen_service.model_name}")
+            except Exception as e:
+                self.logger.error(f"Failed to initialize Qwen service: {str(e)}")
+                self.qwen_service = None
         else:
             self.logger.error("AssistantChat failed to initialize - Qwen service unavailable")
     
     def shutdown(self): 
-        if hasattr(self, 'qwen_service'):
-            self.qwen_service.close()
-        self.logger.info("AssistantChat shutdown")
+        """Shutdown and save conversation"""
+        try:
+            if hasattr(self, 'conversation_history') and self.conversation_history:
+                self._save_conversation_to_state()
+            if hasattr(self, 'qwen_service') and self.qwen_service:
+                self.qwen_service.close()
+        except Exception as e:
+            self.logger.error(f"Error during shutdown: {e}")
+        finally:
+            self.logger.info("AssistantChat shutdown")
+    
+    def _start_new_conversation(self):
+        """Iniciar nueva conversación con ID único"""
+        import uuid
+        from datetime import datetime
+        
+        self.conversation_id = str(uuid.uuid4())[:8]
+        self.conversation_start_time = datetime.now()
+        self.conversation_history = []
+        self.total_tokens_used = 0
+        
+        self.logger.info(f"🆕 Nueva conversación iniciada: {self.conversation_id}")
+    
+    def _add_to_history(self, role: str, content: str, metadata: dict = None):
+        """Agregar mensaje al historial de conversación"""
+        message = {
+            "role": role,
+            "content": content,
+            "timestamp": datetime.now().isoformat(),
+            "conversation_id": self.conversation_id
+        }
+        
+        if metadata:
+            message["metadata"] = metadata
+        
+        self.conversation_history.append(message)
+        
+        # Mantener solo los últimos N mensajes para evitar overflow de contexto
+        if len(self.conversation_history) > self.max_history_length:
+            # Conservar el primer mensaje (system prompt) si existe
+            if self.conversation_history[0].get("role") == "system":
+                self.conversation_history = [self.conversation_history[0]] + self.conversation_history[-(self.max_history_length-1):]
+            else:
+                self.conversation_history = self.conversation_history[-self.max_history_length:]
+        
+        self.logger.debug(f"💬 Historial actualizado: {len(self.conversation_history)} mensajes")
+    
+    def _prepare_messages_for_qwen(self, new_message: str, system_prompt: str = None) -> list:
+        """Preparar mensajes completos con historial para Qwen"""
+        messages = []
+        
+        # Agregar system prompt si es diferente al último o es el primer mensaje
+        if system_prompt and (
+            not self.conversation_history or 
+            not any(msg.get("role") == "system" for msg in self.conversation_history[-5:])
+        ):
+            messages.append({
+                "role": "system", 
+                "content": system_prompt
+            })
+        
+        # Agregar historial existente (solo user y assistant)
+        for msg in self.conversation_history:
+            if msg["role"] in ["user", "assistant"]:
+                messages.append({
+                    "role": msg["role"],
+                    "content": msg["content"]
+                })
+        
+        # Agregar nuevo mensaje del usuario
+        messages.append({
+            "role": "user",
+            "content": new_message
+        })
+        
+        return messages
+    
+    def clear_conversation(self):
+        """Limpiar historial de conversación y empezar de nuevo"""
+        old_id = self.conversation_id
+        self._start_new_conversation()
+        self.logger.info(f"🧹 Conversación {old_id} limpiada, nueva conversación: {self.conversation_id}")
+    
+    def get_conversation_summary(self) -> dict:
+        """Obtener resumen de la conversación actual"""
+        if not self.conversation_history:
+            return {"status": "empty", "message": "No hay conversación activa"}
+        
+        user_messages = [msg for msg in self.conversation_history if msg["role"] == "user"]
+        assistant_messages = [msg for msg in self.conversation_history if msg["role"] == "assistant"]
+        
+        return {
+            "conversation_id": self.conversation_id,
+            "start_time": self.conversation_start_time.isoformat() if self.conversation_start_time else None,
+            "message_count": len(self.conversation_history),
+            "user_messages": len(user_messages),
+            "assistant_messages": len(assistant_messages),
+            "total_tokens_used": self.total_tokens_used,
+            "duration_minutes": (datetime.now() - self.conversation_start_time).total_seconds() / 60 if self.conversation_start_time else 0,
+            "last_message_time": self.conversation_history[-1]["timestamp"] if self.conversation_history else None
+        }
+    
+    def _save_conversation_to_state(self):
+        """Guardar conversación en el estado de aplicación"""
+        try:
+            from src.utils.helpers import FileManager
+            config = get_config()
+            
+            conversation_file = config.DATA_DIR / f"conversation_{self.conversation_id}.json"
+            conversation_data = {
+                "conversation_id": self.conversation_id,
+                "start_time": self.conversation_start_time.isoformat() if self.conversation_start_time else None,
+                "end_time": datetime.now().isoformat(),
+                "history": self.conversation_history,
+                "summary": self.get_conversation_summary()
+            }
+            
+            FileManager.safe_write_json(conversation_file, conversation_data)
+            self.logger.debug(f"💾 Conversación guardada: {conversation_file}")
+            
+        except Exception as e:
+            self.logger.error(f"Error guardando conversación: {e}")
     
     def chat(self, parameters):
-        if not QWEN_AVAILABLE:
+        if not QWEN_AVAILABLE or self.qwen_service is None:
             return {
                 "status": "error", 
-                "result": "❌ Servicio Qwen2.5-7B no disponible. Verifica que el servidor esté ejecutándose en http://192.168.1.45:1234"
+                "result": f"❌ Servicio {get_config().QWEN_MODEL_NAME} no disponible. Verifica que el servidor esté ejecutándose en {get_config().QWEN_BASE_URL}",
+                "fallback_message": "El sistema de chat AI está temporalmente no disponible. Por favor, verifica la conexión con el servidor local."
             }
         
         message = parameters.get("message", "")
@@ -471,23 +748,118 @@ class AssistantChat:
                 "result": "⚠️ Por favor, ingresa un mensaje para el chat."
             }
         
+        # Si no hay conversación activa, iniciar una nueva
+        if not self.conversation_history:
+            self._start_new_conversation()
+        
         self.logger.info(f"Processing chat message: {len(message)} characters {'(streaming)' if stream_callback else ''}")
         
         try:
-            return self.qwen_service.chat(
-                message=message,
-                system_prompt=system_prompt,
-                temperature=temperature,
-                max_tokens=max_tokens,
-                stream=stream_callback is not None,
-                stream_callback=stream_callback
-            )
+            # Check connection status first
+            if not self.qwen_service.is_online:
+                connection_status = self.qwen_service.get_connection_status()
+                if connection_status["status"] != "online":
+                    return {
+                        "status": "error",
+                        "result": f"❌ No se puede conectar con {self.qwen_service.model_name}",
+                        "connection_status": connection_status,
+                        "fallback_message": "El servidor de IA no está disponible. Verifica que esté ejecutándose y sea accesible."
+                    }
+            
+            # Agregar mensaje del usuario al historial ANTES de enviar a Qwen
+            self._add_to_history("user", message, {"temperature": temperature, "max_tokens": max_tokens})
+            
+            # Preparar mensajes con contexto completo
+            messages_with_context = self._prepare_messages_for_qwen(message, system_prompt)
+            
+            self.logger.debug(f"🧠 Enviando {len(messages_with_context)} mensajes a Qwen (incluyendo contexto)")
+            
+            # Usar el método chat_with_history si está disponible, sino usar el método normal
+            result = None
+            if hasattr(self.qwen_service, 'chat_with_messages'):
+                try:
+                    self.logger.debug("🔄 Intentando chat_with_messages (con contexto)")
+                    result = self.qwen_service.chat_with_messages(
+                        messages=messages_with_context,
+                        temperature=temperature,
+                        max_tokens=max_tokens,
+                        stream=stream_callback is not None,
+                        stream_callback=stream_callback
+                    )
+                    self.logger.debug(f"✅ chat_with_messages exitoso: {result.get('status')}")
+                except Exception as e:
+                    self.logger.warning(f"⚠️ chat_with_messages falló: {str(e)}, usando fallback")
+                    result = None  # Force fallback
+            
+            # Fallback: usar el método chat normal pero con contexto en el mensaje
+            if result is None or result.get("status") != "success":
+                self.logger.debug("🔄 Usando fallback: método chat regular con contexto")
+                context_message = self._format_message_with_context(message)
+                result = self.qwen_service.chat(
+                    message=context_message,
+                    system_prompt=system_prompt,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                    stream=stream_callback is not None,
+                    stream_callback=stream_callback
+                )
+            
+            # Si la respuesta fue exitosa, agregar respuesta del asistente al historial
+            if result.get("status") == "success":
+                assistant_response = result.get("result", "")
+                if assistant_response:
+                    self._add_to_history("assistant", assistant_response, {
+                        "model": self.qwen_service.model_name,
+                        "temperature": temperature,
+                        "tokens_used": result.get("tokens_used", 0)
+                    })
+                    
+                    # Actualizar contador de tokens
+                    self.total_tokens_used += result.get("tokens_used", 0)
+                    
+                    # Agregar información de contexto al resultado
+                    result["conversation_context"] = {
+                        "conversation_id": self.conversation_id,
+                        "messages_in_context": len(messages_with_context),
+                        "total_conversation_messages": len(self.conversation_history),
+                        "total_tokens_used": self.total_tokens_used
+                    }
+            
+            # Update online status based on result
+            self.qwen_service.is_online = result.get("status") == "success"
+            
+            return result
+            
         except Exception as e:
             self.logger.error(f"Chat processing error: {str(e)}")
+            if self.qwen_service:
+                self.qwen_service.is_online = False
             return {
                 "status": "error",
-                "result": f"❌ Error en el chat: {str(e)}"
+                "result": f"❌ Error en el chat: {str(e)}",
+                "technical_details": str(e),
+                "fallback_message": "Error de comunicación con el servidor de IA. Intenta nuevamente en unos momentos."
             }
+    
+    def _format_message_with_context(self, new_message: str) -> str:
+        """Formatear mensaje con contexto para servicios que no soportan múltiples mensajes"""
+        if not self.conversation_history:
+            return new_message
+        
+        # Obtener últimos N mensajes para contexto
+        recent_messages = self.conversation_history[-6:]  # Últimos 6 mensajes
+        
+        context_parts = ["=== CONTEXTO DE CONVERSACIÓN ==="]
+        for msg in recent_messages:
+            if msg["role"] == "user":
+                context_parts.append(f"Usuario: {msg['content']}")
+            elif msg["role"] == "assistant":
+                context_parts.append(f"Asistente: {msg['content']}")
+        
+        context_parts.append("=== MENSAJE ACTUAL ===")
+        context_parts.append(new_message)
+        
+        return "\n\n".join(context_parts)
 
 
 class NetworkScanner:

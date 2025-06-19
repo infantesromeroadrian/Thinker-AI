@@ -449,22 +449,31 @@ class ThinkerMainWindow:
             self.widgets["chat_input"].configure(text_color="#0066CC")  # Azul oscuro sobre fondo blanco
             self.placeholder_active = True
 
-
-
     def _clear_chat(self):
-        """Clear the chat display"""
-        if UIHelpers.ask_yes_no(self.root, "Confirmar", "¿Deseas limpiar toda la conversación?"):
+        """Clear the chat display and conversation memory"""
+        if UIHelpers.ask_yes_no(self.root, "Confirmar", "¿Deseas limpiar toda la conversación?\n\nEsto borrará tanto la pantalla como la memoria de conversación del AI."):
+            # Clear the visual chat display
             self.widgets["chat_display"].configure(state="normal")
             self.widgets["chat_display"].delete("1.0", tk.END)
             self.widgets["chat_display"].configure(state="disabled")
 
-            # Add minimal welcome message again
-            self._add_chat_message("💭", 
-                                  "Chat limpio. Listo para streaming. ¿Qué necesitas?")
+            # Clear the AI conversation memory
+            try:
+                result = self.core.execute_conversation_operation("clear_conversation")
+                if result.get("status") == "success":
+                    clear_message = result.get("result", "🧹 Conversación limpiada")
+                    # Add welcome message with conversation cleared confirmation
+                    self._add_chat_message("💭", f"{clear_message} ¿Qué necesitas?")
+                else:
+                    self._add_chat_message("⚠️", "Error limpiando la memoria de conversación")
+                    # Still show basic welcome
+                    self._add_chat_message("💭", "Chat limpio. ¿Qué necesitas?")
+            except Exception as e:
+                self.logger.log_exception(e, "Clear conversation memory")
+                # Show basic welcome even if conversation clearing failed
+                self._add_chat_message("💭", "Chat limpio. ¿Qué necesitas?")
 
             self.logger.log_user_action("Chat Cleared")
-
-
 
     def _create_status_bar(self) -> None:
         """Create minimalist translucent status bar"""
@@ -508,6 +517,7 @@ class ThinkerMainWindow:
         self.root.bind("<F1>", lambda e: self._show_about())
         self.root.bind("<F5>", lambda e: self._show_system_status())
         self.root.bind("<Control-l>", lambda e: self._clear_chat())
+        self.root.bind("<Control-n>", lambda e: self._new_conversation())  # Nueva conversación
 
         self.logger.debug("Event handlers setup")
 
@@ -604,7 +614,17 @@ class ThinkerMainWindow:
 
             # Create stream callback
             def stream_callback(chunk: str):
-                self.root.after(0, lambda: self._append_streaming_chunk(chunk))
+                """Callback for streaming response chunks"""
+                try:
+                    self.logger.debug(f"🌊 Stream chunk received: '{chunk}' (length: {len(chunk)})")
+                    if chunk and chunk.strip():  # Only process non-empty chunks
+                        self.root.after(0, lambda c=chunk: self._append_streaming_chunk(c))
+                    else:
+                        self.logger.debug(f"⚠️ Empty chunk received: '{repr(chunk)}'")
+                except Exception as e:
+                    self.logger.log_exception(e, "Stream callback error")
+                    # Fallback: finalize streaming if there's an error
+                    self.root.after(0, self._finalize_streaming_message)
 
             # Execute AI operation with streaming
             result = self.core.execute_ai_operation("chat", {
@@ -618,7 +638,16 @@ class ThinkerMainWindow:
         except Exception as e:
             self.logger.log_exception(e, "AI message processing")
             error_msg = "Encontré un error procesando tu solicitud. Por favor, intenta de nuevo."
+            
+            # Finalize streaming if it was active
+            if self.is_streaming:
+                self.root.after(0, lambda: self._finalize_streaming_message())
+            
             self.root.after(0, lambda: self._add_chat_message("🚨 Sistema", error_msg))
+            
+            # Re-enable send button
+            self.root.after(0, lambda: self.widgets["send_button"].configure(
+                state="normal", text="→"))
 
     def _handle_ai_error(self, error: Exception) -> None:
         """Handle AI operation errors"""
@@ -635,10 +664,10 @@ class ThinkerMainWindow:
 
         # Update status indicator to show error
         if self.widgets.get("status_indicator"):
-            self.root.after(0, lambda: self.widgets["status_indicator"].configure(
+            self.widgets["status_indicator"].configure(
                 text="⚠", 
                 text_color=self.config.ERROR_COLOR
-            ))
+            )
 
     def _show_processing_status(self, message: str) -> None:
         """Show minimalist processing status"""
@@ -716,12 +745,21 @@ class ThinkerMainWindow:
 
         self.is_streaming = False
 
-        # Add completion indicator and final newlines
-        chat_display = self.widgets["chat_display"]
-        chat_display.configure(state="normal")
-        chat_display.insert(tk.END, " ✅\n\n")  # Checkmark to indicate completion
-        chat_display.configure(state="disabled")
-        chat_display.see(tk.END)
+        # Only add completion indicator if we actually received content
+        if self.current_streaming_message and self.current_streaming_message.strip():
+            # Add completion indicator and final newlines
+            chat_display = self.widgets["chat_display"]
+            chat_display.configure(state="normal")
+            chat_display.insert(tk.END, " ✅\n\n")  # Checkmark to indicate completion
+            chat_display.configure(state="disabled")
+            chat_display.see(tk.END)
+        else:
+            # If no content was received, show error message instead
+            chat_display = self.widgets["chat_display"]
+            chat_display.configure(state="normal")
+            chat_display.insert(tk.END, "\n❌ No se recibió respuesta del AI. Verifica la conexión.\n\n")
+            chat_display.configure(state="disabled")
+            chat_display.see(tk.END)
 
         # Clear streaming state
         self.current_streaming_message = ""
@@ -1070,6 +1108,7 @@ Chat:
 • Enter: Enviar mensaje
 • Ctrl + Enter: Nueva línea
 • Ctrl + L: Limpiar chat
+• Ctrl + N: Nueva conversación
 
 General:
 • Ctrl + Q: Salir
@@ -1085,7 +1124,7 @@ General:
         self.logger.log_user_action("Core Restarted")
 
     def _show_system_status(self) -> None:
-        """Show detailed system status including Qwen3-32B status"""
+        """Show detailed system status including Qwen2.5-7B-Instruct-1M status"""
         status = self.core.get_system_status()
         status_text = f"🔧 System Status Report\n\n"
         status_text += f"Core Status: {status['core_status']}\n"
@@ -1123,7 +1162,7 @@ General:
         UIHelpers.show_info_dialog(self.root, "System Status", status_text)
 
     def _check_qwen_status(self) -> Dict[str, Any]:
-        """Check Qwen3-32B server status"""
+        """Check Qwen2.5-7B-Instruct-1M server status"""
         try:
             from src.services.qwen_service import get_qwen_service
             qwen_service = get_qwen_service()
@@ -1161,6 +1200,21 @@ General:
     def _test_qwen_connection(self) -> None:
         """Test Qwen2.5-7B-Instruct-1M connection with a simple message"""
         self._add_chat_message("💻 Sistema", "🧪 Iniciando test de conexión con Qwen2.5-7B-Instruct-1M...")
+        
+        # Show connection diagnostics first
+        try:
+            from src.services.qwen_service import get_qwen_service
+            qwen_service = get_qwen_service()
+            connection_status = qwen_service.get_connection_status()
+            
+            self._add_chat_message("🔍 Diagnóstico", 
+                f"Estado: {connection_status['status']}\n"
+                f"Servidor: {connection_status['server_url']}\n"
+                f"Modelo: {connection_status['model']}\n"
+                f"Diagnósticos: {connection_status.get('diagnostics', {})}")
+                
+        except Exception as e:
+            self._add_chat_message("❌ Error Diagnóstico", f"No se pudo ejecutar diagnóstico: {str(e)}")
 
         # Show processing
         self.widgets["send_button"].configure(state="disabled", text="🧪 Testing...")
@@ -1182,15 +1236,25 @@ General:
                 if result.get("status") == "success":
                     response = result.get("result", "Test exitoso")
                     response_time = result.get("response_time", 0)
+                    model_name = result.get("model", "Qwen2.5-7B-Instruct-1M")
                     self.root.after(0, lambda: self._add_chat_message(
                         "✅ Test Exitoso",
-                        f"Qwen2.5-7B responde correctamente en {response_time}s:\n\n{response}"
+                        f"{model_name} responde correctamente en {response_time}s:\n\n{response}"
                     ))
                 else:
                     error = result.get("error", "Error desconocido")
+                    connection_status = result.get("connection_status", {})
+                    fallback_msg = result.get("fallback_message", "")
+                    
+                    error_detail = f"Error: {error}"
+                    if fallback_msg:
+                        error_detail += f"\n\n💡 {fallback_msg}"
+                    if connection_status:
+                        error_detail += f"\n\n🔍 Estado de conexión: {connection_status.get('status', 'unknown')}"
+                        
                     self.root.after(0, lambda: self._add_chat_message(
                         "❌ Test Fallido",
-                        f"Error en la conexión: {error}"
+                        error_detail
                     ))
 
             except Exception as e:

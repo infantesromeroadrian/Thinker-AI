@@ -1,0 +1,80 @@
+{
+  "conversation_id": "8fe129c3",
+  "start_time": "2025-06-19T09:23:17.480198",
+  "end_time": "2025-06-19T09:24:32.640917",
+  "history": [
+    {
+      "role": "user",
+      "content": "cuál es la capital de",
+      "timestamp": "2025-06-19T09:23:17.480198",
+      "conversation_id": "8fe129c3",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "Parece que has dejado la pregunta incompleta. ¿Podrías indicarme cuál es el país o región para saber cual es su capital?",
+      "timestamp": "2025-06-19T09:23:20.572033",
+      "conversation_id": "8fe129c3",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    },
+    {
+      "role": "user",
+      "content": "cuál es la capital de Francia",
+      "timestamp": "2025-06-19T09:23:27.537274",
+      "conversation_id": "8fe129c3",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "La capital de Francia es París (en francés, \"Paris\"). Es una ciudad icónica famosa no solo por sus monumentos como la Torre Eiffel y el Ábside del Sacré-Cœur, sino también por su rica historia, arte y cultura.",
+      "timestamp": "2025-06-19T09:23:31.420536",
+      "conversation_id": "8fe129c3",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    },
+    {
+      "role": "user",
+      "content": "y la de Alemania",
+      "timestamp": "2025-06-19T09:23:38.743564",
+      "conversation_id": "8fe129c3",
+      "metadata": {
+        "temperature": 0.7,
+        "max_tokens": 2000
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "La capital de Alemania es Berlín (en alemán, \"Berlin\"). Berlín es una ciudad dinámica que combina modernidad con una rica herencia histórica y cultural. Aunque el muro deBerlín ya no existe, la ciudad conserva varias zonas emblemáticas como la Potsdamer Platz y los restos del Muro de Berlín en la Puerta de Brandenburgo.\n\n¿Te gustaría saber algo más sobre alguna otra cosa?",
+      "timestamp": "2025-06-19T09:23:43.887482",
+      "conversation_id": "8fe129c3",
+      "metadata": {
+        "model": "qwen2.5-7b-instruct-1m",
+        "temperature": 0.7,
+        "tokens_used": 0
+      }
+    }
+  ],
+  "summary": {
+    "conversation_id": "8fe129c3",
+    "start_time": "2025-06-19T09:23:17.480198",
+    "message_count": 6,
+    "user_messages": 3,
+    "assistant_messages": 3,
+    "total_tokens_used": 0,
+    "duration_minutes": 1.25267865,
+    "last_message_time": "2025-06-19T09:23:43.887482"
+  }
+}

@@ -10,25 +10,28 @@ from typing import Dict, Any, Optional, List, Callable
 from datetime import datetime
 
 from src.utils.logger import get_logger
+from src.config.config import get_config
 
 
 class QwenService:
     """Service to interact with Qwen2.5-7B-Instruct-1M model via local API"""
     
     def __init__(self, 
-                 base_url: str = "http://192.168.1.45:1234",
-                 model_name: str = "qwen2.5-7b-instruct-1m"):
-        self.base_url = base_url.rstrip('/')
-        self.model_name = model_name
+                 base_url: Optional[str] = None,
+                 model_name: Optional[str] = None):
+        # Use centralized configuration
+        self.config = get_config()
+        self.base_url = (base_url or self.config.QWEN_BASE_URL).rstrip('/')
+        self.model_name = model_name or self.config.QWEN_MODEL_NAME
         self.logger = get_logger("QwenService")
         
         # API endpoints
         self.chat_endpoint = f"{self.base_url}/v1/chat/completions"
         self.models_endpoint = f"{self.base_url}/v1/models"
         
-        # Configuration
-        self.timeout = 30  # 30 seconds timeout
-        self.max_retries = 3
+        # Configuration from centralized config
+        self.timeout = self.config.QWEN_TIMEOUT
+        self.max_retries = self.config.QWEN_MAX_RETRIES
         
         # Session for connection pooling
         self.session = requests.Session()
@@ -37,10 +40,13 @@ class QwenService:
             'Accept': 'application/json'
         })
         
-        self.logger.info(f"QwenService initialized for {model_name} at {base_url}")
+        # Connection status
+        self.is_online = False
+        
+        self.logger.info(f"QwenService initialized for {self.model_name} at {self.base_url}")
         
         # Test connection on initialization
-        self._test_connection()
+        self.is_online = self._test_connection()
     
     def _test_connection(self) -> bool:
         """Test connection to the Qwen server"""
@@ -175,9 +181,10 @@ class QwenService:
             self.logger.error(f"❌ Qwen chat error: {str(e)}")
             return {
                 "status": "error",
-                "result": f"Lo siento, hubo un error al conectar con el modelo Qwen3-32B: {str(e)}",
+                "result": f"Lo siento, hubo un error al conectar con el modelo {self.model_name}: {str(e)}",
                 "error": str(e),
-                "timestamp": datetime.now().isoformat()
+                "timestamp": datetime.now().isoformat(),
+                "fallback_available": self._has_fallback_available()
             }
     
     def _send_request_with_retries(self, payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
@@ -347,17 +354,285 @@ class QwenService:
         if self.session:
             self.session.close()
             self.logger.debug("QwenService session closed")
+    
+    def _has_fallback_available(self) -> bool:
+        """Check if fallback options are available"""
+        # Could check for alternative services, cached responses, etc.
+        return False
+    
+    def get_connection_status(self) -> Dict[str, Any]:
+        """Get current connection status with diagnostics"""
+        try:
+            # Test connection in real time
+            test_result = self._test_connection()
+            self.is_online = test_result
+            
+            return {
+                "status": "online" if test_result else "offline",
+                "server_url": self.base_url,
+                "model": self.model_name,
+                "timeout": self.timeout,
+                "max_retries": self.max_retries,
+                "last_check": datetime.now().isoformat(),
+                "diagnostics": self._run_diagnostics()
+            }
+            
+        except Exception as e:
+            return {
+                "status": "error",
+                "error": str(e),
+                "server_url": self.base_url,
+                "last_check": datetime.now().isoformat()
+            }
+    
+    def _run_diagnostics(self) -> Dict[str, Any]:
+        """Run connection diagnostics"""
+        diagnostics = {
+            "dns_resolution": "unknown",
+            "tcp_connection": "unknown", 
+            "http_response": "unknown",
+            "api_compatibility": "unknown"
+        }
+        
+        try:
+            import socket
+            # Test DNS resolution
+            host = self.base_url.replace('http://', '').replace('https://', '').split(':')[0]
+            socket.gethostbyname(host)
+            diagnostics["dns_resolution"] = "ok"
+            
+            # Test TCP connection
+            port = int(self.base_url.split(':')[-1]) if ':' in self.base_url else 80
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(3)
+            result = sock.connect_ex((host, port))
+            sock.close()
+            diagnostics["tcp_connection"] = "ok" if result == 0 else "failed"
+            
+            # Test HTTP response
+            if diagnostics["tcp_connection"] == "ok":
+                response = self.session.get(self.models_endpoint, timeout=3)
+                diagnostics["http_response"] = f"HTTP {response.status_code}"
+                
+                if response.status_code == 200:
+                    diagnostics["api_compatibility"] = "compatible"
+                    
+        except Exception as e:
+            diagnostics["error"] = str(e)
+            
+        return diagnostics
+
+    def chat_with_messages(self,
+                          messages: List[Dict[str, str]],
+                          temperature: float = None,
+                          max_tokens: int = None,
+                          stream: bool = False,
+                          stream_callback: Optional[Callable[[str], None]] = None) -> Dict[str, Any]:
+        """
+        Chat with multiple messages (conversation context)
+        
+        Args:
+            messages: List of messages with role and content
+            temperature: Response creativity (0.0-1.0)
+            max_tokens: Maximum response length
+            stream: Enable streaming response
+            stream_callback: Callback function for streaming chunks
+            
+        Returns:
+            Dict with status, result, and metadata
+        """
+        try:
+            # Use provided values or config defaults
+            temperature = temperature if temperature is not None else self.config.QWEN_TEMPERATURE
+            max_tokens = max_tokens if max_tokens is not None else self.config.QWEN_MAX_TOKENS
+            
+            # Validate messages format
+            if not isinstance(messages, list) or not messages:
+                return {
+                    "status": "error",
+                    "result": "Messages must be a non-empty list"
+                }
+            
+            for msg in messages:
+                if not isinstance(msg, dict) or "role" not in msg or "content" not in msg:
+                    return {
+                        "status": "error", 
+                        "result": "Each message must have 'role' and 'content' fields"
+                    }
+            
+            self.logger.debug(f"🧠 Processing conversation with {len(messages)} messages")
+            
+            # Prepare request payload
+            payload = {
+                "model": self.model_name,
+                "messages": messages,
+                "temperature": temperature,
+                "max_tokens": max_tokens,
+                "stream": stream
+            }
+            
+            # Calculate approximate token count for all messages
+            total_content_length = sum(len(msg["content"]) for msg in messages)
+            estimated_tokens = total_content_length // 4  # Rough estimation
+            
+            self.logger.debug(f"💭 Conversation context: {len(messages)} msgs, ~{estimated_tokens} tokens")
+            
+            # Use dynamic timeout for longer conversations
+            dynamic_timeout = self.timeout
+            if len(messages) > 5:  # Longer conversations
+                dynamic_timeout = min(self.timeout * 1.5, 120)  # Max 2 minutes
+            
+            if stream and stream_callback:
+                return self._handle_streaming_response_with_context(payload, stream_callback, dynamic_timeout)
+            else:
+                return self._handle_regular_response_with_context(payload, dynamic_timeout)
+                
+        except Exception as e:
+            self.logger.log_exception(e, "Chat with messages")
+            return {
+                "status": "error",
+                "result": f"Error in conversation: {str(e)}",
+                "error_type": type(e).__name__
+            }
+    
+    def _handle_streaming_response_with_context(self, payload: dict, stream_callback: Callable, timeout: float) -> Dict[str, Any]:
+        """Handle streaming response for conversation with context"""
+        try:
+            start_time = time.time()
+            self.logger.info("🌊 Iniciando respuesta en streaming con contexto...")
+            
+            response = self.session.post(
+                self.chat_endpoint,
+                json=payload,
+                timeout=timeout,
+                stream=True
+            )
+            
+            response.raise_for_status()
+            
+            # Process streaming chunks
+            accumulated_response = ""
+            chunk_count = 0
+            
+            for line in response.iter_lines():
+                if line:
+                    line_text = line.decode('utf-8')
+                    if line_text.startswith('data: '):
+                        data_content = line_text[6:].strip()
+                        
+                        if data_content == '[DONE]':
+                            break
+                        
+                        try:
+                            chunk_data = json.loads(data_content)
+                            
+                            if 'choices' in chunk_data and chunk_data['choices']:
+                                delta = chunk_data['choices'][0].get('delta', {})
+                                content = delta.get('content', '')
+                                
+                                if content:
+                                    accumulated_response += content
+                                    stream_callback(content)
+                                    chunk_count += 1
+                                    
+                        except json.JSONDecodeError:
+                            continue
+            
+            duration = time.time() - start_time
+            
+            self.logger.info("✅ Streaming completado")
+            self.logger.info(f"✅ Qwen response received in {duration:.2f}s (streaming)")
+            
+            # Update connection status
+            self.is_online = True
+            
+            return {
+                "status": "success",
+                "result": accumulated_response,
+                "duration": duration,
+                "chunks_received": chunk_count,
+                "streaming": True,
+                "conversation_mode": True
+            }
+            
+        except Exception as e:
+            self.is_online = False
+            self.logger.log_exception(e, "Streaming conversation response")
+            return {
+                "status": "error",
+                "result": f"Streaming conversation error: {str(e)}",
+                "error_type": type(e).__name__
+            }
+    
+    def _handle_regular_response_with_context(self, payload: dict, timeout: float) -> Dict[str, Any]:
+        """Handle regular (non-streaming) response for conversation with context"""
+        try:
+            start_time = time.time()
+            
+            response = self.session.post(
+                self.chat_endpoint,
+                json=payload,
+                timeout=timeout
+            )
+            
+            response.raise_for_status()
+            data = response.json()
+            
+            duration = time.time() - start_time
+            
+            if 'choices' in data and data['choices']:
+                message_content = data['choices'][0]['message']['content']
+                
+                # Extract usage information if available
+                usage_info = data.get('usage', {})
+                tokens_used = usage_info.get('total_tokens', 0)
+                
+                self.logger.info(f"✅ Qwen conversation response received in {duration:.2f}s")
+                
+                # Update connection status
+                self.is_online = True
+                
+                return {
+                    "status": "success",
+                    "result": message_content,
+                    "duration": duration,
+                    "tokens_used": tokens_used,
+                    "streaming": False,
+                    "conversation_mode": True,
+                    "context_messages": len(payload["messages"])
+                }
+            else:
+                return {
+                    "status": "error",
+                    "result": "No valid response from Qwen service",
+                    "raw_response": data
+                }
+                
+        except Exception as e:
+            self.is_online = False
+            self.logger.log_exception(e, "Regular conversation response")
+            return {
+                "status": "error",
+                "result": f"Conversation error: {str(e)}",
+                "error_type": type(e).__name__
+            }
 
 
-# Global instance
+# Global instance with improved initialization
 _qwen_service: Optional[QwenService] = None
 
 
 def get_qwen_service() -> QwenService:
-    """Get or create global QwenService instance"""
+    """Get or create global QwenService instance using centralized configuration"""
     global _qwen_service
     
     if _qwen_service is None:
+        # Initialize with centralized configuration
         _qwen_service = QwenService()
     
-    return _qwen_service 
+    return _qwen_service
+
+
+def create_qwen_service(base_url: Optional[str] = None, model_name: Optional[str] = None) -> QwenService:
+    """Create a new QwenService instance with custom configuration"""
+    return QwenService(base_url=base_url, model_name=model_name) 

@@ -190,4 +190,59 @@ class TestConfigIntegration:
         assert config.SPEECH_ENGINE in ["google", "whisper", "azure"]
         assert config.SPEECH_LANGUAGE == "es-ES"
         assert config.SPEECH_ENERGY_THRESHOLD > 0
-        assert config.SPEECH_TIMEOUT > 0 
+        assert config.SPEECH_TIMEOUT > 0
+    
+    def test_qwen_configuration_validation(self) -> None:
+        """Test Qwen configuration validation."""
+        config = get_config()
+        
+        # Test validation method
+        validation = config.validate_qwen_configuration()
+        
+        assert isinstance(validation, dict)
+        assert "valid" in validation
+        assert "issues" in validation
+        assert "suggestions" in validation
+        assert isinstance(validation["valid"], bool)
+        assert isinstance(validation["issues"], list)
+        assert isinstance(validation["suggestions"], list)
+    
+    def test_network_alternatives_generation(self) -> None:
+        """Test network alternatives generation."""
+        config = get_config()
+        
+        # Test alternatives method
+        alternatives = config.get_network_alternatives()
+        
+        assert isinstance(alternatives, list)
+        assert len(alternatives) > 0
+        
+        # Check that alternatives are valid URLs
+        for alt in alternatives:
+            assert alt.startswith(('http://', 'https://'))
+            assert ':' in alt  # Should have port
+    
+    def test_centralized_configuration_integration(self) -> None:
+        """Test that QwenService uses centralized configuration."""
+        from src.services.qwen_service import QwenService
+        
+        # Create service without parameters (should use config)
+        service = QwenService()
+        
+        config = get_config()
+        assert service.base_url == config.QWEN_BASE_URL
+        assert service.model_name == config.QWEN_MODEL_NAME
+        assert service.timeout == config.QWEN_TIMEOUT
+        assert service.max_retries == config.QWEN_MAX_RETRIES
+    
+    def test_qwen_service_custom_configuration(self) -> None:
+        """Test QwenService with custom configuration."""
+        from src.services.qwen_service import create_qwen_service
+        
+        custom_url = "http://custom.example.com:8080"
+        custom_model = "custom-model"
+        
+        service = create_qwen_service(base_url=custom_url, model_name=custom_model)
+        
+        assert service.base_url == custom_url
+        assert service.model_name == custom_model 
